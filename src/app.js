@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express()
-const bcrypt = require('bcrypt')
  
 //test
 app.use(express.json())
@@ -43,9 +42,5 @@ app.get('/users/:id', (req, res)=>{
     res.json(users.find(user => user.id === Number(id)))
 })
 
-
-// app.post('/users', async (req, res)=>{
-
-// })
 
 app.listen(5000)
