@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon src/app.js"
   },
-  "author": "karim kohel",
+  "author": "Karim Kohel, Mohamed Osama, Hazem Youssif",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
