@@ -1,13 +1,16 @@
 const express = require('express')
-let router = express.Router()
+const router = express.Router()
+
+router.use(express.json())
 
 
 router.get('/login',(req,res)=>{
-    res.send(true)
+    const authantication = {
+        status : true,
+        links: ['/home','/items', '/catgries']
+    }
+    res.json(authantication)
 })
-
-
-
 
 
 module.exports = router
