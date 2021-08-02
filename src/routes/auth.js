@@ -5,11 +5,11 @@ router.use(express.json())
 
 
 router.get('/login',(req,res)=>{
-    const authantication = {
+    const authentication = {
         status : true,
-        links: ['/home','/items', '/catgries']
+        links: ['/home','/items', '/catagories']
     }
-    res.json(authantication)
+    res.json(authentication)
 })
 
 
@@ -17,4 +17,4 @@ module.exports = router
 
 
 //By osama @ 2/8/2021
-//adding test fuction
+//adding test function
