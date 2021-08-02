@@ -1,50 +1,19 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const sqlize = require('sequelize');
+const auth = require('./routes')
 
-// inits
+//init
 const app = express()
-
-const sequelize = new Sequelize('database', 'username', 'password', {
-    host: 'localhost',
-    dialect: 'mysql'
-    }
-);
 
 // config
 const PORT = process.env.PORT || 5000 
-
-//test
 app.use(express.json())
 
-users = [
-    {
-        id:1,
-        username:"karim",
-        password:"test123"
-    },
-    {
-        id:2,
-        username:"osama",
-        password:"test123"
-    },
-    {
-        id:3,
-        username:"karim2",
-        password:"test123"
-    },
-    {
-        id:4,
-        username:"osama2",
-        password:"test123"
-    },
-    {
-        id:5,
-        username:"osama3",
-        password:"test123"
-    },    
 
-]
+// router
+app.use('/auth', auth)
+
+
+//dummy data
 
 app.get('/users', (req, res)=>{
     res.json(users)
