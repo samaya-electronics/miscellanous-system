@@ -1,6 +1,19 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const sqlize = require('sequelize');
+
+// inits
 const app = express()
- 
+
+const sequelize = new Sequelize('database', 'username', 'password', {
+    host: 'localhost',
+    dialect: 'mysql'
+    }
+);
+
+// config
+const PORT = process.env.PORT || 5000 
+
 //test
 app.use(express.json())
 
@@ -43,4 +56,4 @@ app.get('/users/:id', (req, res)=>{
 })
 
 
-app.listen(5000)
+app.listen(PORT, console.log(`Server started on port ${PORT}`))
