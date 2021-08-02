@@ -1,5 +1,5 @@
 const express = require('express');
-const auth = require('./routes')
+const auth = require('./routes/auth')
 
 //init
 const app = express()
@@ -11,18 +11,6 @@ app.use(express.json())
 
 // router
 app.use('/auth', auth)
-
-
-//dummy data
-
-app.get('/users', (req, res)=>{
-    res.json(users)
-})
-
-app.get('/users/:id', (req, res)=>{
-    const {id} = req.params
-    res.json(users.find(user => user.id === Number(id)))
-})
 
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`))
