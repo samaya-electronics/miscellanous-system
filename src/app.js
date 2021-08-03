@@ -14,5 +14,8 @@ app.use(express.json())
 app.use('/auth', auth)
 app.use('/catagories', catagories)
 
+app.get('/', (req, res)=>{
+    res.json({allGood:true})
+})
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`))
