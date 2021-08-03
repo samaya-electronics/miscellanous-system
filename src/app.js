@@ -12,5 +12,8 @@ app.use(express.json())
 // router
 app.use('/auth', auth)
 
+app.get('/', (req, res)=>{
+    res.json({allGood:true})
+})
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`))

@@ -1,5 +1,5 @@
 const express = require('express')
-const { SequelizeScopeError } = require('sequelize/types')
+// const { SequelizeScopeError } = require('sequelize/types')
 const router = express.Router()
 router.use(express.json())
 
