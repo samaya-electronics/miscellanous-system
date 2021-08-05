@@ -14,15 +14,20 @@ router.get('/login',(req,res)=>{
 })
 
 
-router.post('login',(req,res)=>{
-    if(req.body.username=='UN' && req.body.password=='PW'){
+router.post('/login',(req,res)=>{
+    const username = req.body.username
+    const password = req.body.password
+    if((username == 'user' && password == 'user') ||
+        (username == 'admin' && password == 'admin') ||
+        (username == 'superuser' && password == 'superuser')
+        ){
         res.json({
             status : true,
-            username: hazem,
+            username: username,
             links: [
-                {name:'/items', power:'crud'},
-                {name:'/catagories',power:'crud'},
-                {name:'reports',power:'crud'}
+                {name:'items', power:["create","read","update","delete"]},
+                {name:'catagories',power:["create","read","update","delete"]},
+                {name:'reports',power:["create","read","update","delete"]}
             ]
         })
     }
@@ -35,12 +40,7 @@ router.post('login',(req,res)=>{
     }
 
         
-    }
 })
 
 
 module.exports = router
-
-
-//By osama @ 2/8/2021
-//adding test function
