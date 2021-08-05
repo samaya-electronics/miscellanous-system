@@ -14,6 +14,31 @@ router.get('/login',(req,res)=>{
 })
 
 
+router.post('login',(req,res)=>{
+    if(req.body.username=='UN' && req.body.password=='PW'){
+        res.json({
+            status : true,
+            username: hazem,
+            links: [
+                {name:'/items', power:'crud'},
+                {name:'/catagories',power:'crud'},
+                {name:'reports',power:'crud'}
+            ]
+        })
+    }
+    else{
+        res.json({
+            status:false,
+            username:"",
+            links: []
+        })
+    }
+
+        
+    }
+})
+
+
 module.exports = router
 
 
