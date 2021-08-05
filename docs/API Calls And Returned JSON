@@ -1,4 +1,4 @@
-URL: POST(/login)
+URL: POST(/auth/login)
 POSTED Data: {username:"UN" , password:"PW" }
 Returned Data:
 
