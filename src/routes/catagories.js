@@ -14,7 +14,6 @@ router.get('/:id',(req,res)=>{
     if(found){
         res.json(found)
     } else{
-        console.log(found)
         res.json({msg:'catagorie not found d id ${req.body.id}'})
     }
 })
