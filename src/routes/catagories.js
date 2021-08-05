@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 router.use(express.json())
-const catagories = require('./cat')
+const catagories = require('./test_data/catagories_test_data')
 
 
 router.get('/',(req,res)=>{
