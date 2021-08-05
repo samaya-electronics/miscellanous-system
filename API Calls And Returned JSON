@@ -7,7 +7,9 @@ Returned Datat:
 status:true,
 username:"userName",
 links: [
-{"link_name", power: ["create","view","edit","delete"]}
+{name:"link_name", power: ["create","view","edit","delete"]},
+{name:"link_name", power: ["create","view","edit","delete"]},
+............
 ]
 }
 1.b Login Failed
