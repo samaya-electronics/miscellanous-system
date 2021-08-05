@@ -14,7 +14,7 @@ router.get('/:id',(req,res)=>{
     if(found){
     res.json(catagories.filter(catagories=> catagories.id === req.params.id))
     } else{
-        res.statusCode(400).json({msg:'catagorie not found'})
+        res.statusCode(400).json({msg:'catagorie not found d id ${req.params.id}'})
     }
 })
 
