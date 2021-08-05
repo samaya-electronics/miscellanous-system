@@ -10,11 +10,12 @@ router.get('/',(req,res)=>{
 
 
 router.get('/:id',(req,res)=>{
-    const found = catagories.some(catagories=>catagories.id===parseInt(req.params.id))
+    const found = catagories.find(cat=> cat.id === parseInt(req.params.id))
     if(found){
-    res.json(catagories.filter(catagories=> catagories.id === req.params.id))
+        res.json(found)
     } else{
-        res.statusCode(400).json({msg:'catagorie not found d id ${req.params.id}'})
+        console.log(found)
+        res.json({msg:'catagorie not found d id ${req.body.id}'})
     }
 })
 

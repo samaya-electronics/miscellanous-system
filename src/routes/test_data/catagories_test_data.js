@@ -1,4 +1,4 @@
-const catagories=[
+const catagories= [
     {
         id:1,
         name:'pens',
