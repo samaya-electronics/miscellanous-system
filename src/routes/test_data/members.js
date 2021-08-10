@@ -2,22 +2,21 @@ const members= [
     {
         id:1,
         name:'osama',
-        status:'pending',
-        email:'osama@gmail.com'
+        email:'osama@gmail.com',
+        status:'pending'
     },
     {
         id:2,
         name:'kariem',
-        status:'pending',
-        email:'karim@gmail.com'
+        email:'karim@gmail.com',
+        status:'pending'
     },
     {
         id:3,
         name:'hazem',
-        status:'active',
-        email:'hazem@gmail.com'
+        email:'hazem@gmail.com',
+        status:'active'
     }
-
 ]
 
 
