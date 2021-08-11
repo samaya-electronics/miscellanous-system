@@ -3,6 +3,7 @@ const auth = require('./routes/auth');
 const members= require('./routes/manage_members');
 const catagories = require('./routes/catagories');
 const cors = require('cors')
+const {sequelize} = require('./models')
 //init
 const app = express()
 
@@ -21,4 +22,8 @@ app.get('/', (req, res)=>{
     res.json({homepage:true})
 })
 
-app.listen(PORT, console.log(`Server started on port ${PORT}`))
+app.listen(PORT,()=>{
+    console.log(`Server started on port ${PORT}`)
+    sequelize.sync()
+    console.log("Database synced")
+})
