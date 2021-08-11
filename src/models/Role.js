@@ -40,11 +40,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Role.associate = models=>{
-    Role.belongsTo(models.user)
-    Role.belongsTo(models.role_permission)
+    Role.belongsTo(models.User)
+    Role.belongsTo(models.Role_permission)
   }
-
-
-
   return Role;
 };

@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     await queryInterface.createTable('permission', {
-      permission_id: {
+      role_permission_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -75,10 +75,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Role_permission.associate = models=>{
-      Role_permission.hasMany(models.role,{
-          onDelete: "cascade"
-      })
-      Role_permission.hasMany(models.permission)
+      Role_permission.hasMany(models.Role)
+      Role_permission.hasMany(models.Permission)
     }
-  return Role_pemission;
+  return Role_permission;
 };

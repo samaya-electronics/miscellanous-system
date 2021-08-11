@@ -29,15 +29,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull:false,
         unique: true,
       },
-      role_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        reference_id: {
-          model:'role',
-          key: 'role_id'
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -54,15 +45,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   user.associate = models=>{
-      user.hasMany(models.request,{
-          onDelete: "cascade"
-      })
-      
-      user.hasOne(models.role,{
-          onDelete:"cascade"
-      })
-
+      user.hasMany(models.Request)
+      user.hasOne(models.Role)
   }
   return User;
-
 };

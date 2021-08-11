@@ -25,53 +25,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       request_date:{
-        type: Sequelize.DATE(6),
+        type: Sequelize.DATE,
         allowNull:false,
       },
       approval_date:{
-        type: Sequelize.DATE(6),
+        type: Sequelize.DATE,
         allowNull:false,
       },
       aproved:{
         type: Sequelize.BOOLEAN,
         allowNull:false
       },
-      item_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        reference_id: {
-          model:'item',
-          key:'item_id'
-        }
-      },
-      user_requisting_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        reference_id: {
-          model:'user',
-          key: 'user_id'
-        }
-      },
-      user_approving_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        reference_id: {
-          model:'user',
-          key: 'user_id'
-        }
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    
     }
     ,{
     sequelize,
@@ -80,11 +44,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Request.associate = models=>{
-      Request.hasMany(models.Item,{
-          onDelete: "cascade"
-      })
-
-      Request.belongsTo(models.user)
+      Request.hasOne(models.Item)
+      Request.belongsTo(models.User)
+      Request.belongsTo(models.User)
   }
   return Request;
 };

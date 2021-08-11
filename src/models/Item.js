@@ -32,15 +32,6 @@ module.exports = (sequelize, DataTypes) => {
         type: Sequelize.STRING(500),
         allowNull: false,
       },
-      category_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        reference_id: {
-          model:'category',
-          key: 'category_id'
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -57,13 +48,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Item.associate= models =>{
-      Item.belongsTo(models.category)
+      Item.belongsTo(models.Category)
+      Item.belongsTo(models.Request)
   }
-
-  Item.associate= models =>{
-    Item.belongsTo(models.request)
-}
-
-
   return Item;
 };
