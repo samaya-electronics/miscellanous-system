@@ -18,22 +18,22 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       },
       quantity: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       request_date:{
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         allowNull:false,
       },
       approval_date:{
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         allowNull:false,
       },
       aproved:{
-        type: Sequelize.BOOLEAN,
+        type: DataTypes.BOOLEAN,
         allowNull:false
       },
     }

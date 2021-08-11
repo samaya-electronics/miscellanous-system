@@ -18,24 +18,24 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       },
       name: {
-        type: Sequelize.STRING(150),
+        type: DataTypes.STRING(150),
         allowNull: false,
       },
       userName: {
-        type: Sequelize.STRING(100),
+        type: DataTypes.STRING(100),
         allowNull:false,
         unique: true,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       }
     }
     ,{

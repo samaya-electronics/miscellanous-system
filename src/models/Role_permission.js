@@ -18,57 +18,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      role_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        reference_id: {
-          model:'role',
-          key: 'role_id'
-        }
-      },
-      permission_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true,
-        reference_id: {
-          model:'permission',
-          key:'permission_id'
-        }
+        type: DataTypes.INTEGER
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       }
-    });
-
-    await queryInterface.createTable('permission', {
-      role_permission_id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      name: {
-        type: Sequelize.STRING(150),
-        allowNull: false,
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    }
-    ,{
+  },
+  {
     sequelize,
     modelName: 'Role_permission',
     tableName: 'role_permission'
