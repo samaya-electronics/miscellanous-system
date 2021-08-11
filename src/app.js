@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('./routes/auth');
+const members= require('./routes/manage_members');
 const catagories = require('./routes/catagories');
 const cors = require('cors')
 //init
@@ -14,6 +15,7 @@ app.use(cors())
 // router
 app.use('/auth', auth)
 app.use('/catagories', catagories)
+app.use('/members', members)
 
 app.get('/', (req, res)=>{
     res.json({homepage:true})
