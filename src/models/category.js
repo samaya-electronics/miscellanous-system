@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class category extends Model {
+  class Category extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  category.init({
+  Category.init({
     category_id: {
       allowNull: false,
       autoIncrement: true,
@@ -39,14 +39,14 @@ module.exports = (sequelize, DataTypes) => {
   }
     ,{
     sequelize,
-    modelName: 'category',
+    modelName: 'Category',
   });
 
-  category.associate = models=>{
-    category.hasMany(models.item,{
+  Category.associate = models=>{
+    Category.hasMany(models.item,{
         onDelete: "cascade"
     })
 }
-  return category;
+  return Category;
 };
 

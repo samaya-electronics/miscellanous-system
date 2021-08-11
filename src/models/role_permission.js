@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class role_permission extends Model {
+  class Role_permission extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  role_permission.init({
+  Role_permission.init({
     role_permission_id: {
         allowNull: false,
         autoIncrement: true,
@@ -70,14 +70,15 @@ module.exports = (sequelize, DataTypes) => {
     }
     ,{
     sequelize,
-    modelName: 'role_permission',
+    modelName: 'Role_permission',
+    tableName: 'role_permission'
   });
 
-  role_permission.associate = models=>{
-      role_permission.hasMany(models.role,{
+  Role_permission.associate = models=>{
+      Role_permission.hasMany(models.role,{
           onDelete: "cascade"
       })
-      role_pemission.hasMany(models.permission)
+      Role_permission.hasMany(models.permission)
     }
-  return role_pemission;
+  return Role_pemission;
 };

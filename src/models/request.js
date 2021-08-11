@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class request extends Model {
+  class Request extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  request.init({
+  Request.init({
     request_id: {
         allowNull: false,
         autoIncrement: true,
@@ -75,15 +75,16 @@ module.exports = (sequelize, DataTypes) => {
     }
     ,{
     sequelize,
-    modelName: 'request',
+    modelName: 'Request',
+    tableName: 'request'
   });
 
-  request.associate = models=>{
-      request.hasMany(models.Item,{
+  Request.associate = models=>{
+      Request.hasMany(models.Item,{
           onDelete: "cascade"
       })
 
-      request.belongsTo(models.user)
+      Request.belongsTo(models.user)
   }
-  return request;
+  return Request;
 };
