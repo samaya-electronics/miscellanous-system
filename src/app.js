@@ -24,6 +24,6 @@ app.get('/', (req, res)=>{
 
 app.listen(PORT,()=>{
     console.log(`Server started on port ${PORT}`)
-    await sequelize.sync()
+    await sequelize.sync({force: true})
     console.log("Database synced")
 })
