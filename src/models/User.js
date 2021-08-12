@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName:' user'
   });
 
-  User.associate = models=>{
+  User.associate = models => {
       User.hasMany(models.Request)
       User.hasOne(models.Role)
   }

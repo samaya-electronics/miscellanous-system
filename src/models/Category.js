@@ -43,8 +43,8 @@ module.exports = (sequelize, DataTypes) => {
     tableName: "category"
   });
 
-  Category.associate = models=>{
-    Category.hasMany(models.Item,{
+  Category.associate = models => {
+    Category.hasMany(models.Item, {
         onDelete: "cascade"
     })
 }

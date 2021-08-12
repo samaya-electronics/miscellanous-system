@@ -43,14 +43,14 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'request'
   });
 
-  Request.associate = models=>{
+  Request.associate = models => {
       Request.hasOne(models.Item)
-      Request.belongsTo(models.User,{
+      Request.belongsTo(models.User, {
         foreignKey:{
           allowNull:false
         }
       })
-      Request.belongsTo(models.User,{
+      Request.belongsTo(models.User, {
         foreignKey:{
           allowNull:false
         }

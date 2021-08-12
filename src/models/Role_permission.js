@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'role_permission'
   });
 
-  Role_permission.associate = models=>{
+  Role_permission.associate = models => {
       Role_permission.hasMany(models.Role)
       Role_permission.hasMany(models.Permission)
     }

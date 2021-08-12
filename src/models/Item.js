@@ -47,13 +47,13 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'item'
   });
 
-  Item.associate= models =>{
-      Item.belongsTo(models.Category,{
+  Item.associate = models => {
+      Item.belongsTo(models.Category, {
         foreignKey:{
           allowNull:false
         }
       })
-      Item.belongsTo(models.Request,{
+      Item.belongsTo(models.Request, {
         foreignKey:{
           allowNull:false
         }
