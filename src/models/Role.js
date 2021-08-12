@@ -40,8 +40,16 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Role.associate = models=>{
-    Role.belongsTo(models.User)
-    Role.belongsTo(models.Role_permission)
+    Role.belongsTo(models.User,{
+      foreignKey:{
+        allowNull:false
+      }
+    })
+    Role.belongsTo(models.Role_permission,{
+      foreignKey:{
+        allowNull:false
+      }
+    })
   }
   return Role;
 };

@@ -40,7 +40,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Permission.associate = models =>{
-      Permission.belongsTo(models.Role_permission)
+      Permission.belongsTo(models.Role_permission,{
+        foreignKey:{
+          allowNull:false
+        }
+      })
   }
   return Permission;
 };
