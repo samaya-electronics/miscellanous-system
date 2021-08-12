@@ -6,6 +6,9 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
 
 
 ## TODO
- - look into mvc structure
- - finish DB EER
- - maybe use .env in work env
+ - [X] finish DB EER
+ - [X] use .env in work env
+ - [ ] use sequelize in api enpoints
+ - [ ] add security
+ - [ ] add authentication
+ - [ ] design a better mvc structure
