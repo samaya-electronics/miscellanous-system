@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     ,{
     sequelize,
     modelName: 'Permission',
-    tableName: 'permission'
+    tableName: 'permissions'
   });
 
   Permission.associate = models => {

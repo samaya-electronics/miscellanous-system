@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     ,{
     sequelize,
     modelName: 'Item',
-    tableName: 'item'
+    tableName: 'items'
   });
 
   Item.associate = models => {

@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     ,{
     sequelize,
     modelName: 'Request',
-    tableName: 'request'
+    tableName: 'requests'
   });
 
   Request.associate = models => {

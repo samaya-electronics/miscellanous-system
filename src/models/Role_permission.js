@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   {
     sequelize,
     modelName: 'Role_permission',
-    tableName: 'role_permission'
+    tableName: 'role_permissions'
   });
 
   Role_permission.associate = models => {
