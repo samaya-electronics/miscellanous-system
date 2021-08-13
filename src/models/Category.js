@@ -7,7 +7,10 @@ module.exports = (sequelize, DataTypes) => {
   class Category extends Model {
     static associate(models) {
       Category.hasMany(models.Item, {
-        onDelete: "cascade",
+        foreignKey: {
+          allowNull: false,
+          name: "category_id"
+        }
       })
     }
   };
@@ -22,22 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(300),
       allowNull: false,
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }
-    ,{
+  ,{
     sequelize,
+    underscored: true,
     modelName: 'Category',
     tableName: "categories"
   });
