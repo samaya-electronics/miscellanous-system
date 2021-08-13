@@ -4,15 +4,22 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Request extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
-      // define association here
+      Request.hasOne(models.Item)
+      Request.belongsTo(models.User, {
+        foreignKey:{
+          allowNull:false
+        }
+      })
+      Request.belongsTo(models.User, {
+        foreignKey:{
+          allowNull:false
+        }
+      })
     }
   };
+
   Request.init({
     request_id: {
         allowNull: false,
@@ -43,18 +50,5 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'requests'
   });
 
-  Request.associate = models => {
-      Request.hasOne(models.Item)
-      Request.belongsTo(models.User, {
-        foreignKey:{
-          allowNull:false
-        }
-      })
-      Request.belongsTo(models.User, {
-        foreignKey:{
-          allowNull:false
-        }
-      })
-  }
   return Request;
 };

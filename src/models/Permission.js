@@ -3,16 +3,17 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
+
   class Permission extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Permission.belongsTo(models.Role_permission, {
+        foreignKey:{
+          allowNull:false
+        }
+      })
     }
   };
+
   Permission.init({
     permission_id: {
         allowNull: false,
@@ -38,13 +39,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Permission',
     tableName: 'permissions'
   });
-
-  Permission.associate = models => {
-      Permission.belongsTo(models.Role_permission, {
-        foreignKey:{
-          allowNull:false
-        }
-      })
-  }
+  
   return Permission;
 };
