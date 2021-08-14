@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         through: "role_permission"
       })
+      Role.hasMany(models.User, {
+        foreignKey: {
+          allowNull: false,
+          name: "role_id"
+        },
+      })
     }
   };
 

@@ -18,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         },
       })
+      User.belongsTo(models.Role, {
+        foreignKey: {
+          allowNull: false,
+          name: "role_id"
+        },
+      })
     }
   };
 
