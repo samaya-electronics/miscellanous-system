@@ -38,14 +38,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    request_date:{
-      type: DataTypes.DATE,
-      allowNull:false,
-    },
-    approval_date:{
-      type: DataTypes.DATE,
-      allowNull:false,
-    },
     approved:{
       type: DataTypes.BOOLEAN,
       allowNull:false,
