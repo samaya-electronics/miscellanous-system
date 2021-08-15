@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 router.use(express.json())
-const members = require('./test_data/members')
+
 
 
 router.get('/',(req,res)=>{

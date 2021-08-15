@@ -4,6 +4,7 @@ const cors = require('cors')
 const authRouter = require('./routes/authRouter');
 const categoriesRouter = require('./routes/categoriesRouter');
 const itemsRouter = require('./routes/itemsRouter')
+const usersRouter = require('./routes/users')
 
 const { sequelize } = require('./models');
 
@@ -19,6 +20,7 @@ app.use(cors())
 app.use('/auth', authRouter)
 app.use('/categories', categoriesRouter)
 app.use('/items', itemsRouter)
+app.use('/users',usersRouter)
 
 app.get('/', async (req, res)=>{
     res.json({

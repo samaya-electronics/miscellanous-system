@@ -3,7 +3,7 @@ const { Category } = require('../models')
 // get categories // get
 const getCategories = async(req,res)=>{
    try{ const category = await Category.findAll()
-    res.json(category)
+    res.json(category).end()
    }
    catch (err){
        console.log(err)
@@ -14,12 +14,12 @@ const getCategories = async(req,res)=>{
 const getCategoryById = async (req,res)=>{
     try{
     const category = await Category.findByPk(parseInt(req.params.id))
+    res.json(category).end()
     }
     catch (err){
-   res.json(category)
+        console.log(err)
     }
 }
-
 
 //create category // post
 const createCategory = async (req,res)=>{
@@ -27,7 +27,7 @@ const createCategory = async (req,res)=>{
         const category = await Category.create({
             name: req.body.name
         })
-        res.json(category)
+        res.json(category).end()
     } 
     catch(err){
         console.log(err)
@@ -39,9 +39,9 @@ const updateCategory = async (req,res)=>{
     try{await Category.update({
         name: req.body.name
     },{
-        where: { category_id: req.params.id }
+        where: { category_id: req.params.PK }
     })
-    res.status(200).end()
+    res.end()
     }
     catch(err){
         console.log(err)
@@ -52,11 +52,10 @@ const updateCategory = async (req,res)=>{
 const deleteCategory = async (req,res)=>{
     try{await Category.destroy({
         where: {
-            category_id: req.params.id 
+            category_id: req.params.PK
         }
     })
-
-    res.status(200).end()
+    res.end()
 }
     catch(err){
         console.log(err)
