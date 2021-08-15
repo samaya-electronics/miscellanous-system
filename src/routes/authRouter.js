@@ -1,8 +1,5 @@
 const express = require('express')
-
 const router = express.Router()
-router.use(express.json())
-
 
 router.get('/login',(req,res)=>{
     const authentication = {
@@ -11,7 +8,6 @@ router.get('/login',(req,res)=>{
     }
     res.json(authentication)
 })
-
 
 router.post('/login',(req,res)=>{
     const username = req.body.username
@@ -37,9 +33,6 @@ router.post('/login',(req,res)=>{
             links: []
         })
     }
-
-        
 })
-
 
 module.exports = router

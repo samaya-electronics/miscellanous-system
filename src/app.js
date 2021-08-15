@@ -1,12 +1,13 @@
-const express = require('express');
+const express = require('express')
 const cors = require('cors')
 
-const authRouter = require('./routes/authRouter');
-const categoriesRouter = require('./routes/categoriesRouter');
+const homeRouter = require('./routes/homeRouter')
+const authRouter = require('./routes/authRouter')
+const categoriesRouter = require('./routes/categoriesRouter')
 const itemsRouter = require('./routes/itemsRouter')
 const usersRouter = require('./routes/usersRouter')
 
-const { sequelize } = require('./models');
+const { sequelize } = require('./models')
 
 // config
 const app = express()
@@ -17,14 +18,12 @@ app.use(cors())
 
 
 // router
+app.use('/', homeRouter)
 app.use('/auth', authRouter)
 app.use('/categories', categoriesRouter)
 app.use('/items', itemsRouter)
 app.use('/users',usersRouter)
 
-app.get('/', async (req, res)=>{
-    res.json({ homepage:true })
-})
 
 app.listen(PORT, async () => {
     console.log(`Server started on port ${PORT}`)
