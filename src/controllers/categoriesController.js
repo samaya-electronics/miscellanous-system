@@ -8,7 +8,7 @@ const getCategories = async(req,res)=>{
 
 //get category by PK // get
 const getCategoryById = async (req,res)=>{
-   const category= await Category.findByPk(parseInt(req.params.id))
+   const category = await Category.findByPk(parseInt(req.params.id))
    res.json(category)
 }
 
@@ -20,7 +20,7 @@ const createCategory = async (req,res)=>{
             name: req.body.name
         })
         console.log(category)
-        res.status(200).json(category)
+        res.json(category)
     } 
     catch(err){
         console.log(err)
@@ -29,23 +29,23 @@ const createCategory = async (req,res)=>{
 
 // update // post
 const updateCategory = async (req,res)=>{
-    await category.update({
+    await Category.update({
         name: req.body.name
     },{
-        where: { id: req.params.id }
+        where: { category_id: req.params.id }
     })
-        res.status(200).json(result)
+    res.status(200)
 }
 
 // delete BY PK
 const deleteCategory = async (req,res)=>{
-    const category = await Category.destroy({
+    await Category.destroy({
         where: {
-            id: req.params.id 
+            category_id: req.params.id 
         }
     })
 
-    res.json(category)
+    res.status(200)
 }
    
 
