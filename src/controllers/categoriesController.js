@@ -29,18 +29,13 @@ const createCategory = async (req,res)=>{
 
 // update // post
 const updateCategory = async (req,res)=>{
-    try {
-        const category = await Category.update({
-            name: req.body.name
-        })
-        res.status(200).json(category)
-    } 
-    catch(err){
-        console.log(err)
-    }
-    
+    await category.update({
+        name: req.body.name
+    },{
+        where: { id: req.params.id }
+    })
+        res.status(200).json(result)
 }
-
 
 // delete BY PK
 const deleteCategory = async (req,res)=>{
