@@ -3,16 +3,18 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
+
   class Category extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Category.hasMany(models.Item, {
+        foreignKey: {
+          allowNull: false,
+          name: "category_id"
+        }
+      })
     }
   };
+
   Category.init({
     category_id: {
       allowNull: false,
@@ -23,31 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(300),
       allowNull: false,
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }
-    ,{
+  ,{
     sequelize,
+    underscored: true,
     modelName: 'Category',
-    tableName: "category"
+    tableName: "categories"
   });
 
-  Category.associate = models=>{
-    Category.hasMany(models.Item,{
-        onDelete: "cascade"
-    })
-}
   return Category;
 };
-
