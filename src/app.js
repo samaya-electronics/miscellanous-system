@@ -5,6 +5,7 @@ const authRouter = require('./routes/authRouter');
 const categoriesRouter = require('./routes/categoriesRouter');
 const itemsRouter = require('./routes/itemsRouter')
 const usersRouter = require('./routes/usersRouter')
+const requestRouter = require('./routes/requestsRouter')
 
 const { sequelize } = require('./models');
 
@@ -21,6 +22,7 @@ app.use('/auth', authRouter)
 app.use('/categories', categoriesRouter)
 app.use('/items', itemsRouter)
 app.use('/users',usersRouter)
+app.use('./routers',requestRouter)
 
 app.get('/', async (req, res)=>{
     res.json({ homepage:true })
