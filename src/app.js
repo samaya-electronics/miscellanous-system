@@ -4,7 +4,7 @@ const cors = require('cors')
 const authRouter = require('./routes/authRouter');
 const categoriesRouter = require('./routes/categoriesRouter');
 const itemsRouter = require('./routes/itemsRouter')
-const usersRouter = require('./routes/users')
+const usersRouter = require('./routes/usersRouter')
 
 const { sequelize } = require('./models');
 
@@ -23,11 +23,8 @@ app.use('/items', itemsRouter)
 app.use('/users',usersRouter)
 
 app.get('/', async (req, res)=>{
-    res.json({
-        homepage:true
-    })
+    res.json({ homepage:true })
 })
-
 
 app.listen(PORT, async () => {
     console.log(`Server started on port ${PORT}`)
