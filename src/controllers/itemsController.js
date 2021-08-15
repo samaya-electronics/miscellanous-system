@@ -5,20 +5,51 @@ const getItems = async (req, res) => {
     res.json(items)
 }
 
-const createItem = async (req, res) => {
+const getItemByPK = async (req, res) => {
+    const item = await Item.findByPK(req.body.pk)
+    res.json(item)
+}
 
-    const cat = await Category.create({name: "cat one"})
-    const item = await Item.create({
+const createItem = async (req, res) => {
+    await Item.create({
         name: req.body.name,
         quantity: req.body.quantity,
         location: req.body.location,
         threshold: req.body.threshold,
         category_id: req.body.category_id
     })
-    res.status(200).j
+    res.end()
 }
+
+const updateItem = async (req, res) => {
+    await Item.update({
+        name: req.body.name,
+        quantity: req.body.quantity,
+        location: req.body.location,
+        threshold: req.body.threshold,
+        category_id: req.body.category_id
+    },{
+        where: {
+            item_id: req.params.pk
+        }
+    })
+    res.end()
+}
+
+const deleteItem = async (req, res) => {
+    await Item.destroy({
+        where: {
+            item_id: req.params.pk
+        }
+    })
+    res.end()
+}
+
 
 module.exports = {
     getItems,
-    createItem
+    createItem,
+    deleteItem,
+    updateItem,
+    getItemByPK
 }
