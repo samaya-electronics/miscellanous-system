@@ -2,11 +2,11 @@
   "name": "firstwebsite",
   "version": "1.0.0",
   "description": "f\"my first trial for an express backend \u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[ express\"",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "test": "jest --watchAll",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/server.js"
   },
   "author": "Karim Kohel, Mohamed Osama, Hazem Youssif",
   "license": "ISC",
