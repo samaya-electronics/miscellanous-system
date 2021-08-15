@@ -5,11 +5,17 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "jest --watchAll",
+    "test": "jest",
     "dev": "nodemon src/app.js"
   },
   "author": "Karim Kohel, Mohamed Osama, Hazem Youssif",
   "license": "ISC",
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

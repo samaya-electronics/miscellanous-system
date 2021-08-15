@@ -25,13 +25,15 @@ app.use('/items', itemsRouter)
 app.use('/users',usersRouter)
 
 
-app.listen(PORT, async () => {
-    console.log(`Server started on port ${PORT}`)
-    try{
-        await sequelize.sync({force: true})
-        console.log("Database synced")
-    }
-    catch(err){
-        console.log(err)
-    }
-})
+// app.listen(PORT, async () => {
+//     console.log(`Server started on port ${PORT}`)
+//     try{
+//         await sequelize.sync({force: true})
+//         console.log("Database synced")
+//     }
+//     catch(err){
+//         console.log(err)
+//     }
+// })
+
+module.exports = app
