@@ -5,6 +5,7 @@ const auth = require('./routes/auth');
 const members = require('./routes/manage_members');
 const catagories = require('./routes/catagories');
 const items = require('./routes/items')
+
 const { sequelize } = require('./models');
 
 // config

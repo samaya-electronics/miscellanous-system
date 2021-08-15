@@ -1,22 +1,16 @@
 const express = require('express')
 const router = express.Router()
-router.use(express.json())
-const catagories = require('./test_data/catagories_test_data')
+const category = require('../controllers/categoriesController').
 
+router.get('/',category.getCategories)
 
-router.get('/',(req,res)=>{
-    res.json(catagories)
-})
+router.get('/:id',category.getCategoryById)
 
+router.post('/',category.createCategory)
 
-router.get('/:id',(req,res)=>{
-    const found = catagories.find(cat=> cat.id === parseInt(req.params.id))
-    if(found){
-        res.json(found)
-    } else{
-        res.json({msg:'catagorie not found d id ${req.body.id}'})
-    }
-})
+router.post('/:id',category.updateCategory)
+
+router.delete('/:id',category.deleteCategory)
 
 
 module.exports = router
