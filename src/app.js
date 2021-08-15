@@ -6,6 +6,9 @@ const authRouter = require('./routes/authRouter')
 const categoriesRouter = require('./routes/categoriesRouter')
 const itemsRouter = require('./routes/itemsRouter')
 const usersRouter = require('./routes/usersRouter')
+const requestRouter = require('./routes/requestsRouter')
+const permissionRouter = require('./routes/permissionRouter')
+const rolesRouter = require('./routes/rolesRouter')
 
 const { sequelize } = require('./models')
 
@@ -23,6 +26,9 @@ app.use('/auth', authRouter)
 app.use('/categories', categoriesRouter)
 app.use('/items', itemsRouter)
 app.use('/users',usersRouter)
+app.use('./routers',requestRouter)
+app.use('./permissions',permissionRouter)
+app.use('/roles',rolesRouter)
 
 
 // app.listen(PORT, async () => {
