@@ -22,7 +22,6 @@ app.use('/members', members)
 app.use('/items', items)
 
 app.get('/', async (req, res)=>{
-
     res.json({
         homepage:true
     })

@@ -1,4 +1,4 @@
-const { Item } = require('../models')
+const { Item, Category } = require('../models')
 
 const getItems = async (req, res) => {
     const items = await Item.findAll()
@@ -6,14 +6,16 @@ const getItems = async (req, res) => {
 }
 
 const createItem = async (req, res) => {
+
+    const cat = await Category.create({name: "cat one"})
     const item = await Item.create({
-        name: "item1",
-        quantity: 100,
-        location: "akher el denya shemal",
-        threshold: 50,
-        category_id: 1
+        name: req.body.name,
+        quantity: req.body.quantity,
+        location: req.body.location,
+        threshold: req.body.threshold,
+        category_id: req.body.category_id
     })
-    res.json(item)
+    res.status(200).j
 }
 
 module.exports = {
