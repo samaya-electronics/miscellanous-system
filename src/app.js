@@ -5,6 +5,7 @@ const auth = require('./routes/auth');
 const members = require('./routes/manage_members');
 const categories = require('./routes/categories');
 const items = require('./routes/items')
+const users = require('./routes/users')
 
 const { sequelize } = require('./models');
 
@@ -21,6 +22,7 @@ app.use('/auth', auth)
 app.use('/categories', categories)
 app.use('/members', members)
 app.use('/items', items)
+app.use('/users',users)
 
 app.get('/', async (req, res)=>{
     res.json({
