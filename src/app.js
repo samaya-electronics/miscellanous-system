@@ -3,7 +3,7 @@ const cors = require('cors')
 
 const auth = require('./routes/auth');
 const members = require('./routes/manage_members');
-const catagories = require('./routes/catagories');
+const categories = require('./routes/categories');
 const items = require('./routes/items')
 
 const { sequelize } = require('./models');
@@ -18,7 +18,7 @@ app.use(cors())
 
 // router
 app.use('/auth', auth)
-app.use('/catagories', catagories)
+app.use('/categories', categories)
 app.use('/members', members)
 app.use('/items', items)
 

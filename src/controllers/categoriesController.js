@@ -1,27 +1,25 @@
-const {categories} = require('../models')
+const { Category } = require('../models')
 
 // get categories // get
-
 const getCategories = async(req,res)=>{
-    const category = await categories.findAll()
+    const category = await Category.findAll()
     res.json(category)
 }
 
-//get category byid // get
-
+//get category by PK // get
 const getCategoryById = async (req,res)=>{
-   const category= await categories.findById(req.params.id)
+   const category= await Category.findByPk(parseInt(req.params.id))
    res.json(category)
 }
 
 
 //create category // post
-
 const createCategory = async (req,res)=>{
     try {
-        const category = categories.create({
+        const category = await Category.create({
             name: req.body.name
         })
+        console.log(category)
         res.status(200).json(category)
     } 
     catch(err){
@@ -30,10 +28,9 @@ const createCategory = async (req,res)=>{
 }
 
 // update // post
-
-const updateCategory= async (req,res)=>{
+const updateCategory = async (req,res)=>{
     try {
-        const category = categories.update({
+        const category = await Category.update({
             name: req.body.name
         })
         res.status(200).json(category)
@@ -45,11 +42,12 @@ const updateCategory= async (req,res)=>{
 }
 
 
-// delete BY ID
-
+// delete BY PK
 const deleteCategory = async (req,res)=>{
-    const category= categories.destroy({
-        where: { id: req.params.id }
+    const category = await Category.destroy({
+        where: {
+            id: req.params.id 
+        }
     })
 
     res.json(category)
@@ -63,6 +61,4 @@ module.exports = {
      updateCategory,
      deleteCategory,
      getCategories
-
-
 }
