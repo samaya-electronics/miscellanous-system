@@ -1,0 +1,20 @@
+URL: POST(/auth/login)
+POSTED Data: {username:"UN" , password:"PW" }
+Returned Data:
+
+A- Login "Success"
+    {
+        status:true,
+        username:"userName",
+        links: [
+        {name:"link_name", power: ["create","view","edit","delete"]},
+        {name:"link_name", power: ["create","view","edit","delete"]},
+        ]
+    }
+
+B- Login "Failed"
+    {
+        status:false,
+        username:"",
+        links: []
+    }

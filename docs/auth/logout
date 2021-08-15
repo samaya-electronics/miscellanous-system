@@ -1,0 +1,3 @@
+URL: GET(/auth/logout)
+POSTED Data: {}
+Returned Data: {}
