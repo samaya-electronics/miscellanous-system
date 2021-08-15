@@ -19,7 +19,6 @@ const createCategory = async (req,res)=>{
         const category = await Category.create({
             name: req.body.name
         })
-        console.log(category)
         res.json(category)
     } 
     catch(err){
@@ -34,7 +33,7 @@ const updateCategory = async (req,res)=>{
     },{
         where: { category_id: req.params.id }
     })
-    res.status(200)
+    res.status(200).end()
 }
 
 // delete BY PK
@@ -45,7 +44,7 @@ const deleteCategory = async (req,res)=>{
         }
     })
 
-    res.status(200)
+    res.status(200).end()
 }
    
 
