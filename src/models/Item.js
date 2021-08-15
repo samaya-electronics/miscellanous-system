@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
     location: {
       type: DataTypes.STRING(500),
       allowNull: false,
+    },
+    threshold: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
     }
     ,{

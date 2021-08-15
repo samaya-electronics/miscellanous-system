@@ -1,0 +1,11 @@
+URL: GET(/items/)
+POSTED Data: {}
+Returned Data: 
+{
+    items: [
+        {
+            name: "item name",
+            quantity: 16
+        }
+    ]
+}
