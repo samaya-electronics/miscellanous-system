@@ -43,7 +43,6 @@ const updateCategory = async (req,res)=>{
         where: {category_id: req.params.pk }
     })
     res.json(result)
-    console.log(result)
     }
     catch(err){
         console.log(err)
@@ -54,7 +53,7 @@ const updateCategory = async (req,res)=>{
 const deleteCategory = async (req,res)=>{
     try{await Category.destroy({
         where: {
-            category_id: req.params.PK
+            category_id: req.params.pk
         }
     })
     res.end()
