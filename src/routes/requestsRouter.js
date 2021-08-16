@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const request = require('../controllers/requestController')
 
-
 router.get('/:id',request.getrequestById)
 
 router.get('/',request.getAllrequests)

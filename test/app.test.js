@@ -15,3 +15,20 @@ describe('APP test', () => {
       })
   })
 })
+
+
+describe('APP test', () => {
+  it('GET / --> App is working, returns true', () => {
+    return request(app).get('/auth/login')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toEqual(
+          expect.objectContaining({
+            status : true,
+            links: ['/home','/items', '/catagories']
+        })
+        )
+      })
+  })
+})
