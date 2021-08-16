@@ -11,15 +11,22 @@ afterAll(() => {
 })
 
 describe('Category I/O ', () => {
-    test('POST /categories --> Creates category', async () => {
+    test.each([
+      ['test-cat-1','test-cat-1'],
+      ['test-cat-2','test-cat-2'],
+      ['test-cat-3','test-cat-3'],
+      ['test-cat-4','test-cat-4'],
+      ['test-cat-5','test-cat-5'],
+    ])('POST /categories --> Creates 5 categories', async (test_name, expected_name) => {
         const res = await request(app)
         .post('/categories')
         .send({
-            name: "cat 1"
+            name: test_name
         })
 
         expect(res.statusCode).toEqual(200)
         expect(res.body.category_id).toEqual(expect.any(Number))
+        expect(res.body.name).toEqual(expected_name)
     })
 
     test('GET /categories --> get list of all categories', async () => {
@@ -27,6 +34,20 @@ describe('Category I/O ', () => {
         .get('/categories')
 
         expect(res.statusCode).toEqual(200)
-        expect(res.body).toEqual(expect.arrayContaining([]))
+        expect(res.body).toEqual(expect.arrayContaining([{
+          category_id: expect.any(Number),
+          name: expect.any(String),
+          createdAt: expect.anything(),
+          updatedAt: expect.anything()
+        }]))
+        expect(res.body.length).toBeGreaterThan(4)
     })
+
+    test('GET /categories --> get list of all categories', async () => {
+      const res = await request(app)
+      .get('/categories')
+
+      expect(res.statusCode).toEqual(200)
+      expect(res.body).toEqual(expect.arrayContaining([]))
+  })
 })
