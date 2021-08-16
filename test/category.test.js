@@ -71,7 +71,6 @@ describe('Category I/O ', () => {
       })
       expect(res.statusCode).toEqual(200)
       expect(res.body).toEqual(expect.arrayContaining([1]))
-      // expect(res.body.category_id).toEqual(expect.any(Number))
   })
 
   test.each([
@@ -85,7 +84,7 @@ describe('Category I/O ', () => {
     const read_res = await request(app)
     .get(`/categories`)
 
-    expect(res.statusCode).toEqual(200)
+    expect(delete_res.statusCode).toEqual(200)
 
     expect(read_res.statusCode).toEqual(200)
     expect(read_res.body.length).toEqual(remaining_objects_num)
