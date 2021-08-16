@@ -13,7 +13,7 @@ const getCategories = async(req,res)=>{
 //get category by PK // get
 const getCategoryById = async (req,res)=>{
     try{
-    const category = await Category.findByPk(parseInt(req.params.PK))
+    const category = await Category.findByPk(parseInt(req.params.pk))
     res.json(category)
     }
     catch (err){
@@ -40,7 +40,7 @@ const updateCategory = async (req,res)=>{
         const result = await Category.update({
         name: req.body.name
     },{
-        where: {category_id: req.params.PK }
+        where: {category_id: req.params.pk }
     })
     res.json(result)
     console.log(result)

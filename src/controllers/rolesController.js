@@ -13,7 +13,7 @@ const getAllRoles = async(req,res)=>{
 //get Role by PK // get
 const getRoleById = async (req,res)=>{
     try{
-    const role = await Role.findByPk(parseInt(req.params.id))
+    const role = await Role.findByPk(parseInt(req.params.pk))
     res.json(role)
     }
     catch (err){
@@ -39,7 +39,7 @@ const updateRole = async (req,res)=>{
     try{await Role.update({
         name: req.body.name
     },{
-        where: { Role_id: req.params.PK }
+        where: { Role_id: req.params.pk }
     })
     res.end()
     }
@@ -52,7 +52,7 @@ const updateRole = async (req,res)=>{
 const deleteRole = async (req,res)=>{
     try{await Role.destroy({
         where: {
-            Role_id: req.params.PK
+            Role_id: req.params.pk
         }
     })
     res.end()

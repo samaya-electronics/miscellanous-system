@@ -9,7 +9,7 @@ const getpermissions = async(req,res)=>{
 //get category by PK // get
 const getpermissionsById = async (req,res)=>{
     try{
-    const p = await Permission.findByPk(parseInt(req.params.PK))
+    const p = await Permission.findByPk(parseInt(req.params.pk))
     res.json(p)
     }
     catch (err){
@@ -36,7 +36,7 @@ const updatePermission = async (req,res)=>{
         const p = await Permission.update({
         name: req.body.name
     },{
-        where: {category_id: req.params.PK }
+        where: {category_id: req.params.pk }
     })
     res.json(p)
     console.log(p)
@@ -50,7 +50,7 @@ const updatePermission = async (req,res)=>{
 const deletePermission = async (req,res)=>{
     try{await Permission.destroy({
         where: {
-            category_id: req.params.PK
+            category_id: req.params.pk
         }
     })
     res.end()
