@@ -3,7 +3,7 @@ const { Permissions } = require('../models')
 // get categories // get
 const getpermissions = async(req,res)=>{
    try{ const permissions = await Permissions.findAll()
-    res.json(permissions).end()
+    res.json(permissions)
    }
    catch (err){
        console.log(err)
@@ -14,7 +14,7 @@ const getpermissions = async(req,res)=>{
 const getpermissionsById = async (req,res)=>{
     try{
     const permissions = await Permissions.findByPk(parseInt(req.params.id))
-    res.json(permissions).end()
+    res.json(permissions)
     }
     catch (err){
         console.log(err)
@@ -27,7 +27,7 @@ const createpermissions = async (req,res)=>{
         const permissions = await Permissions.create({
             name: req.body.name
         })
-        res.json(permissions).end()
+        res.json(permissions)
     } 
     catch(err){
         console.log(err)

@@ -3,7 +3,7 @@ const { Request, User,Item} = require('../models')
 
 const getAllrequests = async(req,res)=>{
     try{ const request = await Request.findAll()
-     res.json(request).end()
+     res.json(request)
     }
     catch (err){
         console.log(err)
@@ -14,7 +14,7 @@ const getAllrequests = async(req,res)=>{
  const getrequestById = async (req,res)=>{
     try{
     const request = await Request.findByPk(parseInt(req.params.PK))
-    res.json(request).end()
+    res.json(request)
     }
     catch (err){
         console.log(err)
@@ -30,7 +30,7 @@ const createrequest = async (req,res)=>{
             user_approving_id:req.body.user_approving_PK,
             role_id:req.body.role_PK
         })
-        res.json(request).end()
+        res.json(request)
     } 
     catch(err){
         console.log(err)
