@@ -22,7 +22,7 @@ app.use('/categories', categoriesRouter)
 app.use('/items', itemsRouter)
 app.use('/users',usersRouter)
 app.use('./routers',requestRouter)
-app.use('./permissions',permissionRouter)
+app.use('/permissions',permissionRouter)
 app.use('/roles',rolesRouter)
 
 module.exports = app
