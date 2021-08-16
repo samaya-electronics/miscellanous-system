@@ -1,4 +1,4 @@
-const { Item, Category } = require('../models')
+const { Item } = require('../models')
 
 const getItems = async (req, res) => {
     const items = await Item.findAll()
@@ -6,7 +6,7 @@ const getItems = async (req, res) => {
 }
 
 const getItemByPK = async (req, res) => {
-    const item = await Item.findByPK(req.body.pk)
+    const item = await Item.findByPk(req.params.pk)
     res.json(item)
 }
 
@@ -30,7 +30,7 @@ const updateItem = async (req, res) => {
         category_id: req.body.category_id
     },{
         where: {
-            item_id: req.params.pk
+            item_id: req.params.PK
         }
     })
     res.end()
@@ -39,7 +39,7 @@ const updateItem = async (req, res) => {
 const deleteItem = async (req, res) => {
     await Item.destroy({
         where: {
-            item_id: req.params.pk
+            item_id: req.params.PK
         }
     })
     res.end()
