@@ -10,28 +10,14 @@ afterAll(() => {
   return sequelize.close()
 })
 
-describe('ROLE I/O ', () => {
-    test('POST /roles --> roleo of user', async () => {
+describe('Role I/O', () => {
+    test('POST /roles --> create a role', async () => {
         const res = await request(app)
         .post('/roles')
         .send({
             name: "role no 1"
         })
         expect(res.statusCode).toEqual(200)
-        expect(res.body.category_id).toEqual(expect.any(Number))
-    })
-
-    test('GET /roles --> get list of all categories', async () => {
-        const res = await request(app)
-        .get('/roles')
-
-        expect(res.statusCode).toEqual(200)
-        expect(res.body).toEqual(expect.arrayContaining([]))
-    })
-
-    test('delete /roles --> delete role by id', async () =>{
-      const res = await request(app)
-      .delete('/roles:pk')
-       expect(res.statusCode).toEqual(200)
+        expect(res.body.role_id).toEqual(expect.any(Number))
     })
 })
