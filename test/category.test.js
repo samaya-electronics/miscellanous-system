@@ -71,8 +71,22 @@ describe('Category I/O ', () => {
       })
       expect(res.statusCode).toEqual(200)
       expect(res.body).toEqual(expect.arrayContaining([1]))
-      // expect(res.body.category_id).toEqual(expect.any(Number))
   })
 
-  // test("DELETE")
+  test.each([
+    [2, 4],
+    [3, 3],
+    [4, 2]
+  ])('DELETE /catagories/:pk --> delete 3 categories', async (test_pk, remaining_objects_num) => {
+    const delete_res = await request(app)
+    .delete(`/categories/${test_pk}`)
+
+    const read_res = await request(app)
+    .get(`/categories`)
+
+    expect(delete_res.statusCode).toEqual(200)
+
+    expect(read_res.statusCode).toEqual(200)
+    expect(read_res.body.length).toEqual(remaining_objects_num)
+  })
 })
