@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const permissionController = require('../controllers/permissionController')
+const permissionController = require('../controllers/permissionsController')
 
 router.get('/',permissionController.getpermissions)
 router.get('/:pk', permissionController.getpermissionsById)
-router.post('/', permissionController.createpermissions)
-router.delete('/:pk', permissionController.deletepermissions)
-router.put('/:pk', permissionController.updatepermissions)
+router.post('/', permissionController.createPermission)
+router.delete('/:pk', permissionController.deletePermission)
+router.put('/:pk', permissionController.updatePermission)
 
 module.exports = router
