@@ -63,20 +63,15 @@ describe('Category I/O ', () => {
       }))
   })
 
-  test.each([
-    [3, 'test-cat-edited-3','test-cat-edited-3'],
-    [4, 'test-cat-edited-4','test-cat-edited-4'],
-    [5, 'test-cat-edited-5','test-cat-edited-5'],
-  ])('PUT /categories --> updates 3 categories by primary key', async (test_pk, test_name, expected_name) => {
+  test('PUT /categories --> updates 3 categories by primary key', async() => {
       const res = await request(app)
-      .put(`/categories/${test_pk}`)
+      .put(`/categories/1`)
       .send({
-          name: test_name
+          name: "test_name"
       })
-
       expect(res.statusCode).toEqual(200)
-      expect(res.body.category_id).toEqual(expect.any(Number))
-      expect(res.body.name).toEqual(expected_name)
+      expect(res.body).toEqual(expect.arrayContaining([1]))
+      // expect(res.body.category_id).toEqual(expect.any(Number))
   })
 
   // test("DELETE")

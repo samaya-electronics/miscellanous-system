@@ -13,7 +13,7 @@ const getCategories = async(req,res)=>{
 //get category by PK // get
 const getCategoryById = async (req,res)=>{
     try{
-    const category = await Category.findByPk(parseInt(req.params.id))
+    const category = await Category.findByPk(parseInt(req.params.PK))
     res.json(category)
     }
     catch (err){
@@ -36,12 +36,14 @@ const createCategory = async (req,res)=>{
 
 // update // post
 const updateCategory = async (req,res)=>{
-    try{await Category.update({
+    try{
+        const result = await Category.update({
         name: req.body.name
     },{
-        where: { category_id: req.params.PK }
+        where: {category_id: req.params.PK }
     })
-    res.end()
+    res.json(result)
+    console.log(result)
     }
     catch(err){
         console.log(err)
