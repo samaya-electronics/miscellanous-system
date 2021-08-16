@@ -3,7 +3,7 @@ const { Category } = require('../models')
 // get categories // get
 const getCategories = async(req,res)=>{
    try{ const category = await Category.findAll()
-    res.json(category).end()
+    res.json(category)
    }
    catch (err){
        console.log(err)
@@ -14,7 +14,7 @@ const getCategories = async(req,res)=>{
 const getCategoryById = async (req,res)=>{
     try{
     const category = await Category.findByPk(parseInt(req.params.id))
-    res.json(category).end()
+    res.json(category)
     }
     catch (err){
         console.log(err)
@@ -27,7 +27,7 @@ const createCategory = async (req,res)=>{
         const category = await Category.create({
             name: req.body.name
         })
-        res.json(category).end()
+        res.json(category)
     } 
     catch(err){
         console.log(err)

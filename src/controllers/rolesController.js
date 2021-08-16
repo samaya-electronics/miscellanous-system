@@ -3,7 +3,7 @@ const { Role } = require('../models')
 // get categories // get
 const getAllRoles = async(req,res)=>{
    try{ const role = await Role.findAll()
-    res.json(role).end()
+    res.json(role)
    }
    catch (err){
        console.log(err)
@@ -14,7 +14,7 @@ const getAllRoles = async(req,res)=>{
 const getRoleById = async (req,res)=>{
     try{
     const role = await Role.findByPk(parseInt(req.params.id))
-    res.json(role).end()
+    res.json(role)
     }
     catch (err){
         console.log(err)
@@ -27,7 +27,7 @@ const createRole = async (req,res)=>{
         const role = await Role.create({
             name: req.body.name
         })
-        res.json(role).end()
+        res.json(role)
     } 
     catch(err){
         console.log(err)

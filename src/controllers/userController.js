@@ -1,9 +1,9 @@
-const { User} = require('../models')
+const { User } = require('../models')
 
 
 const getAllUsers = async(req,res)=>{
     try{ const user = await User.findAll()
-     res.json(user).end()
+     res.json(user)
     }
     catch (err){
         console.log(err)
@@ -14,7 +14,7 @@ const getAllUsers = async(req,res)=>{
  const getUserById = async (req,res)=>{
     try{
     const user = await User.findByPk(parseInt(req.params.PK))
-    res.json(user).end()
+    res.json(user)
     }
     catch (err){
         console.log(err)
@@ -28,7 +28,7 @@ const createUser = async (req,res)=>{
             username: req.body.username,
             role_id: req.body.PK
         })
-        res.json(user).end()
+        res.json(user)
     } 
     catch(err){
         console.log(err)
