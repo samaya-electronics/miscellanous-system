@@ -15,9 +15,9 @@ afterAll(() => {
 describe('Item I/O --> Category dependent', () => {
 
   test.each([
-    ['test-cat-1','test-cat-1'],
-    ['test-cat-2','test-cat-2'],
-    ['test-cat-3','test-cat-3'],
+    ['test-item-cat-1','test-item-cat-1'],
+    ['test-item-cat-2','test-item-cat-2'],
+    ['test-item-cat-3','test-item-cat-3'],
   ])('POST /categories --> create 2 categories for Item testing', async (test_name, expected_name) => {
       const res = await request(app)
       .post('/categories')
