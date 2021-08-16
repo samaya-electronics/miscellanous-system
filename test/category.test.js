@@ -3,7 +3,9 @@ const app = require('../src/app');
 const { sequelize } = require('../src/models')
 
 beforeAll(() => {
-  return sequelize.sync({force: true})
+  return sequelize.sync({
+    force: true,
+  })
 });
 
 afterAll(() => {
@@ -43,11 +45,39 @@ describe('Category I/O ', () => {
         expect(res.body.length).toBeGreaterThan(4)
     })
 
-    test('GET /categories --> get list of all categories', async () => {
+    test.each([
+      [1, 1],
+      [2, 2],
+      [3, 3],
+      [4, 4],
+      [5, 5],
+    ])('GET /categories/:pk --> get category by primary key', async (value, expected) => {
       const res = await request(app)
-      .get('/categories')
+      .get(`/categories/${value}`)
+
 
       expect(res.statusCode).toEqual(200)
-      expect(res.body).toEqual(expect.arrayContaining([]))
+      expect(res.body).toEqual(expect.objectContaining({
+        name: `test-cat-${expected}`,
+        category_id: expected
+      }))
   })
+
+  test.each([
+    [3, 'test-cat-edited-3','test-cat-edited-3'],
+    [4, 'test-cat-edited-4','test-cat-edited-4'],
+    [5, 'test-cat-edited-5','test-cat-edited-5'],
+  ])('PUT /categories --> updates 3 categories by primary key', async (test_pk, test_name, expected_name) => {
+      const res = await request(app)
+      .put(`/categories/${test_pk}`)
+      .send({
+          name: test_name
+      })
+
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.category_id).toEqual(expect.any(Number))
+      expect(res.body.name).toEqual(expected_name)
+  })
+
+  // test("DELETE")
 })
