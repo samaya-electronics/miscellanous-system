@@ -11,14 +11,22 @@ afterAll(() => {
 })
 
 describe('Category I/O ', () => {
-    it('POST / --> App is working, returns true', () => {
-        return request(app).post('/categories').send({
+    test('POST /categories --> Creates category', async () => {
+        const res = await request(app)
+        .post('/categories')
+        .send({
             name: "cat 1"
         })
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .then((res) => {
-            expect(res.body.category_id).toBeDefined()
-          })
+
+        expect(res.statusCode).toEqual(200)
+        expect(res.body.category_id).toEqual(expect.any(Number))
+    })
+
+    test('GET /categories --> get list of all categories', async () => {
+        const res = await request(app)
+        .get('/categories')
+
+        expect(res.statusCode).toEqual(200)
+        expect(res.body).toEqual(expect.arrayContaining([]))
     })
 })
