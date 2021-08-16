@@ -13,7 +13,7 @@ const getAllUsers = async(req,res)=>{
 
  const getUserById = async (req,res)=>{
     try{
-    const user = await User.findByPk(parseInt(req.params.PK))
+    const user = await User.findByPk(parseInt(req.params.pk))
     res.json(user)
     }
     catch (err){
@@ -26,7 +26,7 @@ const createUser = async (req,res)=>{
         const user = await User.create({
             name: req.body.name,
             username: req.body.username,
-            role_id: req.body.PK
+            role_id: req.body.pk
         })
         res.json(user)
     } 
@@ -38,7 +38,7 @@ const createUser = async (req,res)=>{
 const deleteUser = async (req,res)=>{
     try{await User.destroy({
         where: {
-            user_id: req.params.PK
+            user_id: req.params.pk
         }
     })
     res.end()

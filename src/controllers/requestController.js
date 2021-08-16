@@ -13,7 +13,7 @@ const getAllrequests = async(req,res)=>{
 
  const getrequestById = async (req,res)=>{
     try{
-    const request = await Request.findByPk(parseInt(req.params.PK))
+    const request = await Request.findByPk(parseInt(req.params.pk))
     res.json(request)
     }
     catch (err){
@@ -26,9 +26,9 @@ const createrequest = async (req,res)=>{
         const request = await Request.create({
             quntity: req.body.quntity,
             approved: false,
-            user_requesting_id:req.body.user_requesting_PK,
-            user_approving_id:req.body.user_approving_PK,
-            role_id:req.body.role_PK
+            user_requesting_id:req.body.user_requesting_pk,
+            user_approving_id:req.body.user_approving_pk,
+            role_id:req.body.role_pk
         })
         res.json(request)
     } 
@@ -40,7 +40,7 @@ const createrequest = async (req,res)=>{
 const deleterequest = async (req,res)=>{
     try{await Request.destroy({
         where: {
-            request_id: req.params.PK
+            request_id: req.params.pk
         }
     })
     res.end()
