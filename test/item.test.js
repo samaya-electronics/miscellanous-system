@@ -1,11 +1,18 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize } = require('../src/models')
+const { sequelize, Category } = require('../src/models')
 
-beforeAll(() => {
-  return sequelize.sync({
+beforeAll(async () => {
+
+  await sequelize.sync({
     force: true,
   })
+
+  return Category.bulkCreate([
+    {name: 'test-item-cat-1'},
+    {name: 'test-item-cat-2'},
+    {name: 'test-item-cat-3'},
+  ])
 });
 
 afterAll(() => {
@@ -13,22 +20,6 @@ afterAll(() => {
 })
 
 describe('Item I/O --> Category dependent', () => {
-
-  test.each([
-    ['test-item-cat-1','test-item-cat-1'],
-    ['test-item-cat-2','test-item-cat-2'],
-    ['test-item-cat-3','test-item-cat-3'],
-  ])('POST /categories --> create 2 categories for Item testing', async (test_name, expected_name) => {
-      const res = await request(app)
-      .post('/categories')
-      .send({
-          name: test_name
-      })
-
-      expect(res.statusCode).toEqual(200)
-      expect(res.body.category_id).toEqual(expect.any(Number))
-      expect(res.body.name).toEqual(expected_name)
-  })
 
   test.each([
     ["test-item-1", "test-loc-1", 58, 30, 1],
