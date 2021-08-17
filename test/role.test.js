@@ -6,7 +6,11 @@ beforeAll(() => {
   return sequelize.sync({force: true})
 });
 
-afterAll(() => {
+afterAll(async () => {
+  await sequelize.sync({
+    force: true,
+  })
+
   return sequelize.close()
 })
 
