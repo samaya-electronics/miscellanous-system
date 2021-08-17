@@ -2,8 +2,16 @@ const request = require('supertest');
 const app = require('../src/app');
 const { sequelize, Role } = require('../src/models')
 
-beforeAll(() => {
-  return sequelize.sync({force: true})
+beforeAll(async () => {
+  await sequelize.sync({force: true})
+
+  return Role.bulkCreate([
+    {name: 'test-role-1'},
+    {name: 'test-role-2'},
+    {name: 'test-role-3'},
+    {name: 'test-role-4'},
+    {name: 'test-role-5'},
+  ])
 });
 
 afterAll(async () => {
@@ -11,22 +19,6 @@ afterAll(async () => {
 })
 
 describe('Role I/O', () => {
-
-  beforeAll(() => {
-    return Role.bulkCreate([
-      {name: 'test-role-1'},
-      {name: 'test-role-2'},
-      {name: 'test-role-3'},
-      {name: 'test-role-4'},
-      {name: 'test-role-5'},
-    ])
-  })
-
-  afterAll(() => {
-    return sequelize.sync({
-      force: true,
-    })
-  })
 
   test('GET /roles --> get list of all roles', async () => {
     const res = await request(app)
@@ -60,10 +52,7 @@ describe('Role I/O', () => {
       role_id: expected
     }))
   })
-})
-
-describe('Role Input', () => {
-
+  
   test.each([
     ['test-role-1', 'test-role-1'],
     ['test-role-2', 'test-role-2'],
@@ -76,10 +65,9 @@ describe('Role Input', () => {
         .send({
           name: test_name
         })
-
+  
       expect(res.statusCode).toEqual(200)
       expect(res.body.role_id).toEqual(expect.any(Number))
       expect(res.body.name).toEqual(expected_name)
   })
-
 })
