@@ -24,11 +24,11 @@ const getAllrequests = async(req,res)=>{
 const createrequest = async (req,res)=>{
     try {
         const request = await Request.create({
-            quntity: req.body.quntity,
+            quantity: req.body.quantity,
             approved: false,
-            user_requesting_id:req.body.user_requesting_pk,
-            user_approving_id:req.body.user_approving_pk,
-            role_id:req.body.role_pk
+            user_requesting_id: req.body.user_requesting_pk,
+            user_approving_id: req.body.user_approving_pk,
+            item_id: req.body.item_pk
         })
         res.json(request)
     } 
