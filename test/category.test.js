@@ -2,10 +2,18 @@ const request = require('supertest');
 const app = require('../src/app');
 const { sequelize, Category } = require('../src/models')
 
-beforeAll(() => {
-  return sequelize.sync({
+beforeAll(async () => {
+  await sequelize.sync({
     force: true,
   })
+
+  return Category.bulkCreate([
+    {name: 'test-cat-1'},
+    {name: 'test-cat-2'},
+    {name: 'test-cat-3'},
+    {name: 'test-cat-4'},
+    {name: 'test-cat-5'},
+  ])
 });
 
 afterAll(async () => {
@@ -13,22 +21,6 @@ afterAll(async () => {
 })
 
 describe('Category Output ', () => {
-
-  beforeAll(() => {
-    return Category.bulkCreate([
-      {name: 'test-cat-1'},
-      {name: 'test-cat-2'},
-      {name: 'test-cat-3'},
-      {name: 'test-cat-4'},
-      {name: 'test-cat-5'},
-    ])
-  })
-
-  afterAll(() => {
-    return sequelize.sync({
-      force: true,
-    })
-  })
 
   test('GET /categories --> get list of all categories', async () => {
       const res = await request(app)
@@ -88,9 +80,6 @@ describe('Category Output ', () => {
     expect(read_res.statusCode).toEqual(200)
     expect(read_res.body.length).toEqual(remaining_objects_num)
   })
-})
-
-describe('Category Input POST', () => {
 
   test.each([
     ['test-cat-1','test-cat-1'],
@@ -104,7 +93,7 @@ describe('Category Input POST', () => {
       .send({
           name: test_name
       })
-
+  
       expect(res.statusCode).toEqual(200)
       expect(res.body.category_id).toEqual(expect.any(Number))
       expect(res.body.name).toEqual(expected_name)
