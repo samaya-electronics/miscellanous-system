@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: true,
           name: "user_manager_id"
         },
+
       })
     }
   };
