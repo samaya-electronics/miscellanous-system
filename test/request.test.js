@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Category, Item, User, Role } = require('../src/models')
+const { sequelize, Category, Item, User, Role, Request } = require('../src/models')
 
 beforeAll(async () => {
   await sequelize.sync({
@@ -37,7 +37,7 @@ beforeAll(async () => {
     {name: 'role no1'},
     {name: 'role no2'},
   ])
-  return User.bulkCreate([{
+  await User.bulkCreate([{
     name: "karim",
     user_name: "karim1111",
     role_id: 1
@@ -46,6 +46,20 @@ beforeAll(async () => {
     user_name:"nourhan12133",
     role_id: 2
   }])
+  return Request.bulkCreate([
+    {
+      quantity: 30,
+      user_requesting_id: 1,
+      user_approving_id: 2,
+      item_id: 2
+    },
+    {
+      quantity: 20,
+      user_requesting_id: 2,
+      user_approving_id: 1,
+      item_id: 1
+    }
+  ])
 });
 
 afterAll(async () => {
@@ -55,16 +69,34 @@ afterAll(async () => {
 
 describe('request I/O --> request test', () => {
 
+  test('GET /requests --> get all requests', async () => {
+    const res = await request(app)
+      .get('/requests')
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.length).toEqual(2)
+  })
+
+  test('GET /requests/:pk --> get request by pk', async () => {
+    const res = await request(app)
+      .get('/requests/1')
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual(expect.objectContaining({
+      quantity: expect.any(Number),
+      user_approving_id: expect.any(Number),
+    }))
+  })
+
   test.each([
     [3,1,2,1],
     // [4,false,2,2,2],
     // [5,false,3,2,3],
-  ])('POST /categories --> create 3 requests for requesting test', async (quantity_test,user_requesting_id_test, user_approving_id_test,item_id_test) => {
+  ])('POST /requests --> create 3 requests', async (quantity_test,user_requesting_id_test, user_approving_id_test,item_id_test) => {
       const res = await request(app)
       .post('/requests')
       .send({
           quantity: quantity_test,
-          approved: false,
           user_requesting_pk: user_requesting_id_test,
           user_approving_pk: user_approving_id_test,
           item_pk: item_id_test
