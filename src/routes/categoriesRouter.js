@@ -7,7 +7,7 @@ router.get('/:pk',category.getCategoryById)
 
 router.get('/',category.getCategories)
 
-router.post('/',category.createCategory)
+router.post('/',category.postCategory)
 
 router.put('/:pk',category.updateCategory)
 

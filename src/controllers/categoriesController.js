@@ -1,4 +1,4 @@
-const { Category } = require('../models')
+const categoryServices = require('../services/categoryService')
 
 // get categories // get
 const getCategories = async(req,res)=>{
@@ -22,16 +22,16 @@ const getCategoryById = async (req,res)=>{
 }
 
 //create category // post
-const createCategory = async (req,res)=>{
-    try {
-        const category = await Category.create({
-            name: req.body.name
-        })
-        res.json(category)
-    } 
-    catch(err){
-        console.log(err)
-    }
+const postCategory = async (req, res)=>{
+    const result = await categoryServices.createCategory({
+        name: req.body.name
+    })
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        category: result.category
+    })
 }
 
 // update // post
@@ -67,7 +67,7 @@ const deleteCategory = async (req,res)=>{
 
 module.exports = {
      getCategoryById,
-     createCategory,
+     postCategory,
      updateCategory,
      deleteCategory,
      getCategories
