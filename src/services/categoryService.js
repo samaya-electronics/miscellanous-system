@@ -1,12 +1,11 @@
 const { Category } = require('../models')
 
-const createCategory = async (data) => {
+const createCategory = async (name) => {
     const result = {}
     try{
-        const category = await Category.create({
-            name: data.name
+        result.category = await Category.create({
+            name: name
         })
-        result.category = category,
         result.msg = "Category Created"
     }
     catch(err){
@@ -17,15 +16,64 @@ const createCategory = async (data) => {
 }
 
 
-// const getCategories = async () => {
-//     try{
-//         const categories = await Category.findAll()
-//     }
-//     catch(err){
-//         return
-//     }
-// }
+const getCategories = async () => {
+    const result = {}
+    try{
+        result.categories = await Category.findAll()
+        result.msg = "Got all categories"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get all categories"
+    }
+    return result
+}
+
+const getCategoryById = async (id) => {
+    result = {}
+    try{
+        result.category = await Category.findByPk(parseInt(id))
+        result.msg = "Got category"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get category"
+    }
+    return result
+}
+
+const updateCategory = async (name, id) => {
+    const result = {}
+    try{
+        const category = await Category.findByPk(id)
+        result.category = await category.update({name: name})
+        result.msg = "Updated Category"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not update category"
+    }
+    return result
+}
+
+const deleteCategory = async (id) => {
+    result = {}
+    try{
+        result.category = await Category.findByPk(id)
+        result.category.destroy()
+        result.msg = "Deleted Category"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not delete category"
+    }
+    return result
+}
 
 module.exports = {
     createCategory,
+    getCategories,
+    getCategoryById,
+    updateCategory,
+    deleteCategory,
 }

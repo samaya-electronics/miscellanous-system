@@ -1,31 +1,17 @@
 const categoryServices = require('../services/categoryService')
 
-// get categories // get
-const getCategories = async(req,res)=>{
-   try{ const category = await Category.findAll()
-    res.json(category)
-   }
-   catch (err){
-       console.log(err)
-   }
-}
+const getCategories = async(req, res)=>{
+    const result = await categoryServices.getCategories()
 
-//get category by PK // get
-const getCategoryById = async (req,res)=>{
-    try{
-    const category = await Category.findByPk(parseInt(req.params.pk))
-    res.json(category)
-    }
-    catch (err){
-        console.log(err)
-    }
-}
-
-//create category // post
-const postCategory = async (req, res)=>{
-    const result = await categoryServices.createCategory({
-        name: req.body.name
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        categories: result.categories
     })
+}
+
+const postCategory = async (req, res)=>{
+    const result = await categoryServices.createCategory(req.body.name)
 
     res.json({
         err: result.err,
@@ -34,41 +20,40 @@ const postCategory = async (req, res)=>{
     })
 }
 
-// update // post
-const updateCategory = async (req,res)=>{
-    try{
-        const result = await Category.update({
-        name: req.body.name
-    },{
-        where: {category_id: req.params.pk }
+const getCategoryById = async (req, res)=>{
+    const result = await categoryServices.getCategoryById(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        category: result.category
     })
-    res.json(result)
-    }
-    catch(err){
-        console.log(err)
-    }
 }
 
-// delete BY PK
-const deleteCategory = async (req,res)=>{
-    try{await Category.destroy({
-        where: {
-            category_id: req.params.pk
-        }
-    })
-    res.end()
-}
-    catch(err){
-        console.log(err)
-    }
-}
-   
+const updateCategory = async (req, res)=>{
+    const result = await categoryServices.updateCategory(req.body.name, req.params.id)
 
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        category: result.category
+    })
+}
+
+const deleteCategory = async (req, res)=>{
+    const result = await categoryServices.deleteCategory(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        category: result.category
+    })
+}
 
 module.exports = {
-     getCategoryById,
-     postCategory,
-     updateCategory,
-     deleteCategory,
-     getCategories
+    getCategoryById,
+    postCategory,
+    updateCategory,
+    deleteCategory,
+    getCategories
 }
