@@ -12,6 +12,12 @@ module.exports = (sequelize, DataTypes) => {
           name: "team_user_id"
         }
       })
+      Team.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: false,
+          name: "leader_id"
+        }
+      })
     }
   };
 

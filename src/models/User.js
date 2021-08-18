@@ -24,6 +24,18 @@ module.exports = (sequelize, DataTypes) => {
           name: "role_id"
         },
       })
+      User.belongsTo(models.Team, {
+        foreignKey: {
+          allowNull: false,
+          name: "team_id"
+        },
+      })
+      User.hasOne(models.Team, {
+        foreignKey: {
+          allowNull: false,
+          name: "leader_id"
+        }
+      })
     }
   };
 
