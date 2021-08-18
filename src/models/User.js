@@ -24,6 +24,18 @@ module.exports = (sequelize, DataTypes) => {
           name: "role_id"
         },
       })
+      User.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: true,
+          name: "user_manager_id"
+        },
+      })
+      User.hasMany(models.User, {
+        foreignKey: {
+          allowNull: true,
+          name: "user_manager_id"
+        },
+      })
     }
   };
 
