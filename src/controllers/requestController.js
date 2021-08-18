@@ -25,7 +25,6 @@ const createrequest = async (req,res)=>{
     try {
         const request = await Request.create({
             quantity: req.body.quantity,
-            approved: false,
             user_requesting_id: req.body.user_requesting_pk,
             user_approving_id: req.body.user_approving_pk,
             item_id: req.body.item_pk
