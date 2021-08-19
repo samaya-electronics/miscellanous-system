@@ -1,4 +1,4 @@
-const requestServices = require('../services/requestService')
+const requestServices = require('../database/services/requestService')
 
 const getRequests = async(req, res)=>{
     const result = await requestServices.getRequests()

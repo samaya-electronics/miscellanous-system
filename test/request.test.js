@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Category, Item, User, Role, Request } = require('../src/models')
+const { sequelize, Category, Item, User, Role, Request } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({
@@ -116,7 +116,7 @@ describe('request I/O --> request test', () => {
 
   test('DELETE /requests --> deleting request', async () => {
     const res = await request(app)
-      .delete('request/1')
+      .delete('/requests/1')
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -129,7 +129,7 @@ describe('request I/O --> request test', () => {
 
   test('DELETE /requests --> error deleting request', async () => {
     const res = await request(app)
-      .delete('request/80')
+      .delete('/requests/30')
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).toEqual(expect.anything())

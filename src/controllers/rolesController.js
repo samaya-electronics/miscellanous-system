@@ -1,4 +1,4 @@
-const { Role } = require('../models')
+const { Role } = require('../database/models')
 
 // get categories // get
 const getAllRoles = async(req,res)=>{
