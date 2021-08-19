@@ -1,59 +1,56 @@
-const { Request, User,Item} = require('../models')
+const requestServices = require('../services/requestService')
 
+const getRequests = async(req, res)=>{
+    const result = await requestServices.getRequests()
 
-const getAllrequests = async(req,res)=>{
-    try{ const request = await Request.findAll()
-     res.json(request)
-    }
-    catch (err){
-        console.log(err)
-    }
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        requests: result.requests
+    })
  }
 
 
- const getrequestById = async (req,res)=>{
-    try{
-    const request = await Request.findByPk(parseInt(req.params.pk))
-    res.json(request)
-    }
-    catch (err){
-        console.log(err)
-    }
-}
+ const getRequestById = async (req, res)=>{
+    const result = await requestServices.getRequestById(req.params.id)
 
-const createrequest = async (req,res)=>{
-    try {
-        const request = await Request.create({
-            quantity: req.body.quantity,
-            user_requesting_id: req.body.user_requesting_pk,
-            user_approving_id: req.body.user_approving_pk,
-            item_id: req.body.item_pk
-        })
-        res.json(request)
-    } 
-    catch(err){
-        console.log(err)
-    }
-}
-
-const deleterequest = async (req,res)=>{
-    try{await Request.destroy({
-        where: {
-            request_id: req.params.pk
-        }
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        request: result.request
     })
-    res.end()
 }
-    catch(err){
-        console.log(err)
-    }
+
+const createRequest = async (req, res)=>{
+    const result = await requestServices.createRequest(
+        req.body.quantity,
+        req.body.item_id,
+        req.body.user_requesting_id,
+        req.body.user_approving_id
+    )
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        request: result.request
+    })
+}
+
+const deleteRequest = async (req, res)=>{
+    const result = await requestServices.deleteRequest(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        request: result.request
+    })
 }
    
 module.exports = {
-    getAllrequests,
-    getrequestById,
-    createrequest,
-    deleterequest
+    getRequests,
+    getRequestById,
+    createRequest,
+    deleteRequest
 }
 
 
