@@ -1,4 +1,4 @@
-const itemServices = require('../services/itemService')
+const itemServices = require('../database/services/itemService')
 
 const getItems = async(req, res)=>{
     const result = await itemServices.getItems()

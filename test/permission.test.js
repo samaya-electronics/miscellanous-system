@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Permission } = require('../src/models')
+const { sequelize, Permission } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({
@@ -22,18 +22,19 @@ afterAll(() => {
 
 describe('Permission I/O', () => {
 
-    test('GET /Permissions --> get list of all Permissions', async () => {
+    test('GET /permissions --> get list of all Permissions', async () => {
         const res = await request(app)
         .get('/permissions')
   
         expect(res.statusCode).toEqual(200)
-        expect(res.body).toEqual(expect.arrayContaining([{
+        expect(res.body.err).not.toEqual(expect.anything())
+        expect(res.body.permissions).toEqual(expect.arrayContaining([{
           permission_id: expect.any(Number),
           name: expect.any(String),
           createdAt: expect.anything(),
           updatedAt: expect.anything()
         }]))
-        expect(res.body.length).toEqual(5)
+        expect(res.body.permissions.length).toEqual(5)
     })
   
     test.each([
@@ -47,7 +48,8 @@ describe('Permission I/O', () => {
       .get(`/permissions/${value}`)
   
       expect(res.statusCode).toEqual(200)
-      expect(res.body).toEqual(expect.objectContaining({
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body.permission).toEqual(expect.objectContaining({
         name: `test-permission-${expected}`,
         permission_id: expected
       }))
@@ -60,7 +62,8 @@ describe('Permission I/O', () => {
             name: "test_name"
         })
         expect(res.statusCode).toEqual(200)
-        expect(res.body).toEqual(expect.arrayContaining([1]))
+        expect(res.body.err).not.toEqual(expect.anything())
+        expect(res.body.permission).toEqual(expect.anything())
     })
   
     test.each([
@@ -68,16 +71,12 @@ describe('Permission I/O', () => {
       {test_pk: 2, remaining_objects_num: 3},
       {test_pk: 3, remaining_objects_num: 2},
     ])('DELETE /permissions/:pk --> delete 3 permissions', async ({test_pk, remaining_objects_num}) => {
-      const delete_res = await request(app)
+      const res = await request(app)
       .delete(`/permissions/${test_pk}`)
   
-      const read_res = await request(app)
-      .get(`/permissions`)
-  
-      expect(delete_res.statusCode).toEqual(200)
-  
-      expect(read_res.statusCode).toEqual(200)
-      expect(read_res.body.length).toEqual(remaining_objects_num)
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body.permission).toEqual(expect.anything())
     })
   
     test.each([
@@ -94,7 +93,8 @@ describe('Permission I/O', () => {
         })
     
         expect(res.statusCode).toEqual(200)
-        expect(res.body.permission_id).toEqual(expect.any(Number))
-        expect(res.body.name).toEqual(expected_name)
+        expect(res.body.err).not.toEqual(expect.anything())
+        expect(res.body.permission.permission_id).toEqual(expect.any(Number))
+        expect(res.body.permission.name).toEqual(expected_name)
     })
 })

@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Category } = require('../src/models')
+const { sequelize, Category } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({
@@ -27,6 +27,7 @@ describe('Category I/O ', () => {
       .get('/categories')
 
       expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
       expect(res.body).toEqual(expect.objectContaining({
         msg: expect.any(String),
         categories: expect.anything()
@@ -46,6 +47,7 @@ describe('Category I/O ', () => {
 
 
     expect(res.statusCode).toEqual(200)
+    expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.category).toEqual(expect.objectContaining({
       name: `test-cat-${expected}`,
       category_id: expected
@@ -75,7 +77,6 @@ describe('Category I/O ', () => {
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.category).toEqual(expect.anything())
-    console.log(res.body.category)
   })
 
   test.each([
@@ -92,8 +93,8 @@ describe('Category I/O ', () => {
       })
 
     expect(res.statusCode).toEqual(200)
-    expect(res.body.category.category_id).toEqual(expect.any(Number))
     expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.category.category_id).toEqual(expect.any(Number))
     expect(res.body.category.name).toEqual(expected_name)
   })
 

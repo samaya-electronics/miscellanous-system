@@ -1,4 +1,4 @@
-const { Permission } = require('../models')
+const { Permission } = require('../database/models')
 
 // get categories // get
 const getpermissions = async(req,res)=>{

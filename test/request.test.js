@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Category, Item, User, Role, Request } = require('../src/models')
+const { sequelize, Category, Item, User, Role, Request } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({
@@ -73,8 +73,9 @@ describe('request I/O --> request test', () => {
     const res = await request(app)
       .get('/requests')
 
-    expect(res.statusCode).toEqual(200)
-    expect(res.body.length).toEqual(2)
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.requests.length).toEqual(2)
   })
 
   test('GET /requests/:pk --> get request by pk', async () => {
@@ -82,32 +83,55 @@ describe('request I/O --> request test', () => {
       .get('/requests/1')
 
     expect(res.statusCode).toEqual(200)
-    expect(res.body).toEqual(expect.objectContaining({
+    expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.request).toEqual(expect.objectContaining({
       quantity: expect.any(Number),
       user_approving_id: expect.any(Number),
+      approved: false
     }))
   })
 
   test.each([
     [3,1,2,1],
-    // [4,false,2,2,2],
-    // [5,false,3,2,3],
-  ])('POST /requests --> create 3 requests', async (quantity_test,user_requesting_id_test, user_approving_id_test,item_id_test) => {
+    [4,2,2,2],
+    [5,2,2,3],
+  ])('POST /requests --> create 3 requests', async (quantity_test, user_requesting_id_test, user_approving_id_test, item_id_test) => {
       const res = await request(app)
       .post('/requests')
       .send({
           quantity: quantity_test,
-          user_requesting_pk: user_requesting_id_test,
-          user_approving_pk: user_approving_id_test,
-          item_pk: item_id_test
+          user_requesting_id: user_requesting_id_test,
+          user_approving_id: user_approving_id_test,
+          item_id: item_id_test
       })
 
       expect(res.statusCode).toEqual(200)
-      expect(res.body.quantity).toEqual(quantity_test)
-      expect(res.body.approved).toEqual(false)
-      console.log(res.body);
-      expect(res.body.user_requesting_id).toEqual(user_requesting_id_test)
-      expect(res.body.user_approving_id).toEqual(user_approving_id_test)
-      expect(res.body.item_id).toEqual(item_id_test)
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body.request.quantity).toEqual(quantity_test)
+      expect(res.body.request.approved).toEqual(false)
+      expect(res.body.request.user_requesting_id).toEqual(user_requesting_id_test)
+      expect(res.body.request.user_approving_id).toEqual(user_approving_id_test)
+      expect(res.body.request.item_id).toEqual(item_id_test)
+  })
+
+  test('DELETE /requests --> deleting request', async () => {
+    const res = await request(app)
+      .delete('/requests/1')
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.request).toEqual(expect.objectContaining({
+      quantity: expect.any(Number),
+      user_approving_id: expect.any(Number),
+      approved: false
+    }))
+  })
+
+  test('DELETE /requests --> error deleting request', async () => {
+    const res = await request(app)
+      .delete('/requests/30')
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).toEqual(expect.anything())
   })
 })

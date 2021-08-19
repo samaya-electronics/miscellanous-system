@@ -1,14 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const request = require('../controllers/requestController')
+const requestController = require('../controllers/requestController')
 
-router.get('/:pk',request.getrequestById)
+router.get('/:id', requestController.getRequestById)
 
-router.get('/',request.getAllrequests)
+router.get('/', requestController.getRequests)
 
-router.post('/',request.createrequest)
+router.post('/', requestController.createRequest)
 
-router.delete('/:pk',request.deleterequest)
+router.delete('/:id', requestController.deleteRequest)
 
 
 module.exports = router
