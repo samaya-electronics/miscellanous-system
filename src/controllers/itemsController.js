@@ -1,55 +1,59 @@
-const { Item } = require('../models')
+const itemServices = require('../services/itemServices')
 
-const getItems = async (req, res) => {
-    const items = await Item.findAll()
-    res.json(items)
-}
+const getItems = async(req, res)=>{
+    const result = await itemServices.getItems()
 
-const getItemByPK = async (req, res) => {
-    const item = await Item.findByPk(req.params.pk)
-    res.json(item)
-}
-
-const createItem = async (req, res) => {
-    await Item.create({
-        name: req.body.name,
-        quantity: req.body.quantity,
-        location: req.body.location,
-        threshold: req.body.threshold,
-        category_id: req.body.category_id
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        items: result.items
     })
-    res.end()
 }
 
-const updateItem = async (req, res) => {
-    await Item.update({
-        name: req.body.name,
-        quantity: req.body.quantity,
-        location: req.body.location,
-        threshold: req.body.threshold,
-        category_id: req.body.category_id
-    },{
-        where: {
-            item_id: req.params.PK
-        }
+const postItem = async (req, res)=>{
+    const result = await itemServices.createItem(req.body.name, req.body.quantity, req.body.location, req.body.threshold, req.body.category_id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        item: result.item
     })
-    res.end()
 }
 
-const deleteItem = async (req, res) => {
-    await Item.destroy({
-        where: {
-            item_id: req.params.PK
-        }
+const getItemById = async (req, res)=>{
+    const result = await itemServices.getItemById(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        item: result.item
     })
-    res.end()
 }
 
+const updateItem = async (req, res)=>{
+    const result = await itemServices.updateItem(req.body.name,req.body.quantity, req.body.location, req.body.threshold, req.body.category_id,req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        item: result.item
+    })
+}
+
+const deleteItem = async (req, res)=>{
+    const result = await itemServices.deleteItem(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        item: result.item
+    })
+}
 
 module.exports = {
-    getItems,
-    createItem,
-    deleteItem,
+    getItemById,
+    postItem,
     updateItem,
-    getItemByPK
+    deleteItem,
+    getItems
 }

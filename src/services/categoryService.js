@@ -30,7 +30,7 @@ const getCategories = async () => {
 }
 
 const getCategoryById = async (id) => {
-    result = {}
+   const result = {}
     try{
         result.category = await Category.findByPk(parseInt(id))
         result.msg = "Got category"
@@ -57,7 +57,7 @@ const updateCategory = async (name, id) => {
 }
 
 const deleteCategory = async (id) => {
-    result = {}
+   const result = {}
     try{
         result.category = await Category.findByPk(id)
         result.category.destroy()
