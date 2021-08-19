@@ -95,5 +95,5 @@ describe('Role I/O', () => {
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.role).toEqual(expect.anything())
-})
+  })
 })
