@@ -20,9 +20,9 @@ app.use('/', homeRouter)
 app.use('/auth', authRouter)
 app.use('/categories', categoriesRouter)
 app.use('/items', itemsRouter)
-app.use('/users',usersRouter)
-app.use('/requests',requestRouter)
-app.use('/permissions',permissionRouter)
-app.use('/roles',rolesRouter)
+app.use('/users', usersRouter)
+app.use('/requests', requestRouter)
+app.use('/permissions', permissionRouter)
+app.use('/roles', rolesRouter)
 
 module.exports = app
