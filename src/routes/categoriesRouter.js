@@ -4,13 +4,9 @@ const category = require('../controllers/categoriesController')
 
 
 router.get('/:id',category.getCategoryById)
-
 router.get('/',category.getCategories)
-
 router.post('/',category.postCategory)
-
 router.put('/:id',category.updateCategory)
-
 router.delete('/:id',category.deleteCategory)
 
 module.exports = router
