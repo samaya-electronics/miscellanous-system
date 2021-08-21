@@ -1,70 +1,59 @@
-const { Permission } = require('../database/models')
+const permissionServices = require('../database/services/permissionService')
 
-// get categories // get
-const getpermissions = async(req,res)=>{
-    const p = await Permission.findAll()
-    res.json(p)
-}
+const getPermissions = async(req, res)=>{
+    const result = await permissionServices.getPermissions()
 
-//get category by PK // get
-const getpermissionsById = async (req,res)=>{
-    try{
-    const p = await Permission.findByPk(parseInt(req.params.pk))
-    res.json(p)
-    }
-    catch (err){
-        console.log(err)
-    }
-}
-
-//create category // post
-const createPermission = async (req,res)=>{
-    try {
-        const p = await Permission.create({
-            name: req.body.name
-        })
-        res.json(p)
-    } 
-    catch(err){
-        console.log(err)
-    }
-}
-
-// update // post
-const updatePermission = async (req,res)=>{
-    try{
-        const p = await Permission.update({
-            name: req.body.name
-        },{
-            where: {permission_id: req.params.pk }
-        })
-        res.json(p)
-    }
-    catch(err){
-        console.log(err)
-    }
-}
-
-// delete BY PK
-const deletePermission = async (req,res)=>{
-    try{await Permission.destroy({
-        where: {
-            permission_id: req.params.pk
-        }
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        permission: result.permission
     })
-    res.end()
 }
-    catch(err){
-        console.log(err)
-    }
-}
-   
 
+const postPermission = async (req, res)=>{
+    const result = await permissionServices.createPermission(req.body.name)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        permission: result.permission
+    })
+}
+
+const getPermissionById = async (req, res)=>{
+    const result = await permissionServices.getPermissionById(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        permission: result.permission
+    })
+}
+
+const updatePermission = async (req, res)=>{
+    const result = await permissionServices.updatePermission(req.body.name, req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        permission: result.permission
+    })
+}
+
+const deletePermission = async (req, res)=>{
+    const result = await permissionServices.deletePermission(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        permission: result.permission
+    })
+}
 
 module.exports = {
-     getpermissions,
-     createPermission,
-     updatePermission,
-     deletePermission,
-     getpermissionsById
+    getPermissionById,
+    postPermission,
+    updatePermission,
+    deletePermission,
+    getPermissions
 }

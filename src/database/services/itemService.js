@@ -47,11 +47,11 @@ const getItemById = async (id) => {
      return result
  }
 
- const updateItem = async (id, name, quantity, location, threshold, category_id) => {
+ const updateItem = async (name, quantity, location, threshold, category_id, id) => {
     const result = {}
     try{
         const item = await Item.findByPk(id)
-        result.item = await category.update({name: name , quantity: quantity , location: location, threshold: threshold , category_id: category_id})
+        result.item = await item.update({name: name , quantity: quantity , location: location, threshold: threshold , category_id: category_id})
         result.msg = "Updated Item"
     }
     catch(err){
