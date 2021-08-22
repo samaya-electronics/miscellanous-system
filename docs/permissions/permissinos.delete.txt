@@ -1,0 +1,21 @@
+URL DELETE /permissions/:id
+Body Data: {}
+
+Returned Data:
+
+A- success
+{
+    msg: {string}
+    permission:{
+        name : {string},
+        permission_id: {int},
+        updated_at: {Date},
+        created_at: {Date}
+    }
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: {string}
+}
