@@ -1,4 +1,4 @@
-const roleServices = require('../database/services/RoleService')
+const roleServices = require('../database/services/roleService')
 
 const getRoles = async(req, res)=>{
     const result = await roleServices.getRoles()
