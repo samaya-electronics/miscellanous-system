@@ -1,0 +1,24 @@
+URL POST /categories
+Body Data: {
+    name : "string name"
+}
+
+Returned Data:
+
+A- success 
+{
+    msg: "string"
+    item:
+        {
+            category_id: {int},
+            name: "string name",
+            updated_at: {Date},
+            created_at: {Date}
+        }
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: "string"
+}
