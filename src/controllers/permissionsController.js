@@ -6,7 +6,7 @@ const getPermissions = async(req, res)=>{
     res.json({
         err: result.err,
         msg: result.msg,
-        permission: result.permission
+        permissions: result.permissions
     })
 }
 

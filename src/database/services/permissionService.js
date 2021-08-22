@@ -19,7 +19,7 @@ const createPermission = async (name) => {
 const getPermissions = async () => {
     const result = {}
     try{
-        result.permission = await Permission.findAll()
+        result.permissions = await Permission.findAll()
         result.msg = "Got all permissions"
     }
     catch(err){
