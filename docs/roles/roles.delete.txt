@@ -1,0 +1,21 @@
+URL DELETE /roles/:id
+Body Data: {}
+
+Returned Data:
+
+A- success
+{
+    msg: {string}
+    role:{
+        name : {string},
+        role_id: {int},
+        updated_at: {Date},
+        created_at: {Date}
+    }
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: {string}
+}

@@ -1,10 +1,5 @@
 URL PUT /requests/:id
-Body Data: {
-    quantity : {int},
-    item_id : {int},
-    user_approving_id : {int},
-    user_requesting_id : {int}
-}
+Body Data:{} 
 
 Returned Data:
 
