@@ -13,6 +13,7 @@ A- success
 {
     msg: {string}
     item:{
+        item_id: {int}
         name : {string},
         quantity: {int},
         threshold: {int},

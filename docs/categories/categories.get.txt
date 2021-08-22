@@ -1,4 +1,4 @@
-URL GET /items
+URL GET /categories
 Body Data: {}
 
 Returned Data:
@@ -6,21 +6,13 @@ Returned Data:
 A- success
 {
     msg: {string}
-    items:[{
-        item_id: {int}
+    categories:[{
         name : {string},
-        quantity: {int},
-        threshold: {int},
-        location: {string},
         category_id: {int},
         updated_at: {Date},
         created_at: {Date}
     },{
-        item_id: {int}
         name : {string},
-        quantity: {int},
-        threshold: {int},
-        location: {string},
         category_id: {int},
         updated_at: {Date},
         created_at: {Date}
@@ -43,12 +35,8 @@ Returned Data:
 A- success
 {
     msg: {string}
-    item:{
-        item_id: {int}
+    category:{
         name : {string},
-        quantity: {int},
-        threshold: {int},
-        location: {string},
         category_id: {int},
         updated_at: {Date},
         created_at: {Date}
