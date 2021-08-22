@@ -27,7 +27,7 @@ B- failed
 
 -----------------------------------------------------------------------------------------
 
-URL GET /items/:id
+URL GET /categories/:id
 Body Data: {}
 
 Returned Data:
