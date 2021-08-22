@@ -1,0 +1,30 @@
+URL PUT /requests/:id
+Body Data: {
+    quantity : {int},
+    item_id : {int},
+    user_approving_id : {int},
+    user_requesting_id : {int}
+}
+
+Returned Data:
+
+A- success 
+{
+    msg: {string}
+    request:
+        {
+            request_id: {int},
+            quantity: {string},
+            updated_at: {Date},
+            created_at: {Date},
+            item_id: {int},
+            user_requesting_id: {int},
+            user_approving_id: {int}, 
+        }
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: {string}
+}
