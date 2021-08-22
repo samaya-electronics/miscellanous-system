@@ -1,74 +1,59 @@
-const { Role } = require('../database/models')
+const roleServices = require('../database/services/RoleService')
 
-// get categories // get
-const getAllRoles = async(req,res)=>{
-   try{ const role = await Role.findAll()
-    res.json(role)
-   }
-   catch (err){
-       console.log(err)
-   }
-}
+const getRoles = async(req, res)=>{
+    const result = await roleServices.getRoles()
 
-//get Role by PK // get
-const getRoleById = async (req,res)=>{
-    try{
-    const role = await Role.findByPk(parseInt(req.params.pk))
-    res.json(role)
-    }
-    catch (err){
-        console.log(err)
-    }
-}
-
-//create Role // post
-const createRole = async (req,res)=>{
-    try {
-        const role = await Role.create({
-            name: req.body.name
-        })
-        res.json(role)
-    } 
-    catch(err){
-        console.log(err)
-    }
-}
-
-// update // post
-const updateRole = async (req,res)=>{
-    try{await Role.update({
-        name: req.body.name
-    },{
-        where: { Role_id: req.params.pk }
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        roles: result.roles
     })
-    res.end()
-    }
-    catch(err){
-        console.log(err)
-    }
 }
 
-// delete BY PK
-const deleteRole = async (req,res)=>{
-    try{await Role.destroy({
-        where: {
-            Role_id: req.params.pk
-        }
+const postRole = async (req, res)=>{
+    const result = await roleServices.createRole(req.body.name)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        role: result.role
     })
-    res.end()
 }
-    catch(err){
-        console.log(err)
-    }
-}
-   
 
+const getRoleById = async (req, res)=>{
+    const result = await roleServices.getRoleById(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        role: result.role
+    })
+}
+
+const updateRole = async (req, res)=>{
+    const result = await roleServices.updateRole(req.body.name, req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        role: result.role
+    })
+}
+
+const deleteRole = async (req, res)=>{
+    const result = await roleServices.deleteRole(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        role: result.role
+    })
+}
 
 module.exports = {
-     getRoleById,
-     createRole,
-     updateRole,
-     deleteRole,
-     getAllRoles
-
+    getRoleById,
+    postRole,
+    updateRole,
+    deleteRole,
+    getRoles
 }
