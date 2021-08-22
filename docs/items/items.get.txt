@@ -1,0 +1,59 @@
+URL GET /items
+Body Data: {}
+
+Returned Data:
+
+A- success
+{
+    msg: {string}
+    items:[{
+        name : {string},
+        quantity: {int},
+        threshold: {int},
+        location: {string},
+        category_id: {int},
+        updated_at: {Date},
+        created_at: {Date}
+    },{
+        name : {string},
+        quantity: {int},
+        threshold: {int},
+        location: {string},
+        category_id: {int},
+        updated_at: {Date},
+        created_at: {Date}
+    }]
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: {string}
+}
+
+-----------------------------------------------------------------------------------------
+
+URL GET /items/:id
+Body Data: {}
+
+Returned Data:
+
+A- success
+{
+    msg: {string}
+    item:{
+        name : {string},
+        quantity: {int},
+        threshold: {int},
+        location: {string},
+        category_id: {int},
+        updated_at: {Date},
+        created_at: {Date}
+    }
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: {string}
+}

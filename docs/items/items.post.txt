@@ -1,0 +1,30 @@
+URL POST /items
+Body Data: {
+    name : {string},
+    quantity: {int},
+    threshold: {int},
+    location: {string},
+    category_id: {int}
+}
+
+Returned Data:
+
+A- success 
+{
+    msg: {string}
+    item:{
+        name : {string},
+        quantity: {int},
+        threshold: {int},
+        location: {string},
+        category_id: {int},
+        updated_at: {Date},
+        created_at: {Date}        
+    }
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: {string}
+}
