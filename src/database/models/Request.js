@@ -37,11 +37,20 @@ module.exports = (sequelize, DataTypes) => {
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: true,
+        min: 1
+      }
     },
-    approved:{
+    leader_approval:{
       type: DataTypes.BOOLEAN,
-      allowNull:false,
-      defaultValue: false
+      allowNull:true,
+      defaultValue: null
+    },
+    warehouse_approval:{
+      type: DataTypes.BOOLEAN,
+      allowNull:true,
+      defaultValue: null
     }
     }
     ,{

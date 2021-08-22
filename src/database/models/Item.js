@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        isInt: true,
+        min: 0
+      }
     },
     location: {
       type: DataTypes.STRING(500),
@@ -42,7 +46,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     threshold: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isInt: true,
+        min: 0
+      }
     }
     }
     ,{
