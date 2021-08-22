@@ -1,17 +1,17 @@
 URL PUT /categories/:id
 Body Data: {
-    name : "updated string name"
+    name : {string}
 }
 
 Returned Data:
 
 A- success 
 {
-    msg: "string"
+    msg: {string}
     item:
         {
             category_id: {int},
-            name: "updated string name",
+            name: {string},
             updated_at: {Date},
             created_at: {Date}
         }
@@ -20,5 +20,5 @@ A- success
 B- failed 
 {
     err: {Object}
-    msg: "string"
+    msg: {string}
 }
