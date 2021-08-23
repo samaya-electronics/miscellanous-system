@@ -24,12 +24,6 @@ module.exports = (sequelize, DataTypes) => {
           name: "user_manager_id"
         },
       })
-      User.hasMany(models.User, {
-        foreignKey: {
-          allowNull: true,
-          name: "user_manager_id"
-        },
-      })
       User.belongsToMany(models.Item, {
         through: models.ItemAuth
       })
