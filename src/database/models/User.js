@@ -46,11 +46,6 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(150),
       allowNull: false,
-    },
-    user_name: { // or email or whatever the ldap has to offer
-      type: DataTypes.STRING(100),
-      allowNull:false,
-      unique: true,
     }
     }
     ,{
