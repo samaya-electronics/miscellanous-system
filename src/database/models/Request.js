@@ -41,24 +41,14 @@ module.exports = (sequelize, DataTypes) => {
         isInt: true,
         min: 1
       }
-    },
-    leader_approval:{
-      type: DataTypes.BOOLEAN,
-      allowNull:true,
-      defaultValue: null
-    },
-    warehouse_approval:{
-      type: DataTypes.BOOLEAN,
-      allowNull:true,
-      defaultValue: null
     }
-    }
-    ,{
-      sequelize,
-      underscored: true,
-      modelName: 'Request',
-      tableName: 'requests'
-    });
+  }
+  ,{
+    sequelize,
+    underscored: true,
+    modelName: 'Request',
+    tableName: 'requests'
+  });
 
   return Request;
 };
