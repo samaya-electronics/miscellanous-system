@@ -4,7 +4,7 @@
   "description": "f\"my first trial for an express backend \u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[ express\"",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node src/server.js",
     "test": "jest --silent -i",
     "dev": "nodemon src/server.js"
   },
