@@ -18,12 +18,6 @@ module.exports = (sequelize, DataTypes) => {
           name: "user_requesting_id"
         },
       })
-      Request.belongsTo(models.User, {
-        foreignKey:{
-          allowNull: false,
-          name: "user_approving_id"
-        },
-      })
     }
   };
 

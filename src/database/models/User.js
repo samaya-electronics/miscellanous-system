@@ -12,12 +12,6 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         },
       })
-      User.hasMany(models.Request, {
-        foreignKey:{
-          name: "user_approving_id",
-          allowNull: false
-        },
-      })
       User.belongsTo(models.Role, {
         foreignKey: {
           allowNull: false,
