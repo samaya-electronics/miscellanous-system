@@ -25,7 +25,6 @@ const createRequest = async (req, res)=>{
     const result = await requestServices.createRequest(
         req.body.quantity,
         req.body.item_id,
-        req.body.user_requesting_id,
         req.body.user_approving_id
     )
 

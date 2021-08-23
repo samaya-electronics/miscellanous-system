@@ -1,12 +1,11 @@
 const { Request } = require('../models')
 
-const createRequest = async (quantity, item_id, user_requesting_id, user_approving_id) => {
+const createRequest = async (quantity, item_id, user_requesting_id) => {
     const result = {}
     try{
         result.request = await Request.create({
             quantity: quantity,
             item_id: item_id,
-            user_approving_id: user_approving_id,
             user_requesting_id: user_requesting_id
         })
         result.msg = "Request Created"
