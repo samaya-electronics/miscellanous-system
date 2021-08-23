@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         },
       })
+      Item.belongsToMany(models.User, {
+        through: models.ItemAuth
+      })
     }
   };
 
