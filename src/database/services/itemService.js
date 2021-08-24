@@ -1,6 +1,6 @@
 const { Item } = require('../models')
 
-const createItem = async (name, quantity, location, threshold, category_id) => {
+const createItem = async (name, quantity, location, threshold, category_id,code) => {
     const result = {}
     try{
         result.item = await Item.create({
@@ -8,7 +8,8 @@ const createItem = async (name, quantity, location, threshold, category_id) => {
             quantity: quantity,
             location: location,
             threshold: threshold,
-            category_id: category_id
+            category_id: category_id,
+            code: code
         })
         result.msg = "Item Created"
     }
@@ -47,11 +48,11 @@ const getItemById = async (id) => {
      return result
  }
 
- const updateItem = async (name, quantity, location, threshold, category_id, id) => {
+ const updateItem = async (name, quantity, location, threshold, category_id, code, id) => {
     const result = {}
     try{
         const item = await Item.findByPk(id)
-        result.item = await item.update({name: name , quantity: quantity , location: location, threshold: threshold , category_id: category_id})
+        result.item = await item.update({name: name , quantity: quantity , location: location, threshold: threshold, category_id: category_id, code:code})
         result.msg = "Updated Item"
     }
     catch(err){

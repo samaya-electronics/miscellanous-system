@@ -19,21 +19,24 @@ beforeAll(async () => {
       quantity: 50,
       threshold: 30,
       location: "test-loc-1",
-      category_id: 1
+      category_id: 1,
+      code: "125626werfs"
     },
     {
       name: "test-item-2",
       quantity: 50,
       threshold: 30,
       location: "test-loc-2",
-      category_id: 2
+      category_id: 2,
+      code :"12566werfs"
     },
     {
       name: "test-item-3",
       quantity: 50,
       threshold: 30,
       location: "test-loc-3",
-      category_id: 1
+      category_id: 1,
+      code :"125686werfs"
     },
   ])
 
@@ -68,10 +71,10 @@ describe('Item I/O --> Category dependent', () => {
   // })
   
   test.each([
-    ["test-item-1", "test-loc-1", 58, 30, 1],
-    ["test-item-2", "test-loc-2", 52, 25, 2],
-    ["test-item-3", "test-loc-3", 55, 20, 2],
-  ])('POST /items --> Create 3 item, Category dependent', async (test_name, test_loc, test_q, test_thresh, test_cat_id) => {
+    ["test-item-1", "test-loc-1", 58, 30, 1,"125626werfs"],
+    ["test-item-2", "test-loc-2", 52, 25, 2,"12566werfs"],
+    ["test-item-3", "test-loc-3", 55, 20, 2,"125686werfs"],
+  ])('POST /items --> Create 3 item, Category dependent', async (test_name, test_loc, test_q, test_thresh, test_cat_id,test_code) => {
     const res = await request(app)
       .post('/items')
       .send({
@@ -80,8 +83,7 @@ describe('Item I/O --> Category dependent', () => {
         threshold: test_thresh,
         location: test_loc,
         category_id: test_cat_id,
-        users: [1,2,3],
-        leader_approve: true
+        code: test_code,
     })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -91,8 +93,7 @@ describe('Item I/O --> Category dependent', () => {
       threshold: test_thresh,
       location: test_loc,
       category_id: test_cat_id,
-      users: [1,2,3],
-      leader_approve: true
+      code: test_code,
     }))
   })
 
@@ -130,9 +131,8 @@ describe('Item I/O --> Category dependent', () => {
         threshold: 30,
         location: "test-loc-1",
         category_id: 1,
-        users: [1,2,3],
-        leader_approve: true
-    })
+        code: "125626werfs",
+        })
 
     expect(res.body.err).toEqual(expect.anything())
     expect(res.body.item).not.toEqual(expect.anything())
@@ -150,5 +150,6 @@ describe('Item I/O --> Category dependent', () => {
     expect(res.body.item.threshold).toEqual(expect.any(Number))
     expect(res.body.item.quantity).toEqual(expect.any(Number))
     expect(res.body.item.category_id).toEqual(expect.any(Number))
+    expect(res.body.item.code).toEqual(expect.any(String))
   })
 })

@@ -11,7 +11,7 @@ const getItems = async(req, res)=>{
 }
 
 const postItem = async (req, res)=>{
-    const result = await itemServices.createItem(req.body.name, req.body.quantity, req.body.location, req.body.threshold, req.body.category_id)
+    const result = await itemServices.createItem(req.body.name, req.body.quantity, req.body.location, req.body.threshold, req.body.category_id, req.body.code)
 
     res.json({
         err: result.err,
@@ -31,7 +31,7 @@ const getItemById = async (req, res)=>{
 }
 
 const updateItem = async (req, res)=>{
-    const result = await itemServices.updateItem(req.body.name,req.body.quantity, req.body.location, req.body.threshold, req.body.category_id,req.params.id)
+    const result = await itemServices.updateItem(req.body.name,req.body.quantity, req.body.location, req.body.threshold, req.body.category_id, req.body.code,req.params.id)
 
     res.json({
         err: result.err,
