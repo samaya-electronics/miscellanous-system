@@ -50,10 +50,21 @@ const deleteRole = async (req, res)=>{
     })
 }
 
+const getRoleUsers = async (req, res) => {
+    const result = await roleServices.getRoleUsers(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        users: result.users
+    })
+}
+
 module.exports = {
     getRoleById,
     postRole,
     updateRole,
     deleteRole,
-    getRoles
+    getRoles,
+    getRoleUsers
 }

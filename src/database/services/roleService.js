@@ -70,10 +70,26 @@ const deleteRole = async (id) => {
     return result
 }
 
+
+const getRoleUsers = async (role_id) => {
+    result = {}
+    try{
+        const role = Role.findByPk(role_id)
+        result.users = role.getUsers()
+        result.msg = "Found all users with role ID"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not find users by role ID"
+    }
+    return result
+}
+
 module.exports = {
     createRole,
     getRoles,
     getRoleById,
     updateRole,
     deleteRole,
+    getRoleUsers,
 }
