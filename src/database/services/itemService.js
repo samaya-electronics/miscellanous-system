@@ -76,22 +76,22 @@ const deleteItem = async (id) => {
  }
 
 const createItemAuthenticators = async (item, users_ids, order, leader_approve) => {
-    users_ids.forEach((user_id, i) => {
-        const user = await User.findByPk(user_id)
-        await item.addUser(user, {
-            through: {
-                order,
-                leader_approve
-            }
-        })
-    })
+	users_ids.forEach((user_id, i) => {
+		const user = await User.findByPk(user_id)
+		await item.addUser(user, {
+			through: {
+				order,
+				leader_approve
+			}
+		})
+	})
 }
  
- module.exports = {
-    createItem,
-    getItems,
-    getItemById,
-    updateItem,
-    deleteItem,
-    createItemAuthenticators,
- }
+module.exports = {
+	createItem,
+	getItems,
+	getItemById,
+	updateItem,
+	deleteItem,
+	createItemAuthenticators,
+}
