@@ -11,9 +11,6 @@ const getItems = async(req, res)=>{
 }
 
 const postItem = async (req, res)=>{
-<<<<<<< HEAD
-    const result = await itemServices.createItem(req.body.name, req.body.quantity, req.body.location, req.body.threshold, req.body.category_id, req.body.code)
-=======
     const result = await itemServices.createItem(
         req.body.name,
         req.body.quantity,
@@ -27,7 +24,6 @@ const postItem = async (req, res)=>{
         req.body.order,
         req.body.leader_approve
     )
->>>>>>> f4ae91e8a86d9a43ba34780659cfc730d00390e0
 
     res.json({
         err: result.err,
@@ -47,9 +43,6 @@ const getItemById = async (req, res)=>{
 }
 
 const updateItem = async (req, res)=>{
-<<<<<<< HEAD
-    const result = await itemServices.updateItem(req.body.name,req.body.quantity, req.body.location, req.body.threshold, req.body.category_id, req.body.code,req.params.id)
-=======
     const result = await itemServices.updateItem(
         req.body.name,
         req.body.quantity,
@@ -58,7 +51,6 @@ const updateItem = async (req, res)=>{
         req.body.category_id,
         req.params.id
     )
->>>>>>> f4ae91e8a86d9a43ba34780659cfc730d00390e0
 
     res.json({
         err: result.err,
