@@ -47,7 +47,7 @@ describe('Item I/O --> Category dependent', () => {
 
   test('get /userbyrole --> with error', async () => {
     const res = await request(app)
-      .get('/roles/99/users')
+      .get('/roles/marwanbablo/users')
       
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).toEqual(expect.anything())
