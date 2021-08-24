@@ -43,6 +43,13 @@ module.exports = (sequelize, DataTypes) => {
         min: 0
       }
     },
+    code: {
+      type: DataTypes.STRING(500),
+      allowNull: false,
+      // validate: {
+      //   isAlphanumeric: true,
+      // }
+    },
     location: {
       type: DataTypes.STRING(500),
       allowNull: false,
@@ -54,8 +61,9 @@ module.exports = (sequelize, DataTypes) => {
         isInt: true,
         min: 0
       }
-    }
-    }
+    },
+    
+  }
     ,{
       sequelize,
       underscored: true,
