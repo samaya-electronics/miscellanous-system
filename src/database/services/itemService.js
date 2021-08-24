@@ -1,4 +1,4 @@
-const { Item } = require('../models')
+const { Item, User } = require('../models')
 
 const createItem = async (name, quantity, location, threshold, category_id,code) => {
     const result = {}
@@ -75,11 +75,24 @@ const deleteItem = async (id) => {
      }
      return result
  }
+
+const createItemAuthenticators = async (item, users_ids, order, leader_approve) => {
+    users_ids.forEach((user_id, i) => {
+        const user = await User.findByPk(user_id)
+        await item.addUser(user, {
+            through: {
+                order,
+                leader_approve
+            }
+        })
+    })
+}
  
  module.exports = {
-     createItem,
-     getItems,
-     getItemById,
-     updateItem,
-     deleteItem,
+    createItem,
+    getItems,
+    getItemById,
+    updateItem,
+    deleteItem,
+    createItemAuthenticators,
  }
