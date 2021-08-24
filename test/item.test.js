@@ -67,30 +67,34 @@ describe('Item I/O --> Category dependent', () => {
   //   expect(res.body.item.category_id).toEqual(1)
   // })
   
-  // test.each([
-  //   ["test-item-1", "test-loc-1", 58, 30, 1],
-  //   ["test-item-2", "test-loc-2", 52, 25, 2],
-  //   ["test-item-3", "test-loc-3", 55, 20, 2],
-  // ])('POST /items --> Create 3 item, Category dependent', async (test_name, test_loc, test_q, test_thresh, test_cat_id) => {
-  //   const res = await request(app)
-  //     .post('/items')
-  //     .send({
-  //       name: test_name,
-  //       quantity: test_q,
-  //       threshold: test_thresh,
-  //       location: test_loc,
-  //       category_id: test_cat_id
-  //   })
-  //   expect(res.statusCode).toEqual(200)
-  //   expect(res.body.err).not.toEqual(expect.anything())
-  //   expect(res.body.item).toEqual(expect.objectContaining({
-  //     name: test_name,
-  //     quantity: test_q,
-  //     threshold: test_thresh,
-  //     location: test_loc,
-  //     category_id: test_cat_id
-  //   }))
-  // })
+  test.each([
+    ["test-item-1", "test-loc-1", 58, 30, 1],
+    ["test-item-2", "test-loc-2", 52, 25, 2],
+    ["test-item-3", "test-loc-3", 55, 20, 2],
+  ])('POST /items --> Create 3 item, Category dependent', async (test_name, test_loc, test_q, test_thresh, test_cat_id) => {
+    const res = await request(app)
+      .post('/items')
+      .send({
+        name: test_name,
+        quantity: test_q,
+        threshold: test_thresh,
+        location: test_loc,
+        category_id: test_cat_id,
+        users: [1,2,3],
+        leader_approve: true
+    })
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.item).toEqual(expect.objectContaining({
+      name: test_name,
+      quantity: test_q,
+      threshold: test_thresh,
+      location: test_loc,
+      category_id: test_cat_id,
+      users: [1,2,3],
+      leader_approve: true
+    }))
+  })
 
   // test.each([
   //   ["test-item-1-edit", "test-loc-1", 58, 30, 1, 1],
@@ -125,7 +129,9 @@ describe('Item I/O --> Category dependent', () => {
         quantity: 50,
         threshold: 30,
         location: "test-loc-1",
-        category_id: 1
+        category_id: 1,
+        users: [1,2,3],
+        leader_approve: true
     })
 
     expect(res.body.err).toEqual(expect.anything())
