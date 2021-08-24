@@ -74,8 +74,8 @@ const deleteRole = async (id) => {
 const getRoleUsers = async (role_id) => {
     result = {}
     try{
-        const role = Role.findByPk(role_id)
-        result.users = role.getUsers()
+        const role = await Role.findByPk(role_id)
+        result.users = await role.getUsers()
         result.msg = "Found all users with role ID"
     }
     catch(err){
