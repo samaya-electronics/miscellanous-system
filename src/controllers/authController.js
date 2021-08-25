@@ -2,7 +2,7 @@ const userService = require("../database/services/userService")
 
 const loginPost = async (req, res) => {
 
-	const result = await userService.findByUserName(req.body.username)
+	const result = await userService.generateUserToken(req.body.username)
 	// TODO:
 	// check if they are true and get info from ldap
 	// check password too
