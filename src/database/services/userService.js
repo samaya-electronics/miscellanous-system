@@ -1,34 +1,19 @@
 const { User } = require('../models')
+const jwt = require('jsonwebtoken');
 
-const createUser = async (name, username, role_id,user_manager_id) => {
+const createUser = async (name, role_id, user_manager_id) => {
     const result = {}
     try{
         result.user = await User.create({
-            name: name,
-            username: username,
-            role_id: role_id,
-            user_manager_id: user_manager_id
+            name,
+            role_id,
+            user_manager_id
         })
         result.msg = "User Created"
     }
     catch(err){
         result.err = err
         result.msg = "Could not create user, try again later."
-    }
-    return result
-}
-
-
-
-const getUsers = async () => {
-    const result = {}
-    try{
-        result.users = await User.findAll()
-        result.msg = "Got all users"
-    }
-    catch(err){
-        result.err = err
-        result.msg = "Could not get all users"
     }
     return result
 }
@@ -46,11 +31,15 @@ const getUserById = async (id) => {
      return result
  }
 
- const updateUser = async (id, name, username, role_id,user_manager_id) => {
+ const updateUser = async (id, name, role_id, user_manager_id) => {
     const result = {}
     try{
         const user = await User.findByPk(id)
-        result.user = await category.update({name: name , username: username ,role_id: role_id, user_manager_id: user_manager_id})
+        result.user = await user.update({
+            name,
+            role_id,
+            user_manager_id,
+        })
         result.msg = "Updated user"
     }
     catch(err){
@@ -74,11 +63,17 @@ const deleteUser = async (id) => {
      return result
 }
 
-const findByUserName = async (username) => {
+const generateUserToken = async (username) => {
     const result = {}
     try{
         result.user = await User.findOne({ where: { name: username } })
         if(!result.user) throw new Error('user not found')
+
+        result.token = jwt.sign({ user: result.user },  process.env.SECRET_KEY, { expiresIn: '8h' });
+
+        result.user.token = result.token
+        await user.save()
+        
         result.msg = "Got user"
     }
     catch(err){
@@ -97,14 +92,13 @@ const saveUserToken = async (user, token) => {
         return err
     }
 }
-
  
- module.exports = {
+module.exports = {
      createUser,
      getUsers,
      getUserById,
      updateUser,
      deleteUser,
-     findByUserName,
      saveUserToken,
- }
+     generateUserToken,
+}
