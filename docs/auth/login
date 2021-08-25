@@ -1,6 +1,6 @@
 URL POST /auth/login
 Body Data: {
-    name:{String}
+    username:{String}
 }
 
 Returned Data:
