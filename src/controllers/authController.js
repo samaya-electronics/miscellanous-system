@@ -12,7 +12,7 @@ const loginPost = async (req, res) => {
 	res.json({
 		msg: result.msg,
 		token: result.token,
-		links:['/store','/requests'],
+		links: result.links,
 		err: result.err
 	})
 }

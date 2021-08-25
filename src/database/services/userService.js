@@ -74,6 +74,9 @@ const generateUserToken = async (username) => {
         result.user.token = result.token
         await user.save()
         
+        const userRole = user.getRole()
+        result.links = userRole.name === "admin" ? ['/store','/requests'] : ['/store'] 
+
         result.msg = "Got user"
     }
     catch(err){
