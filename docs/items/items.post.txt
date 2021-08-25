@@ -4,7 +4,9 @@ Body Data: {
     quantity: {int},
     threshold: {int},
     location: {string},
-    category_id: {int}
+    category_id: {int},
+    code:{string},
+    leader_approve:{boolean},
 }
 
 Returned Data:
@@ -19,6 +21,8 @@ A- success
         threshold: {int},
         location: {string},
         category_id: {int},
+        code:{string},
+        leader_approve:{boolean},
         updated_at: {Date},
         created_at: {Date}        
     }

@@ -1,0 +1,19 @@
+URL POST /auth/login
+Body Data: {
+    name:{String}
+}
+
+Returned Data:
+
+A- success
+{
+    msg: {string},
+    token: {string},
+    links: {array} ==> ['/store','/requests'],
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: {string}
+}
