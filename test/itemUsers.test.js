@@ -1,4 +1,3 @@
-const { arrayContaining } = require('expect');
 const request = require('supertest');
 const app = require('../src/app');
 const { sequelize, Role, User, Item, Category } = require('../src/database/models')
