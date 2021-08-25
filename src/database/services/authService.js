@@ -9,7 +9,7 @@ const findByUserName = async (username) => {
     }
     catch(err){
         result.err = err
-        result.msg = "Could not get all users"
+        result.msg = "Could not get user"
     }
     return result
 }
