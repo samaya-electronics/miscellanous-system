@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING(150),
       allowNull: false,
+    },
+    token: {
+      type: DataTypes.STRING(500),
+      allowNull: true
     }
     }
     ,{
