@@ -82,16 +82,6 @@ const generateUserToken = async (username) => {
     }
     return result
 }
-
-const saveUserToken = async (user, token) => {
-    try{
-        user.token = token
-        await user.save()
-    }
-    catch(err){
-        return err
-    }
-}
  
 module.exports = {
      createUser,
