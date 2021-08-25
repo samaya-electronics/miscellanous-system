@@ -72,7 +72,32 @@ const deleteUser = async (id) => {
          result.msg = "Could not delete user"
      }
      return result
- }
+}
+
+const findByUserName = async (username) => {
+    const result = {}
+    try{
+        result.user = await User.findOne({ where: { name: username } })
+        if(!result.user) throw new Error('user not found')
+        result.msg = "Got user"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get user"
+    }
+    return result
+}
+
+const saveUserToken = async (user, token) => {
+    try{
+        user.token = token
+        await user.save()
+    }
+    catch(err){
+        return err
+    }
+}
+
  
  module.exports = {
      createUser,
@@ -80,4 +105,6 @@ const deleteUser = async (id) => {
      getUserById,
      updateUser,
      deleteUser,
+     findByUserName,
+     saveUserToken,
  }
