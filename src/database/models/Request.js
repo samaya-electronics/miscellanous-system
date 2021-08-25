@@ -35,6 +35,16 @@ module.exports = (sequelize, DataTypes) => {
         isInt: true,
         min: 1
       }
+    },
+    leader_approved:{
+      type: DataTypes.BOOLEAN,
+      allowNull:false,
+      defaultValue: false
+    },
+    warehouse_admin_approved:{
+      type: DataTypes.BOOLEAN,
+      allowNull:false,
+      defaultValue: false
     }
   }
   ,{

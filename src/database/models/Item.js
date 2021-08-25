@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     leader_approve:{
       type: DataTypes.BOOLEAN,
       allowNull:false,
-      defaultValue: false
+      defaultValue: true
     }
   }
     ,{

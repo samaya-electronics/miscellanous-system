@@ -10,7 +10,7 @@ const createItem = async (name, quantity, location, threshold, category_id, code
             threshold,
             category_id,
             code,
-						leader_approve
+			leader_approve
         })
         result.msg = "Item Created"
     }
