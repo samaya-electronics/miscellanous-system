@@ -62,7 +62,11 @@ module.exports = (sequelize, DataTypes) => {
         min: 0
       }
     },
-    
+    leader_approve:{
+      type: DataTypes.BOOLEAN,
+      allowNull:false,
+      defaultValue: false
+    }
   }
     ,{
       sequelize,

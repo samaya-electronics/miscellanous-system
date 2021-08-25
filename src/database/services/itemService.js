@@ -1,15 +1,16 @@
 const { Item, User } = require('../models')
 
-const createItem = async (name, quantity, location, threshold, category_id,code) => {
+const createItem = async (name, quantity, location, threshold, category_id, code, leader_approve) => {
     const result = {}
     try{
         result.item = await Item.create({
-            name: name,
-            quantity: quantity,
-            location: location,
-            threshold: threshold,
-            category_id: category_id,
-            code: code
+            name,
+            quantity,
+            location,
+            threshold,
+            category_id,
+            code,
+						leader_approve
         })
         result.msg = "Item Created"
     }
@@ -48,11 +49,19 @@ const getItemById = async (id) => {
      return result
  }
 
- const updateItem = async (name, quantity, location, threshold, category_id, code, id) => {
+ const updateItem = async (name, quantity, location, threshold, category_id, code, leader_approve, id) => {
     const result = {}
     try{
         const item = await Item.findByPk(id)
-        result.item = await item.update({name: name , quantity: quantity , location: location, threshold: threshold, category_id: category_id, code:code})
+        result.item = await item.update({
+					name,
+					quantity,
+					location,
+					threshold,
+					category_id,
+					code,
+					leader_approve
+				})
         result.msg = "Updated Item"
     }
     catch(err){
@@ -76,16 +85,40 @@ const deleteItem = async (id) => {
      return result
  }
 
-const createItemAuthenticators = async (item, users_ids, order, leader_approve) => {
-	users_ids.forEach((user_id, i) => {
-		const user = await User.findByPk(user_id)
-		await item.addUser(user, {
-			through: {
-				order,
-				leader_approve
-			}
-		})
-	})
+const createItemAuthenticators = async (item, users_ids) => {
+	try{
+		let user
+		for await (const [i, user_id] of users_ids.entries()){
+			user = await User.findByPk(user_id)
+			await item.addUser(user, {
+				through: {
+					order: i+1,
+					leader_approve: true
+				}
+			})
+		}
+	}
+	catch(err){
+		return err
+	}
+	return undefined
+}
+
+const editItemAuthenticators = async (item, users_ids) => {
+	await item.setUsers([])
+	try{
+		for await (const [i, user] of users.entries()){
+			await item.addUser(user, {
+				through: {
+					order: i+1,
+					leader_approve: true
+				}
+			})
+		}
+	}
+	catch(err){
+		return err
+	}
 }
  
 module.exports = {
@@ -95,4 +128,5 @@ module.exports = {
 	updateItem,
 	deleteItem,
 	createItemAuthenticators,
+	editItemAuthenticators
 }

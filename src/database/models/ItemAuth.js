@@ -19,11 +19,6 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 		},
-		leader_approve:{
-      type: DataTypes.BOOLEAN,
-      allowNull:false,
-      defaultValue: false
-    }
   },{
 		sequelize,
 		underscored: true,
