@@ -9,10 +9,10 @@ beforeAll(async () => {
   })
   await Role.bulkCreate([
     {name: 'admin'},
-    {name: 'admin'},
+    {name: 'user'},
   ])
   return User.bulkCreate([{
-    name: "admin",
+    name: "karim",
     role_id: 1
   },{
     name: "nourhan",
@@ -26,7 +26,7 @@ return sequelize.close()
 
 describe('login test', () => {
 
-  it('post /login --> login error attempt', async () => {
+  test('post /login --> login error attempt with no body', async () => {
     const res = await request(app)
       .post('/auth/login')
   
@@ -35,12 +35,15 @@ describe('login test', () => {
     expect(res.body.err).toEqual(expect.anything())
   })
   
-  it('post /login --> post is working, returns result', async () => {
+  test.each([
+    ['nourhan', 'nourhan', ['/store']],
+    ['karim', 'admin', ['/store', '/requests']],
+  ])('post /login --> post is working, returns result for appropriate user', async (username, password, links) => {
     const res = await request(app)
       .post('/auth/login')
       .send({
-          username: "admin",
-          password: "admin"
+          username,
+          password
       })
       
       
@@ -48,6 +51,23 @@ describe('login test', () => {
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.token).toEqual(expect.any(String))
     expect(res.body.msg).toEqual(expect.any(String))
-    expect(res.body.links).toEqual(expect.arrayContaining(['/store', '/requests']))
+    expect(res.body.links).toEqual(expect.arrayContaining(links))
+  })
+
+
+  test('post /login --> post is working, not a registered user', async () => {
+    const res = await request(app)
+      .post('/auth/login')
+      .send({
+          username: "not a usr",
+          password: "dummy data"
+      })
+      
+      
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).toEqual(expect.anything())
+    expect(res.body.token).not.toEqual(expect.any(String))
+    expect(res.body.msg).toEqual(expect.any(String))
+    expect(res.body.links).not.toEqual(expect.arrayContaining(['/store', '/requests']))
   })
 })
