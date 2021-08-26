@@ -54,5 +54,4 @@ module.exports = {
     postUser,
     updateUser,
     deleteUser,
-    getUsers
 }

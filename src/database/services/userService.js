@@ -70,13 +70,15 @@ const generateUserToken = async (username) => {
         if(!result.user) throw new Error('user not found')
 
         result.token = jwt.sign({ user: result.user },  process.env.SECRET_KEY, { expiresIn: '8h' });
-
-        result.user.token = result.token
-        await user.save()
         
-        const userRole = user.getRole()
+        result.user.token = result.token
+        await result.user.save()
+        
+        //we can save user role directly to token or save boolean is admin
+        
+        const userRole = await result.user.getRole()
         result.links = userRole.name === "admin" ? ['/store','/requests'] : ['/store'] 
-
+        
         result.msg = "Got user"
     }
     catch(err){
@@ -88,10 +90,8 @@ const generateUserToken = async (username) => {
  
 module.exports = {
      createUser,
-     getUsers,
      getUserById,
      updateUser,
      deleteUser,
-     saveUserToken,
      generateUserToken,
 }

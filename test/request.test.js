@@ -18,18 +18,21 @@ beforeAll(async () => {
     name: "item-1",
     quantity: 50,
     threshold: 20,
+    code: "klsjd45",
     location: "wanta mal ahlk anta ana al sb3awy",
     category_id: 1
   },{
     name: "item-2",
     quantity: 90,
     threshold: 40,
+    code: "klsjd45",
     location: "wanta mal ahlk anta ana al sb3awy tany",
     category_id: 2
   },{
     name: "item-3",
     quantity: 102,
     threshold: 23,
+    code: "klsjd45",
     location: "wanta mal ahlk anta ana al sb3awy talt",
     category_id: 1
   }])

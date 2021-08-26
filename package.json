@@ -21,6 +21,7 @@
     "test": "^0.6.0"
   },
   "devDependencies": {
+    "i": "^0.3.6",
     "jest": "^27.0.6",
     "nodemon": "^2.0.12",
     "sequelize-cli": "^6.2.0",
