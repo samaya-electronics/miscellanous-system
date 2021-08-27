@@ -13,9 +13,9 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
  - [X] refactor all pk to ids
  - [X] write tests for all services and controllers
  - [X] implement validation & constraints in Models
- - [ ] remove leader_approve from itemAuth
- - [ ] do exception handling to create/edit itemauth in item services
- - [ ] implement validation in endpoints
+ - [ ] remove unwanted info from user in token
+ - [ ] catchphrase
+ <!-- - [ ] do exception handling to create/edit itemauth in item services -->
 
 ### ASK Hazem :
  - what will warehouse admin need to verify a user

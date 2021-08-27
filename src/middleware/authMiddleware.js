@@ -1,10 +1,24 @@
 const jwt = require('jsonwebtoken');
 
-const authenticateToken = async (req, res, next) => {
-    try{
-        req.user = jwt.sign(req.body.token, process.env.SECRETE_TOKEN)
-    }
-    catch(err){
-        req.tokenErr = err
-    }
+const authenticateToken = (...roles) =>{
+	return (req, res, next) => {
+		try{
+			req.user = jwt.verify(req.body.token, process.env.SECRETE_TOKEN)
+			if(roles.includes(req.user.role.name)){
+				next()
+			}
+			else{
+				throw new Error("Not permitted")
+			}
+		}
+		catch(err){
+			return res.json({
+				err
+			})
+		}
+	}
+} 
+
+module.exports = {
+	authenticateToken,
 }
