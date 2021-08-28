@@ -3,7 +3,7 @@ const router = express.Router()
 const itemsController = require('../controllers/itemsController')
 const authMiddleware = require('../middleware/authMiddleware')
 
-router.use(authMiddleware.authenticateToken('admin', 'user'))
+router.use(authMiddleware.authenticateTokenAndRole('admin', 'user'))
 
 router.get('/', itemsController.getItems)
 router.get('/:id', itemsController.getItemById)

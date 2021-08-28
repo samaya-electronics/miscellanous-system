@@ -3,7 +3,7 @@ const { User, Role } = require('../database/models');
 
 // TODO
 // clean up this god forsaken function
-const authenticateToken = (...roles) =>{
+const authenticateTokenAndRole = (...roles) =>{
 	return async (req, res, next) => {
 		try{
 			let user = jwt.verify(req.body.token, process.env.SECRET_KEY)
@@ -22,6 +22,24 @@ const authenticateToken = (...roles) =>{
 	}
 } 
 
+const authenticateToken = async (req, res, next) => {
+	try{
+		let user = jwt.verify(req.body.token, process.env.SECRET_KEY)
+		user = await User.findByPk(user.user_id, {include : Role})
+		if(user.token !== req.body.token) throw new Error("Invalid user token")
+		if(user.name !== req.body.username) throw new Error("Invalid username")
+		
+		req.body.user = user
+		next()
+	}
+	catch(err){
+		return res.json({
+			err
+		})
+	}
+}
+
 module.exports = {
-	authenticateToken,
+	authenticateTokenAndRole,
+	authenticateToken
 }

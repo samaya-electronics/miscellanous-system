@@ -87,11 +87,26 @@ const generateUserToken = async (username) => {
     }
     return result
 }
+
+const logoutUser = async (user) => {
+    result = {}
+    try{
+        user.token = null
+        await user.save()
+        result.msg = "User logged out successfully"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "User logout error"
+    }
+    return result
+}
  
 module.exports = {
-     createUser,
-     getUserById,
-     updateUser,
-     deleteUser,
-     generateUserToken,
+    createUser,
+    getUserById,
+    updateUser,
+    deleteUser,
+    generateUserToken,
+    logoutUser,
 }

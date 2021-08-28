@@ -17,10 +17,11 @@ const loginPost = async (req, res) => {
 }
 
 const logoutController = async (req, res) => {
-	// log out user by deactivating his token
+	const result = await userService.logoutUser(req.body.user)
+
 	res.json({
-		msg: "msg",
-		err: "err",
+		msg: result.msg,
+		err: result.err
 	})
 }
 
