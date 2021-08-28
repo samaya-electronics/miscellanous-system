@@ -66,21 +66,18 @@ const deleteUser = async (id) => {
 const generateUserToken = async (username) => {
     const result = {}
     try{
-        result.user = await User.findOne({
+        const user = await User.findOne({
             where: { name: username },
             include: Role
         })
-        if(!result.user) throw new Error('user not found')
+        if(!user) throw new Error('user not found')
 
-        result.token = jwt.sign({ user: result.user },  process.env.SECRET_KEY, { expiresIn: '8h' });
+        result.token = jwt.sign({user_id: user.user_id},  process.env.SECRET_KEY, { expiresIn: '8h' });
         
-        result.user.token = result.token
-        await result.user.save()
+        user.token = result.token
+        await user.save()
         
-        //we can save user role directly to token or save boolean is admin
-        
-        const userRole = await result.user.getRole()
-        result.links = userRole.name === "admin" ? ['/store','/requests'] : ['/store'] 
+        result.links = user.Role.name === "admin" ? ['/store','/requests'] : ['/store'] 
         
         result.msg = "Got user"
     }

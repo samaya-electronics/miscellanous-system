@@ -48,6 +48,7 @@ describe('login test', () => {
       
       
     expect(res.statusCode).toEqual(200)
+    // console.log(res.body.err.message)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.token).toEqual(expect.any(String))
     expect(res.body.msg).toEqual(expect.any(String))

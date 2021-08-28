@@ -1,15 +1,18 @@
 const jwt = require('jsonwebtoken');
+const { User, Role } = require('../database/models');
 
+// TODO
+// clean up this god forsaken function
 const authenticateToken = (...roles) =>{
-	return (req, res, next) => {
+	return async (req, res, next) => {
 		try{
-			req.user = jwt.verify(req.body.token, process.env.SECRET_KEY).user // you have to specify what you want out of the token (.user)
-			if(roles.includes(req.user.Role.name)){
-				next()
-			}
-			else{
-				throw new Error("Not permitted")
-			}
+			let user = jwt.verify(req.body.token, process.env.SECRET_KEY)
+			user = await User.findByPk(user.user_id, {include : Role})
+			if(user.token !== req.body.token) throw new Error("Invalid user token")
+			if(user.name !== req.body.username) throw new Error("Invalid username")
+			if(!roles.includes(user.Role.name)) throw new Error("User role not permitted")
+			
+			next()
 		}
 		catch(err){
 			return res.json({

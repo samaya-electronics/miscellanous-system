@@ -13,8 +13,11 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
  - [X] refactor all pk to ids
  - [X] write tests for all services and controllers
  - [X] implement validation & constraints in Models
- - [ ] remove unwanted info from user in token
- - [ ] catchphrase
+ - [ ] logout
+ - [ ] **remove unwanted info from user in token**
+ - [ ] clean up middleware function
+ - [ ] finish authentication with ldap
+ - [ ] if security is tight, user UUIDs instead of IDs
  <!-- - [ ] do exception handling to create/edit itemauth in item services -->
 
 ### ASK Hazem :
