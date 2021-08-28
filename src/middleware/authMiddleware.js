@@ -6,12 +6,8 @@ const { User, Role } = require('../database/models');
 const authenticateTokenAndRole = (...roles) =>{
 	return async (req, res, next) => {
 		try{
-			let user = jwt.verify(req.body.token, process.env.SECRET_KEY)
-			user = await User.findByPk(user.user_id, {include : Role})
-			if(user.token !== req.body.token) throw new Error("Invalid user token")
-			if(user.name !== req.body.username) throw new Error("Invalid username")
-			if(!roles.includes(user.Role.name)) throw new Error("User role not permitted")
-			
+			if(!roles.includes(req.body.user.Role.name)) throw new Error("User role not permitted")
+
 			next()
 		}
 		catch(err){
