@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.User, {
         foreignKey: {
           allowNull: true,
-          name: "user_manager_id"
+          name: "user_leader_id"
         },
       })
       User.belongsToMany(models.Item, {

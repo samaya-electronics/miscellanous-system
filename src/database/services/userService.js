@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Role } = require('../models')
 const jwt = require('jsonwebtoken');
 
 const createUser = async (name, role_id, user_manager_id) => {
@@ -66,7 +66,10 @@ const deleteUser = async (id) => {
 const generateUserToken = async (username) => {
     const result = {}
     try{
-        result.user = await User.findOne({ where: { name: username } })
+        result.user = await User.findOne({
+            where: { name: username },
+            include: Role
+        })
         if(!result.user) throw new Error('user not found')
 
         result.token = jwt.sign({ user: result.user },  process.env.SECRET_KEY, { expiresIn: '8h' });
