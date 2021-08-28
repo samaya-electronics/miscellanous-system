@@ -42,11 +42,9 @@ beforeAll(async () => {
   ])
   await User.bulkCreate([{
     name: "karim",
-    user_name: "karim1111",
     role_id: 1
   },{
     name: "nourhan",
-    user_name:"nourhan12133",
     role_id: 2
   }])
   return Request.bulkCreate([
