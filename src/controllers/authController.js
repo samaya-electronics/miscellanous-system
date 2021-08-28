@@ -17,6 +17,15 @@ const loginPost = async (req, res) => {
 	})
 }
 
+const logoutController = async (req, res) => {
+	// log out user by deactivating his token
+	res.json({
+		msg: "msg",
+		err: "err",
+	})
+}
+
 module.exports = {
 	loginPost,
+	logoutController
 }
