@@ -14,15 +14,15 @@ beforeAll(async () => {
   ])
 
   await Role.bulkCreate([
-    {name: 'role no1'},
-    {name: 'role no2'},
+    {name: 'user'},
+    {name: 'admin'},
   ])
 
   await User.bulkCreate([{
-    name: "karim1",
+    name: "karim",
     role_id: 1
   },{
-    name: "nourhan1",
+    name: "nourhan",
     role_id: 2
   },{
     name: "shafik",
@@ -68,8 +68,20 @@ afterAll(() => {
 describe('Item I/O --> Category dependent', () => {
 
   test('GET /items --> get all items created in DB', async () => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
       .get('/items')
+      .send({
+        token: resAuth.body.token,
+        username: 'karim'
+      })
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -77,8 +89,20 @@ describe('Item I/O --> Category dependent', () => {
   })
   
   test('GET /items/:pk --> get item by pk to check it is created in DB', async () => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
     .get('/items/1')
+    .send({
+      token: resAuth.body.token,
+      username: 'karim'
+    })
     
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -94,10 +118,18 @@ describe('Item I/O --> Category dependent', () => {
     ["test-item-2", "test-loc-2", 52, 25, 2,"12566werfs"],
     ["test-item-3", "test-loc-3", 55, 20, 2,"125686werfs"],
   ])('POST /items --> Create 3 item, Category dependent', async (test_name, test_loc, test_q, test_thresh, test_cat_id,test_code) => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
       .post('/items')
       .send({
-        name: test_name,
+        item_name: test_name,
         quantity: test_q,
         threshold: test_thresh,
         location: test_loc,
@@ -106,7 +138,9 @@ describe('Item I/O --> Category dependent', () => {
         leader_approve: true,
         users_ids: [4,2,3],
         order: [1,2,3],
-        leader_approve: true
+        leader_approve: true,
+        token: resAuth.body.token,
+        username: 'karim'
     })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -121,6 +155,14 @@ describe('Item I/O --> Category dependent', () => {
   })
 
   test('POST /items --> error in creating Item', async () => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
       .post('/items')
       .send({
@@ -132,7 +174,9 @@ describe('Item I/O --> Category dependent', () => {
         code: "125626werfs",
         users_ids: [4,2,3],
         order: [1,2,3],
-        leader_approve: true
+        leader_approve: true,
+        token: resAuth.body.token,
+        username:'karim'
       })
 
     expect(res.body.err).toEqual(expect.anything())
@@ -144,10 +188,18 @@ describe('Item I/O --> Category dependent', () => {
     ["test-item-2-edit", "test-loc-2", 52, 25, 2, 2, "dkj123hj"],
     ["test-item-3-edit", "test-loc-3", 55, 20, 2, 3, "dkj123hj"],
   ])('PUT /items --> Edit 3 items', async (test_name, test_loc, test_q, test_thresh, test_cat_id, item_to_change_id, item_to_change_code) => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
       .put(`/items/${item_to_change_id}`)
       .send({
-        name: test_name,
+        item_name: test_name,
         quantity: test_q,
         threshold: test_thresh,
         location: test_loc,
@@ -155,7 +207,9 @@ describe('Item I/O --> Category dependent', () => {
         code: item_to_change_code,
         users_ids: [4,2,3],
         order: [1,2,3],
-        leader_approve: false
+        leader_approve: false,
+        token: resAuth.body.token,
+        username: 'karim'
     })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -169,9 +223,20 @@ describe('Item I/O --> Category dependent', () => {
   })
 
   test('DELETE /items/:pk --> delete item by pk', async () => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+    
     const res = await request(app)
     .delete('/items/1')
-    
+    .send({
+      token:resAuth.body.token,
+      username:'karim'
+    })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.item.name).toEqual(expect.any(String))
@@ -181,4 +246,5 @@ describe('Item I/O --> Category dependent', () => {
     expect(res.body.item.category_id).toEqual(expect.any(Number))
     expect(res.body.item.code).toEqual(expect.any(String))
   })
+
 })
