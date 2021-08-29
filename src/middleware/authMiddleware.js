@@ -5,7 +5,6 @@ const onlyPassRoles = (...roles) =>{
 	return async (req, res, next) => {
 		try{
 			if(!roles.includes(req.body.user.Role.name)) throw new Error("User role not permitted")
-
 			next()
 		}
 		catch(err){

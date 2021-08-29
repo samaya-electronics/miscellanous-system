@@ -1,6 +1,6 @@
 const requestServices = require('../database/services/requestService')
 
-const getRequests = async(req, res)=>{
+const getRequests = async(req, res) => {
     const result = await requestServices.getRequests()
 
     res.json({
@@ -10,8 +10,18 @@ const getRequests = async(req, res)=>{
     })
  }
 
+const getLeaderRequests = async (req, res) => {
+    const result = await requestServices.getLeaderRequests(req.body.user)
 
- const getRequestById = async (req, res)=>{
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        requests: result.requests
+    })
+}
+
+
+ const getRequestById = async (req, res) => {
     const result = await requestServices.getRequestById(req.params.id)
 
     res.json({
@@ -21,7 +31,7 @@ const getRequests = async(req, res)=>{
     })
 }
 
-const createRequest = async (req, res)=>{
+const createRequest = async (req, res) => {
     const result = await requestServices.createRequest(
         req.body.quantity,
         req.body.item_id,
@@ -35,7 +45,7 @@ const createRequest = async (req, res)=>{
     })
 }
 
-const deleteRequest = async (req, res)=>{
+const deleteRequest = async (req, res) => {
     const result = await requestServices.deleteRequest(req.params.id)
 
     res.json({
@@ -48,6 +58,7 @@ const deleteRequest = async (req, res)=>{
 module.exports = {
     getRequests,
     getRequestById,
+    getLeaderRequests,
     createRequest,
     deleteRequest
 }
