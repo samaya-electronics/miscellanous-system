@@ -3,7 +3,7 @@ const { User, Role } = require('../database/models');
 
 // TODO
 // clean up this god forsaken function
-const authenticateTokenAndRole = (...roles) =>{
+const onlyPassRoles = (...roles) =>{
 	return async (req, res, next) => {
 		try{
 			if(!roles.includes(req.body.user.Role.name)) throw new Error("User role not permitted")
@@ -36,6 +36,6 @@ const authenticateToken = async (req, res, next) => {
 }
 
 module.exports = {
-	authenticateTokenAndRole,
+	onlyPassRoles,
 	authenticateToken
 }

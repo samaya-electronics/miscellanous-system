@@ -4,7 +4,7 @@ const itemsController = require('../controllers/itemsController')
 const authMiddleware = require('../middleware/authMiddleware')
 
 router.use(authMiddleware.authenticateToken)
-router.use(authMiddleware.authenticateTokenAndRole('admin', 'user'))
+router.use(authMiddleware.onlyPassRoles('admin', 'user'))
 
 router.get('/', itemsController.getItems)
 router.get('/:id', itemsController.getItemById)
