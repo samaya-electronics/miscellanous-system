@@ -11,7 +11,7 @@ const getCategories = async(req, res)=>{
 }
 
 const postCategory = async (req, res)=>{
-    const result = await categoryServices.createCategory(req.body.name)
+    const result = await categoryServices.createCategory(req.body.category_name)
 
     res.json({
         err: result.err,
@@ -31,7 +31,7 @@ const getCategoryById = async (req, res)=>{
 }
 
 const updateCategory = async (req, res)=>{
-    const result = await categoryServices.updateCategory(req.body.name, req.params.id)
+    const result = await categoryServices.updateCategory(req.body.category_name, req.params.id)
 
     res.json({
         err: result.err,

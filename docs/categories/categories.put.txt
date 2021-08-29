@@ -1,6 +1,8 @@
 URL PUT /categories/:id
 Body Data: {
-    name : {string}
+    category_name : {string},
+    username: {string},
+    token: {string}
 }
 
 Returned Data:

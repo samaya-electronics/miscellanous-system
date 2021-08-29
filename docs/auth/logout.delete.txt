@@ -1,6 +1,7 @@
-URL POST /auth/login
+URL DELETE /auth/logout
 Body Data: {
-    username:{string}
+    username:{string},
+    token: {string}
 }
 
 Returned Data:
@@ -8,8 +9,6 @@ Returned Data:
 A- success
 {
     msg: {string},
-    token: {string},
-    links: {array} ==> ['/store','/requests'],
 }
 
 B- failed 
