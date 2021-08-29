@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User, Role } = require('../database/models');
 
-// TODO
-// clean up this god forsaken function
 const onlyPassRoles = (...roles) =>{
 	return async (req, res, next) => {
 		try{
