@@ -1,11 +1,30 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Category } = require('../src/database/models')
+const { sequelize, Category, Role, User } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({
     force: true,
   })
+
+  await Role.bulkCreate([
+    {name: 'user'},
+    {name: 'admin'},
+  ])
+
+  await User.bulkCreate([{
+    name: "karim",
+    role_id: 1
+  },{
+    name: "nourhan",
+    role_id: 2
+  },{
+    name: "shafik",
+    role_id: 2
+  },{
+    name: "youssef",
+    role_id: 2
+  }])
 
   return Category.bulkCreate([
     {name: 'test-cat-1'},
@@ -23,8 +42,20 @@ afterAll(async () => {
 describe('Category I/O ', () => {
 
   test('GET /categories --> get list of all categories', async () => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
       const res = await request(app)
       .get('/categories')
+      .send({
+        token: resAuth.body.token,
+        username:'karim'
+      })
 
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
@@ -42,8 +73,20 @@ describe('Category I/O ', () => {
     [4, 4],
     [5, 5],
   ])('GET /categories/:pk --> get category by primary key', async (value, expected) => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
     .get(`/categories/${value}`)
+    .send({
+      token: resAuth.body.token,
+      username:'karim'
+    })
 
 
     expect(res.statusCode).toEqual(200)
@@ -56,10 +99,20 @@ describe('Category I/O ', () => {
   })
 
   test('PUT /categories --> updates categories by primary key', async() => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
       const res = await request(app)
       .put(`/categories/1`)
       .send({
-          name: "test_name"
+        category_name: "test_name",
+          token: resAuth.body.token,
+          username: 'karim'
       })
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
@@ -71,9 +124,21 @@ describe('Category I/O ', () => {
     {test_pk: 2, remaining_objects_num: 3},
     {test_pk: 3, remaining_objects_num: 2},
   ])('DELETE /catagories/:pk --> delete 3 categories', async ({test_pk, remaining_objects_num}) => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
     .delete(`/categories/${test_pk}`)
+    .send({
+      token: resAuth.body.token,
+      username: 'karim'
 
+    })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.category).toEqual(expect.anything())
@@ -86,10 +151,20 @@ describe('Category I/O ', () => {
     ['test-cat-4','test-cat-4'],
     ['test-cat-5','test-cat-5'],
   ])('POST /categories --> Creates 5 categories', async (test_name, expected_name) => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
       .post('/categories')
       .send({
-          name: test_name
+        category_name: test_name,
+          token: resAuth.body.token,
+          username: 'karim'
       })
 
     expect(res.statusCode).toEqual(200)
@@ -99,10 +174,20 @@ describe('Category I/O ', () => {
   })
 
   test('POST /categories --> testing category creation error', async () => {
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim',
+      password:'password'})
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
     const res = await request(app)
       .post('/categories')
       .send({
-        nme: "test-error"
+        nme: "test-error",
+        token: resAuth.body.token,
+        username: 'karim'
       })
 
     expect(res.statusCode).toEqual(200)
