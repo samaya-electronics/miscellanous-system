@@ -1,11 +1,23 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Permission } = require('../src/database/models')
+const { sequelize, Permission, Role, User } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({
     force: true,
   })
+
+  await Role.bulkCreate([
+    {name: 'admin'},
+    {name: 'admin'},
+  ])
+  await User.bulkCreate([{
+    name: "karim",
+    role_id: 1
+  },{
+    name: "nourhan",
+    role_id: 2
+  }])
 
   return Permission.bulkCreate([
       {name: "test-permission-1"},
@@ -21,20 +33,28 @@ afterAll(() => {
 })
 
 describe('Permission I/O', () => {
-
     test('GET /permissions --> get list of all Permissions', async () => {
-        const res = await request(app)
+      const res_login = await request(app)
+        .post('/auth/login')
+        .send({
+          username: "karim"
+        })
+      const res = await request(app)
         .get('/permissions')
-  
-        expect(res.statusCode).toEqual(200)
-        expect(res.body.err).not.toEqual(expect.anything())
-        expect(res.body.permissions).toEqual(expect.arrayContaining([{
-          permission_id: expect.any(Number),
-          name: expect.any(String),
-          createdAt: expect.anything(),
-          updatedAt: expect.anything()
-        }]))
-        expect(res.body.permissions.length).toEqual(5)
+        .send({
+          username: "karim",
+          token: res_login.body.token
+        })
+
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body.permissions).toEqual(expect.arrayContaining([{
+        permission_id: expect.any(Number),
+        name: expect.any(String),
+        createdAt: expect.anything(),
+        updatedAt: expect.anything()
+      }]))
+      expect(res.body.permissions.length).toEqual(5)
     })
   
     test.each([
@@ -44,8 +64,18 @@ describe('Permission I/O', () => {
       [4, 4],
       [5, 5],
     ])('GET /permissions/:pk --> get Permission by primary key', async (value, expected) => {
+      const res_login = await request(app)
+        .post('/auth/login')
+        .send({
+          username: "karim"
+        })
+        
       const res = await request(app)
       .get(`/permissions/${value}`)
+      .send({
+        username: "karim",
+        token: res_login.body.token
+      })
   
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
@@ -56,14 +86,23 @@ describe('Permission I/O', () => {
     })
   
     test('PUT /permissions --> updates 3 permission by primary key', async() => {
-        const res = await request(app)
+      const res_login = await request(app)
+        .post('/auth/login')
+        .send({
+          username: "karim"
+        })
+
+      const res = await request(app)
         .put('/permissions/1')
         .send({
-            name: "test_name"
+          name: "test_name",
+          username: "karim",
+          token: res_login.body.token
         })
-        expect(res.statusCode).toEqual(200)
-        expect(res.body.err).not.toEqual(expect.anything())
-        expect(res.body.permission).toEqual(expect.anything())
+
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body.permission).toEqual(expect.anything())
     })
   
     test.each([
@@ -71,8 +110,18 @@ describe('Permission I/O', () => {
       {test_pk: 2, remaining_objects_num: 3},
       {test_pk: 3, remaining_objects_num: 2},
     ])('DELETE /permissions/:pk --> delete 3 permissions', async ({test_pk, remaining_objects_num}) => {
+      const res_login = await request(app)
+        .post('/auth/login')
+        .send({
+          username: "karim"
+        })
+
       const res = await request(app)
-      .delete(`/permissions/${test_pk}`)
+        .delete(`/permissions/${test_pk}`)
+        .send({
+          username: "karim",
+          token: res_login.body.token
+        })
   
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
@@ -86,15 +135,23 @@ describe('Permission I/O', () => {
       ['test-permission-post-4','test-permission-post-4'],
       ['test-permission-post-5','test-permission-post-5'],
     ])('POST /permission --> Creates 5 permissions', async (test_name, expected_name) => {
-        const res = await request(app)
+      const res_login = await request(app)
+        .post('/auth/login')
+        .send({
+          username: "karim"
+        })
+
+      const res = await request(app)
         .post('/permissions')
         .send({
-            name: test_name
+            name: test_name,
+            username: "karim",
+            token: res_login.body.token
         })
     
-        expect(res.statusCode).toEqual(200)
-        expect(res.body.err).not.toEqual(expect.anything())
-        expect(res.body.permission.permission_id).toEqual(expect.any(Number))
-        expect(res.body.permission.name).toEqual(expected_name)
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body.permission.permission_id).toEqual(expect.any(Number))
+      expect(res.body.permission.name).toEqual(expected_name)
     })
 })

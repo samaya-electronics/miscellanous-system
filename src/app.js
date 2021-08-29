@@ -17,11 +17,11 @@ app.use(cors())
 
 
 // router
+app.use('/', homeRouter)
 app.use('/auth', authRouter)
 
 app.use(authMiddleware.authenticateToken)
 
-app.use('/', homeRouter)
 app.use('/categories', categoriesRouter)
 app.use('/items', itemsRouter)
 app.use('/users', usersRouter)
