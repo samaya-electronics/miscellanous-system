@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       defaultValue: false
     },
-    warehouse_admin_approved:{
+    superuser_approved:{
       type: DataTypes.BOOLEAN,
       allowNull:false,
       defaultValue: false

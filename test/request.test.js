@@ -38,7 +38,7 @@ beforeAll(async () => {
   }])
   await Role.bulkCreate([
     {name: 'admin'},
-    {name: 'admin'},
+    {name: 'teamleader'},
     {name: 'user'},
   ])
   await User.bulkCreate([{
@@ -62,7 +62,8 @@ beforeAll(async () => {
     {
       quantity: 20,
       user_requesting_id: 2,
-      item_id: 1
+      item_id: 1,
+      leader_approved: true
     },{
       quantity: 30,
       user_requesting_id: 3,
@@ -80,118 +81,80 @@ afterAll(async () => {
 })
 
 
+
+
+
+
+
+
+
 describe('request I/O --> request test', () => {
 
-  // test('GET /requests --> get all requests', async () => {
-  //   const res_login = await request(app)
-  //     .post('/auth/login')
-  //     .send({
-  //       username: "karim"
-  //     })
+  test('GET /requests --> get all requests for admin', async () => {
+    const res_login = await request(app)
+      .post('/auth/login')
+      .send({
+        username: "karim"
+      })
 
-  //   const res = await request(app)
-  //     .get('/requests')
-  //     .send({
-  //       token: res_login.body.token,
-  //       username: 'karim'
-  //     })
+    const res = await request(app)
+      .get('/requests')
+      .send({
+        token: res_login.body.token,
+        username: 'karim'
+      })
 
-  //     expect(res.statusCode).toEqual(200)
-  //     expect(res.body.err).not.toEqual(expect.anything())
-  //     expect(res.body.requests.length).toEqual(4)
-  // })
-
-  // test('GET /requests/:pk --> get request by pk', async () => {
-  //   const res_login = await request(app)
-  //   .post('/auth/login')
-  //   .send({
-  //     username: "karim"
-  //   })
-
-  //   const res = await request(app)
-  //     .get('/requests/1')
-  //     .send({
-  //       token: res_login.body.token,
-  //       username: 'karim'
-  //     })
-
-  //   expect(res.statusCode).toEqual(200)
-  //   expect(res.body.err).not.toEqual(expect.anything())
-  //   expect(res.body.request).toEqual(expect.objectContaining({
-  //     quantity: expect.any(Number),
-  //   }))
-  // })
-
-  // test.each([
-  //   [3,1,1],
-  //   [4,2,2],
-  //   [5,2,3],
-  // ])('POST /requests --> create 3 requests', async (quantity_test, user_requesting_id_test, item_id_test) => {
-  //   const res_login = await request(app)
-  //   .post('/auth/login')
-  //   .send({
-  //     username: "karim"
-  //   })
-
-  //   const res = await request(app)
-  //     .post('/requests')
-  //     .send({
-  //       quantity: quantity_test,
-  //       item_id: item_id_test,
-  //       user_requesting_id: user_requesting_id_test,
-  //       token: res_login.body.token,
-  //       username: 'karim'
-  //     })
-
-  //   expect(res.statusCode).toEqual(200)
-  //   expect(res.body.err).not.toEqual(expect.anything())
-  //   expect(res.body.request.quantity).toEqual(quantity_test)
-  //   expect(res.body.request.user_requesting_id).toEqual(user_requesting_id_test)
-  //   expect(res.body.request.item_id).toEqual(item_id_test)
-  // })
-
-  // test('DELETE /requests --> deleting request', async () => {
-  //   const res_login = await request(app)
-  //   .post('/auth/login')
-  //   .send({
-  //     username: "karim"
-  //   })
-
-  //   const res = await request(app)
-  //     .delete('/requests/1')
-  //     .send({
-  //       token: res_login.body.token,
-  //       username: 'karim'
-  //     })
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body.requests.length).toEqual(4)
+  })
+  
 
 
-  //   expect(res.statusCode).toEqual(200)
-  //   expect(res.body.err).not.toEqual(expect.anything())
-  //   expect(res.body.request).toEqual(expect.objectContaining({
-  //     quantity: expect.any(Number),
-  //   }))
-  // })
+  test('GET /requests --> get specific user request depending on team member', async () => {
+    const res_login = await request(app)
+    .post('/auth/login')
+    .send({
+      username: "hazem"
+    })
 
-  // test('DELETE /requests --> error deleting request', async () => {
-  //   const res_login = await request(app)
-  //   .post('/auth/login')
-  //   .send({
-  //     username: "karim"
-  //   })
-
-  //   const res = await request(app)
-  //     .delete('/requests/30')
-  //     .send({
-  //       token: res_login.body.token,
-  //       username: 'karim'
-  //     })
+    const res = await request(app)
+      .get('/requests')
+      .send({
+        token: res_login.body.token,
+        username: 'hazem'
+      })
+    
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.requests).toEqual(expect.anything())
+    expect(res.body.requests.length).toEqual(2)
+  })
 
 
-  //   expect(res.statusCode).toEqual(200)
-  //   expect(res.body.err).toEqual(expect.anything())
-  // })
 
-  test('GET /requests --> get specific user request depending on team members', async () => {
+  test('GET /requests --> get specific user request depending on being leader', async () => {
+    const res_login = await request(app)
+    .post('/auth/login')
+    .send({
+      username: "nourhan"
+    })
+
+    const res = await request(app)
+      .get('/requests')
+      .send({
+        token: res_login.body.token,
+        username: 'nourhan'
+      })
+    
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.requests).toEqual(expect.anything())
+    expect(res.body.requests.length).toEqual(1)
+  })
+
+
+
+
+  test('GET /requests/:pk --> get request by pk', async () => {
     const res_login = await request(app)
     .post('/auth/login')
     .send({
@@ -199,14 +162,89 @@ describe('request I/O --> request test', () => {
     })
 
     const res = await request(app)
-      .get('/requests/leader')
+      .get('/requests/1')
       .send({
         token: res_login.body.token,
         username: 'karim'
       })
-    
+
     expect(res.statusCode).toEqual(200)
-    expect(res.body.requests).toEqual(expect.anything())
-    expect(res.body.requests.length).toEqual(2)
+    expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.request).toEqual(expect.objectContaining({
+      quantity: expect.any(Number),
+    }))
   })
+
+
+
+
+  test.each([
+    [3,1,1],
+    [4,2,2],
+    [5,2,3],
+  ])('POST /requests --> create 3 requests', async (quantity_test, user_requesting_id_test, item_id_test) => {
+    const res_login = await request(app)
+    .post('/auth/login')
+    .send({
+      username: "karim"
+    })
+
+    const res = await request(app)
+      .post('/requests')
+      .send({
+        quantity: quantity_test,
+        item_id: item_id_test,
+        user_requesting_id: user_requesting_id_test,
+        token: res_login.body.token,
+        username: 'karim'
+      })
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.request.quantity).toEqual(quantity_test)
+    expect(res.body.request.user_requesting_id).toEqual(user_requesting_id_test)
+    expect(res.body.request.item_id).toEqual(item_id_test)
+  })
+
+  test('DELETE /requests --> deleting request', async () => {
+    const res_login = await request(app)
+    .post('/auth/login')
+    .send({
+      username: "karim"
+    })
+
+    const res = await request(app)
+      .delete('/requests/1')
+      .send({
+        token: res_login.body.token,
+        username: 'karim'
+      })
+
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.request).toEqual(expect.objectContaining({
+      quantity: expect.any(Number),
+    }))
+  })
+
+  test('DELETE /requests --> error deleting request', async () => {
+    const res_login = await request(app)
+    .post('/auth/login')
+    .send({
+      username: "karim"
+    })
+
+    const res = await request(app)
+      .delete('/requests/30')
+      .send({
+        token: res_login.body.token,
+        username: 'karim'
+      })
+
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).toEqual(expect.anything())
+  })
+
 })
