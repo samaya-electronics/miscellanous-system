@@ -26,7 +26,7 @@ const postItem = async (req, res)=>{
     // )
 
     res.json({
-        err: result.err || err,
+        err: result.err,
         msg: result.msg,
         item: result.item
     })
@@ -59,7 +59,7 @@ const updateItem = async (req, res)=>{
     // )
 
     res.json({
-        err: result.err || err,
+        err: result.err,
         msg: result.msg,
         item: result.item
     })
