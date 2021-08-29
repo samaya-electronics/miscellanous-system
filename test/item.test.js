@@ -14,7 +14,7 @@ beforeAll(async () => {
   ])
 
   await Role.bulkCreate([
-    {name: 'user'},
+    {name: 'admin'},
     {name: 'admin'},
   ])
 

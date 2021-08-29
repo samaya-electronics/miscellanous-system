@@ -7,7 +7,7 @@ beforeAll(async () => {
 
   await Role.bulkCreate([
     {name: 'admin'},
-    {name: 'user'},
+    {name: 'admin'},
     {name: 'test-role-3'},
     {name: 'test-role-4'},
     {name: 'test-role-5'},
@@ -54,7 +54,7 @@ describe('Role I/O', () => {
 
   test.each([
     [1, 'admin'],
-    [2, 'user'],
+    [2, 'admin'],
     [3, 'test-role-3'],
     [4, 'test-role-4'],
     [5, 'test-role-5'],

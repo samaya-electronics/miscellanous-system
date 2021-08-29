@@ -1,14 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const itemsController = require('../controllers/itemsController')
-const authMiddleware = require('../middleware/authMiddleware')
+const { onlyPassRoles } = require('../middleware/authMiddleware')
 
-router.use(authMiddleware.onlyPassRoles('admin', 'user'))
-
-router.get('/', itemsController.getItems)
-router.get('/:id', itemsController.getItemById)
-router.post('/', itemsController.postItem)
-router.delete('/:id', itemsController.deleteItem)
-router.put('/:id', itemsController.updateItem)
+router.get('/', onlyPassRoles('admin', 'superuser', 'teamleader', 'user') ,itemsController.getItems)
+router.get('/:id', onlyPassRoles('admin', 'superuser', 'teamleader', 'user') , itemsController.getItemById)
+router.post('/', onlyPassRoles('admin', 'superuser') , itemsController.postItem)
+router.delete('/:id', onlyPassRoles('admin', 'superuser') , itemsController.deleteItem)
+router.put('/:id', onlyPassRoles('admin', 'superuser') , itemsController.updateItem)
 
 module.exports = router
