@@ -7,6 +7,8 @@ Body Data:{
         category_id: {int},
         code:{string},
         leader_approve:{boolean},
+        token: {string},
+        username: {string}
     }
 
 Returned Data:

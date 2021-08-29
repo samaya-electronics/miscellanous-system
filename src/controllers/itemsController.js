@@ -12,7 +12,7 @@ const getItems = async(req, res)=>{
 
 const postItem = async (req, res)=>{
     const result = await itemServices.createItem(
-        req.body.name,
+        req.body.item_name,
         req.body.quantity,
         req.body.location,
         req.body.threshold,
@@ -20,10 +20,10 @@ const postItem = async (req, res)=>{
         req.body.code,
         req.body.leader_approve
     )
-    const err = await itemServices.createItemAuthenticators(
-        result.item,
-        req.body.users_ids
-    )
+    // const err = await itemServices.createItemAuthenticators(
+    //     result.item,
+    //     req.body.users_ids
+    // )
 
     res.json({
         err: result.err || err,
@@ -44,7 +44,7 @@ const getItemById = async (req, res)=>{
 
 const updateItem = async (req, res)=>{
     const result = await itemServices.updateItem(
-        req.body.name,
+        req.body.item_name,
         req.body.quantity,
         req.body.location,
         req.body.threshold,
@@ -53,10 +53,10 @@ const updateItem = async (req, res)=>{
         req.body.leader_approve,
         req.params.id
     )
-    const err = await itemServices.createItemAuthenticators(
-        result.item,
-        req.body.users_ids
-    )
+    // const err = await itemServices.createItemAuthenticators(
+    //     result.item,
+    //     req.body.users_ids
+    // )
 
     res.json({
         err: result.err || err,

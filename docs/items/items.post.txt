@@ -1,12 +1,14 @@
 URL POST /items
 Body Data: {
-    name : {string},
+    item_name : {string},
     quantity: {int},
     threshold: {int},
     location: {string},
     category_id: {int},
     code:{string},
     leader_approve:{boolean},
+    token: {string},
+    username: {string}
 }
 
 Returned Data:

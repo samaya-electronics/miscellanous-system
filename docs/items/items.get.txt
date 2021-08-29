@@ -1,5 +1,8 @@
 URL GET /items
-Body Data: {}
+Body Data: {
+    token: {string},
+    username: {string}
+}
 
 Returned Data:
 
