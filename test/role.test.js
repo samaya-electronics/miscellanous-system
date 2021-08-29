@@ -1,17 +1,24 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Role } = require('../src/database/models')
+const { sequelize, Role, User } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({force: true})
 
-  return Role.bulkCreate([
-    {name: 'test-role-1'},
-    {name: 'test-role-2'},
+  await Role.bulkCreate([
+    {name: 'admin'},
+    {name: 'user'},
     {name: 'test-role-3'},
     {name: 'test-role-4'},
     {name: 'test-role-5'},
   ])
+  return User.bulkCreate([{
+    name: "karim",
+    role_id: 1
+  },{
+    name: "nourhan",
+    role_id: 2
+  }])
 });
 
 afterAll(async () => {
@@ -21,8 +28,18 @@ afterAll(async () => {
 describe('Role I/O', () => {
 
   test('GET /roles --> get list of all roles', async () => {
+    const res_login = await request(app)
+      .post('/auth/login')
+      .send({
+        username: "karim"
+      })
+
     const res = await request(app)
       .get('/roles')
+      .send({
+        username: "karim",
+        token: res_login.body.token
+      })
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -36,21 +53,31 @@ describe('Role I/O', () => {
   })
 
   test.each([
-    [1, 1],
-    [2, 2],
-    [3, 3],
-    [4, 4],
-    [5, 5],
+    [1, 'admin'],
+    [2, 'user'],
+    [3, 'test-role-3'],
+    [4, 'test-role-4'],
+    [5, 'test-role-5'],
   ])('GET /roles/:pk --> get role by primary key', async (value, expected) => {
+    const res_login = await request(app)
+      .post('/auth/login')
+      .send({
+        username: "karim"
+      })
+
     const res = await request(app)
     .get(`/roles/${value}`)
+    .send({
+      username: "karim",
+      token: res_login.body.token
+    })
 
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.role).toEqual(expect.objectContaining({
-      name: `test-role-${expected}`,
-      role_id: expected
+      name: expected,
+      role_id: value
     }))
   })
   
@@ -61,10 +88,18 @@ describe('Role I/O', () => {
     ['test-role-4'],
     ['test-role-5']
   ])('POST /roles --> create a role', async (test_name) => {
+      const res_login = await request(app)
+        .post('/auth/login')
+        .send({
+          username: "karim"
+        })
+
       const res = await request(app)
         .post('/roles')
         .send({
-          name: test_name
+          role_name: test_name,
+          username: "karim",
+          token: res_login.body.token
         })
   
       expect(res.statusCode).toEqual(200)
@@ -74,23 +109,41 @@ describe('Role I/O', () => {
   })
 
   test('PUT /roles --> updates roles by primary key', async() => {
+    const res_login = await request(app)
+      .post('/auth/login')
+      .send({
+        username: "karim"
+      })
+      
     const res = await request(app)
-    .put(`/roles/1`)
-    .send({
-        name: "test_name"
-    })
+      .put(`/roles/3`)
+      .send({
+        role_name: "test_name",
+        username: "karim",
+        token: res_login.body.token
+      })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.role).toEqual(expect.anything())
   })
 
   test.each([
-    [1],
-    [2],
     [3],
+    [4],
+    [5],
   ])('DELETE /catagories/:pk --> delete 3 roles', async (test_pk) => {
+    const res_login = await request(app)
+      .post('/auth/login')
+      .send({
+        username: "karim"
+      })
+
     const res = await request(app)
-    .delete(`/roles/${test_pk}`)
+      .delete(`/roles/${test_pk}`)
+      .send({
+        username: "karim",
+        token: res_login.body.token
+      })
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
