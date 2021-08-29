@@ -11,7 +11,7 @@ const getRoles = async(req, res)=>{
 }
 
 const postRole = async (req, res)=>{
-    const result = await roleServices.createRole(req.body.name)
+    const result = await roleServices.createRole(req.body.role_name)
 
     res.json({
         err: result.err,
@@ -31,7 +31,7 @@ const getRoleById = async (req, res)=>{
 }
 
 const updateRole = async (req, res)=>{
-    const result = await roleServices.updateRole(req.body.name, req.params.id)
+    const result = await roleServices.updateRole(req.body.role_name, req.params.id)
 
     res.json({
         err: result.err,
