@@ -1,5 +1,9 @@
 URL GET /requests
-Body Data: {}
+Body Data: {
+    token: {string},
+    username: {string}
+}
+
 
 Returned Data:
 

@@ -3,7 +3,9 @@ Body Data: {
     quantity : {int},
     item_id : {int},
     user_approving_id : {int},
-    user_requesting_id : {int}
+    user_requesting_id : {int},
+    token: {string},
+    username: {string}
 }
 
 Returned Data:
