@@ -17,33 +17,60 @@ const createRequest = async (quantity, item_id, user_requesting_id) => {
     return result
 }
 
-const getRequests = async (user) => {
-    const result = {}
-    result.requests = []
-
+const getAllRequests = async (user) => {
+    result = {}
     try{
-        if(user.Role.name == 'admin'){
-            result.requests = await Request.findAll()
+        result.requests = await Request.findAll()
+        result.msg = "Got all requests"
+    }
+    catch(err){
+        result.msg = "Got all requests"
+        result.err = err
+    }
+    return result
+}
+
+const getSuperUserRequests = async (user) => {
+    result = {}
+    try{
+        result.requests = await Request.findAll({
+            where: {leader_approved: true}
+        })
+        result.msg = "Got all requests"
+    }
+    catch(err){
+        result.msg = "Got all requests"
+        result.err = err
+    }
+    return result
+}
+
+const getLeaderRequests = async (user) => {
+    result = {}
+    result.requests = []
+    try{
+        const teamMembers = await User.findAll({
+            where: {user_leader_id: user.user_id}
+        })
+        for await (const [i, member] of teamMembers.entries()){
+            const memberRequests = await member.getRequests()
+            result.requests.push(...memberRequests)
         }
-        else if(user.Role.name === 'superuser'){
-            result.requests = await Request.findAll({
-                where: {leader_approved: true}
-            })
-        }
-        else if(user.Role.name === 'teamleader'){
-            const teamMembers = await User.findAll({
-                where: {user_leader_id: user.user_id}
-            })
-            for await (const [i, member] of teamMembers.entries()){
-                const memberRequests = await member.getRequests()
-                result.requests.push(...memberRequests)
-            }
-            const ownRequests = await user.getRequests()
-            result.requests.push(...ownRequests)
-        }
-        else if(user.Role.name === 'user'){
-            result.requests = await user.getRequests()
-        }
+        const ownRequests = await user.getRequests()
+        result.requests.push(...ownRequests)
+        result.msg = "Got all requests"
+    }
+    catch(err){
+        result.msg = "Got all requests"
+        result.err = err
+    }
+    return result
+    
+}
+const getUserRequests = async (user) => {
+    const result = {}
+    try{
+        result.requests = await user.getRequests()
         result.msg = "Got all requests"
     }
     catch(err){
@@ -84,7 +111,10 @@ const deleteRequest = async (id) => {
 
 module.exports = {
     createRequest,
-    getRequests,
+    getAllRequests,
+    getLeaderRequests,
+    getSuperUserRequests,
+    getUserRequests,
     getRequestById,
     deleteRequest
 }
