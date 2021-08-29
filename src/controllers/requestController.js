@@ -1,7 +1,25 @@
 const requestServices = require('../database/services/requestService')
 
 const getRequests = async(req, res) => {
-    const result = await requestServices.getRequests(req.body.user)
+    const userRole = req.body.user.Role.name
+    let result
+    
+    if(userRole === 'admin'){
+        result = await requestServices.getAllRequests(req.body.user)
+    }
+    else if(userRole === 'superuser'){
+        result = await requestServices.getSuperUserRequests(req.body.user)
+    }
+    else if(userRole === 'teamleader'){
+        result = await requestServices.getLeaderRequests(req.body.user)
+    }
+    else if(userRole === 'user'){
+        result = await requestServices.getUserRequests(req.body.user)
+    }
+    else{
+        result.err = new Error("Unknown Role")
+        result.msg = "Unknown Role"
+    }
 
     res.json({
         err: result.err,
