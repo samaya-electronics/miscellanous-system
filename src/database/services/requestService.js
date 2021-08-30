@@ -19,7 +19,7 @@ const createRequest = async (quantity, item_id, user) => {
     return result
 }
 
-const getAllRequests = async (user) => {
+const getAllRequests = async () => {
     result = {}
     try{
         result.requests = await Request.findAll()
@@ -112,10 +112,12 @@ const getRequestById = async (id) => {
     return result
 }
 
-const deleteRequest = async (id) => {
+const deleteRequest = async (req_id, user) => {
     const result = {}
     try{
-        result.request = await Request.findByPk(id)
+        result.request = await Request.findByPk(req_id)
+        const userRequests = await user.getRequests()
+        if(!userRequests.includes(result.request)) throw new Error("Not permitted to delete request")
         result.request.destroy()
         result.msg = "Deleted request"
     }
