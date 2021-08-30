@@ -13,9 +13,11 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
  - [X] refactor all pk to ids
  - [X] write tests for all services and controllers
  - [X] implement validation & constraints in Models
- - [ ] logout
- - [ ] **remove unwanted info from user in token**
- - [ ] clean up middleware function
+ - [X] logout
+ - [X] remove unwanted info from user in token
+ - [X] clean up middleware function
+ - [ ] request creation logic
+ - [ ] formal email service
  - [ ] finish authentication with ldap
  - [ ] if security is tight, user UUIDs instead of IDs
  <!-- - [ ] do exception handling to create/edit itemauth in item services -->
@@ -24,3 +26,8 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
  - what will warehouse admin need to verify a user
  - how will we know team leaders from team members
  - what data will come from auth server
+
+## FUTURE WORK 2.0:
+ - Make user approvals dynamic to any additional roles
+ - make request GETing dynaming instead of hard coded functions
+ - make roles and permissions dynamic instead of hard coded middleware
