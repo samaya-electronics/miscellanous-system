@@ -18,6 +18,7 @@
     "live-server": "^1.2.1",
     "mysql2": "^2.2.5",
     "nodemailer": "^6.6.3",
+    "nodemailer-express-handlebars": "^4.0.0",
     "sequelize": "^6.6.5",
     "test": "^0.6.0"
   },

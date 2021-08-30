@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const hbs = require('nodemailer-express-handlebars');
 
 const transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -8,20 +9,18 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-
-const options = {
-    from: 'samayatest@outlook.com',
-    to: 'kareemkohel@gmail.com',
-    subject: 'rod 3al miscellanous store ya mghror',
-    text: 'al s3dawy by2olk t3ala yala khod al haga'
-}
+transporter.use('compile',hbs({
+    viewEngine: 'express-handlebars',
+    viewPath: "./viwes/"
+}))
 
 const sendMail = (email, message)=>{
     const options = {
         from: 'samayatest@outlook.com',
         to: email,
         subject: 'rod 3al miscellanous store ya mghror',
-        text: message
+        text: message,
+        template: 'index'
     }
     transporter.sendMail(options, (err,info)=>{
     if(err){
