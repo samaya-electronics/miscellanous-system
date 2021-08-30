@@ -100,10 +100,6 @@ const sendRequestingMail = (email, item , username)=>{
 }
 
 
-
-//fx declaration
-sendMail('moandosama1163@gmail.com','blackboard', 'Mohamed osama')
-
 exports = {
     sendApprovingMail,
     sendRejectionMail,
