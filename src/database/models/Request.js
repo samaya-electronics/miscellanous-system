@@ -50,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
   ,{
     sequelize,
     underscored: true,
+    paranoid: true,
     modelName: 'Request',
     tableName: 'requests'
   });
