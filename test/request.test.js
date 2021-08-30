@@ -259,6 +259,27 @@ describe('request I/O --> request test', () => {
   })
 
 
+  test('DELETE /requests --> deleting request that does not belong to user', async () => {
+    const res_login = await request(app)
+    .post('/auth/login')
+    .send({
+      username: "hazem"
+    })
+
+    const res = await request(app)
+      .delete('/requests/2')
+      .send({
+        token: res_login.body.token,
+        username: 'hazem'
+      })
+
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).toEqual(expect.anything())
+    expect(res.body.request).not.toEqual(expect.anything())
+  })
+
+
   test('DELETE /requests --> error deleting request', async () => {
     const res_login = await request(app)
     .post('/auth/login')

@@ -115,9 +115,12 @@ const getRequestById = async (id) => {
 const deleteRequest = async (req_id, user) => {
     const result = {}
     try{
-        result.request = await Request.findByPk(req_id)
-        const userRequests = await user.getRequests()
-        if(!userRequests.includes(result.request)) throw new Error("Not permitted to delete request")
+        result.request = await Request.findOne({
+            where: {
+                request_id: req_id,
+                user_requesting_id: user.user_id
+            }
+        })
         result.request.destroy()
         result.msg = "Deleted request"
     }
