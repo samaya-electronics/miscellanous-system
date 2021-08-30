@@ -62,6 +62,16 @@ const approveRequest = async (req, res) => {
     })
 }
 
+const rejectRequest = async (req, res) => {
+    const result = await requestServices.rejectRequest(req.params.id, req.body.user.Role.name)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        request: result.request
+    })
+}
+
 const deleteRequest = async (req, res) => {
     const result = await requestServices.deleteRequest(req.params.id, req.body.user)
 
@@ -77,6 +87,7 @@ module.exports = {
     getRequestById,
     createRequest,
     approveRequest,
+    rejectRequest,
     deleteRequest
 }
 

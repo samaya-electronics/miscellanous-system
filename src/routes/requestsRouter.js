@@ -7,6 +7,7 @@ router.get('/',onlyPassRoles('admin', 'superuser', 'teamleader', 'user') ,reques
 router.get('/:id',onlyPassRoles('admin', 'superuser', 'teamleader', 'user') ,requestController.getRequestById)
 router.post('/',onlyPassRoles('admin', 'superuser','teamleader','user') ,requestController.createRequest)
 router.put('/:id/approve',onlyPassRoles('superuser','teamleader') ,requestController.approveRequest)
+router.put('/:id/reject',onlyPassRoles('superuser','teamleader') ,requestController.rejectRequest)
 router.delete('/:id',onlyPassRoles('admin', 'superuser', 'teamleader' ,'user') ,requestController.deleteRequest)
 
 module.exports = router

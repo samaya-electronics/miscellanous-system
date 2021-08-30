@@ -38,13 +38,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     leader_approved:{
       type: DataTypes.BOOLEAN,
-      allowNull:false,
-      defaultValue: false
+      allowNull:true,
+      defaultValue: null
     },
     superuser_approved:{
       type: DataTypes.BOOLEAN,
-      allowNull:false,
-      defaultValue: false
+      allowNull:true,
+      defaultValue: null
     }
   }
   ,{

@@ -36,14 +36,44 @@ const approveRequest = async (request_id, userRole) => {
     result = {}
     try{
         result.request = await Request.findByPk(request_id)
-        result.request.leader_approved = (userRole === 'teamleader')
-        result.request.superuser_approved = (userRole === 'superuser')
+        if(userRole === 'teamleader'){
+            result.request.leader_approved  = true
+        }
+        else if(userRole === 'superuser'){
+            result.request.superuser_approved = true
+        }
+        else{
+            throw new Error("Unknown role trying to approve a request")
+        }
         await result.request.save()
         result.msg = "Request approved"
     }
     catch(err){
         result.err = err
         result.msg = "Request not approved"
+    }
+    return result
+}
+
+const rejectRequest = async (request_id, userRole) => {
+    result = {}
+    try{
+        result.request = await Request.findByPk(request_id)
+        if(userRole === 'teamleader'){
+            result.request.leader_approved  = false
+        }
+        else if(userRole === 'superuser'){
+            result.request.superuser_approved = false
+        }
+        else{
+            throw new Error("Unknown role trying to reject a request")
+        }
+        await result.request.save()
+        result.msg = "Request rejected"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Request could not be rejected"
     }
     return result
 }
@@ -140,5 +170,6 @@ module.exports = {
     getUserRequests,
     getRequestById,
     approveRequest,
+    rejectRequest,
     deleteRequest
 }
