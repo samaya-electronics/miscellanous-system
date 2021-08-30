@@ -32,6 +32,22 @@ const getAllRequests = async (user) => {
     return result
 }
 
+const approveRequest = async (request_id, userRole) => {
+    result = {}
+    try{
+        result.request = await Request.findByPk(request_id)
+        result.request.leader_approved = (userRole === 'teamleader')
+        result.request.superuser_approved = (userRole === 'superuser')
+        await result.request.save()
+        result.msg = "Request approved"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Request not approved"
+    }
+    return result
+}
+
 const getSuperUserRequests = async (user) => {
     result = {}
     try{
@@ -118,5 +134,6 @@ module.exports = {
     getSuperUserRequests,
     getUserRequests,
     getRequestById,
+    approveRequest,
     deleteRequest
 }
