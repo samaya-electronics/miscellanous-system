@@ -181,7 +181,6 @@ describe('request I/O --> request test', () => {
 
 
 
-
   test.each([
     ['karim',3,1,1],
     ['nourhan',4,2,2],
@@ -211,6 +210,32 @@ describe('request I/O --> request test', () => {
     expect(res.body.request.item_id).toEqual(item_id_test)
   })
 
+
+
+  test.each([
+    ['nourhan', 3],
+    ['osama', 4]
+  ])('PUT /requests/:id/approve --> request approval by team leader and superuser', async (username, req_id) => {
+    const res_login = await request(app)
+    .post('/auth/login')
+    .send({
+      username
+    })
+
+    const res = await request(app)
+      .put(`/requests/${req_id}/approve`)
+      .send({
+        token: res_login.body.token,
+        username
+      })
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.request).toEqual(expect.anything())
+    expect(res.body.err).not.toEqual(expect.anything())
+  })
+
+
+
   test('DELETE /requests --> deleting request', async () => {
     const res_login = await request(app)
     .post('/auth/login')
@@ -233,6 +258,7 @@ describe('request I/O --> request test', () => {
     }))
   })
 
+
   test('DELETE /requests --> error deleting request', async () => {
     const res_login = await request(app)
     .post('/auth/login')
@@ -251,5 +277,6 @@ describe('request I/O --> request test', () => {
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).toEqual(expect.anything())
   })
+
 
 })

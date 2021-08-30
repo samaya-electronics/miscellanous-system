@@ -19,7 +19,7 @@ const createRequest = async (quantity, item_id, user) => {
     return result
 }
 
-const getAllRequests = async (user) => {
+const getAllRequests = async () => {
     result = {}
     try{
         result.requests = await Request.findAll()
@@ -28,6 +28,22 @@ const getAllRequests = async (user) => {
     catch(err){
         result.msg = "Got all requests"
         result.err = err
+    }
+    return result
+}
+
+const approveRequest = async (request_id, userRole) => {
+    result = {}
+    try{
+        result.request = await Request.findByPk(request_id)
+        result.request.leader_approved = (userRole === 'teamleader')
+        result.request.superuser_approved = (userRole === 'superuser')
+        await result.request.save()
+        result.msg = "Request approved"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Request not approved"
     }
     return result
 }
@@ -96,10 +112,12 @@ const getRequestById = async (id) => {
     return result
 }
 
-const deleteRequest = async (id) => {
+const deleteRequest = async (req_id, user) => {
     const result = {}
     try{
-        result.request = await Request.findByPk(id)
+        result.request = await Request.findByPk(req_id)
+        const userRequests = await user.getRequests()
+        if(!userRequests.includes(result.request)) throw new Error("Not permitted to delete request")
         result.request.destroy()
         result.msg = "Deleted request"
     }
@@ -118,5 +136,6 @@ module.exports = {
     getSuperUserRequests,
     getUserRequests,
     getRequestById,
+    approveRequest,
     deleteRequest
 }

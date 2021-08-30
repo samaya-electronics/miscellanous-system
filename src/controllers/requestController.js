@@ -5,7 +5,7 @@ const getRequests = async(req, res) => {
     let result
     
     if(userRole === 'admin'){
-        result = await requestServices.getAllRequests(req.body.user)
+        result = await requestServices.getAllRequests()
     }
     else if(userRole === 'superuser'){
         result = await requestServices.getSuperUserRequests(req.body.user)
@@ -17,7 +17,7 @@ const getRequests = async(req, res) => {
         result = await requestServices.getUserRequests(req.body.user)
     }
     else{
-        result.err = new Error("Unknown Role")
+        result.err = new Error("User Role not permitted")
         result.msg = "Unknown Role"
     }
 
@@ -52,8 +52,18 @@ const createRequest = async (req, res) => {
     })
 }
 
+const approveRequest = async (req, res) => {
+    const result = await requestServices.approveRequest(req.params.id, req.body.user.Role.name)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        request: result.request
+    })
+}
+
 const deleteRequest = async (req, res) => {
-    const result = await requestServices.deleteRequest(req.params.id)
+    const result = await requestServices.deleteRequest(req.params.id, req.body.user)
 
     res.json({
         err: result.err,
@@ -66,6 +76,7 @@ module.exports = {
     getRequests,
     getRequestById,
     createRequest,
+    approveRequest,
     deleteRequest
 }
 
