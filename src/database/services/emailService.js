@@ -16,10 +16,10 @@ const options = {
     text: 'al s3dawy by2olk t3ala yala khod al haga'
 }
 
-const sendmails = (useremail, message)=>{
+const sendMail = (email, message)=>{
     const options = {
         from: 'samayatest@outlook.com',
-        to: useremail,
+        to: email,
         subject: 'rod 3al miscellanous store ya mghror',
         text: message
     }
@@ -33,4 +33,4 @@ const sendmails = (useremail, message)=>{
 }
 
 //fx declaration
-sendmails('kareemkohel@gmail.com','al s3dawy by2olk t3ala yala khod al haga')
+sendMail('kareemkohel@gmail.com','al s3dawy by2olk t3ala yala khod al haga')
