@@ -16,11 +16,11 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
  - [X] logout
  - [X] remove unwanted info from user in token
  - [X] clean up middleware function
- - [ ] request creation logic
+ - [X] request creation logic
+ - [ ] request approval logic
  - [ ] formal email service
  - [ ] finish authentication with ldap
  - [ ] if security is tight, user UUIDs instead of IDs
- <!-- - [ ] do exception handling to create/edit itemauth in item services -->
 
 ### ASK Hazem :
  - what will warehouse admin need to verify a user
