@@ -22,9 +22,9 @@ const sendApprovingMail = (email, item , username)=>{
             <title>Document</title>
         </head> 
         <body>
-        <h1> miscellanous store </h1>
+        <h1> miscellaneous store </h1>
         <h4 style="color: black;"> We would like to inform you mr ${username} that. 
-        your request about item <h3>'${item}'</h3> has been approved you can come to recive it</h4>
+        your request about item <h3>'${item}'</h3> has been approved you can come to receive it</h4>
         </body>
         </html>`
     }
@@ -52,7 +52,7 @@ const sendRejectionMail = (email, item , username)=>{
             <title>Document</title>
         </head> 
         <body>
-        <h1> miscellanous store </h1>
+        <h1> miscellaneous store </h1>
         <h4 style="color: black;"> We are sorry to inform you mr ${username} that. 
         your request about item <h3>'${item}'</h3> has been rejected  </h4>
         </body>
@@ -69,11 +69,11 @@ const sendRejectionMail = (email, item , username)=>{
 }
 
 
-const sendRequestignMail = (email, item , username)=>{
+const sendRequestingMail = (email, item , username)=>{
     const options = {
         from: 'samayatest@outlook.com',
         to: email,
-        subject: 'Informing you about ${username} request from Miscellanous store ',
+        subject: `Informing you about ${username} request from Miscellaneous store `,
         html: `<!doctype html>
         <html ⚡4email>
         <head>
@@ -83,8 +83,8 @@ const sendRequestignMail = (email, item , username)=>{
             <title>Document</title>
         </head> 
         <body>
-        <h1> miscellanous store </h1>
-        <h4 style="color: black;"> We would like to inform you ther is request from ${username} 
+        <h1> miscellaneous store </h1>
+        <h4 style="color: black;"> We would like to inform you there is a request from ${username} 
         who wants to get ${item.quantity} of <h3>'${item.name}'</h3> waiting for your response </h4>
         </body>
         </html>`
@@ -102,11 +102,11 @@ const sendRequestignMail = (email, item , username)=>{
 
 
 //fx declaration
-sendMail('moandosama1163@gmail.com','blackbord', 'Mohamed osama')
+sendMail('moandosama1163@gmail.com','blackboard', 'Mohamed osama')
 
 exports = {
     sendApprovingMail,
     sendRejectionMail,
-    sendRequestignMail,
+    sendRequestingMail,
 
 }
