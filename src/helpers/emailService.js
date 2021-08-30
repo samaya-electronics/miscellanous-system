@@ -100,9 +100,8 @@ const sendRequestingMail = (email, item , username)=>{
 }
 
 
-exports = {
+module.exports = {
     sendApprovingMail,
     sendRejectionMail,
     sendRequestingMail,
-
 }

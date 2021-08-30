@@ -1,4 +1,5 @@
 const requestServices = require('../database/services/requestService')
+const emailer = require('../helpers/emailService')
 
 const getRequests = async(req, res) => {
     const userRole = req.body.user.Role.name
@@ -45,6 +46,8 @@ const createRequest = async (req, res) => {
         req.body.user,
     )
 
+    // if(!result.err) emailer.sendRequestingMail("email", "item", "username")
+
     res.json({
         err: result.err,
         msg: result.msg,
@@ -55,6 +58,8 @@ const createRequest = async (req, res) => {
 const approveRequest = async (req, res) => {
     const result = await requestServices.approveRequest(req.params.id, req.body.user.Role.name)
 
+    // if(!result.err) emailer.sendApprovingMail("email", "item", "username")
+
     res.json({
         err: result.err,
         msg: result.msg,
@@ -64,6 +69,8 @@ const approveRequest = async (req, res) => {
 
 const rejectRequest = async (req, res) => {
     const result = await requestServices.rejectRequest(req.params.id, req.body.user.Role.name)
+
+    // if(!result.err) emailer.sendRejectionMail("email", "item", "username")
 
     res.json({
         err: result.err,
