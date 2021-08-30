@@ -1,12 +1,14 @@
 const { Request, User } = require('../models')
 
-const createRequest = async (quantity, item_id, user_requesting_id) => {
+const createRequest = async (quantity, item_id, user) => {
     const result = {}
     try{
         result.request = await Request.create({
             quantity: quantity,
             item_id: item_id,
-            user_requesting_id: user_requesting_id
+            user_requesting_id: user.user_id,
+            leader_approved: (user.Role.name !== 'user'), // if he is not a user then he is a leader or higher
+            superuser_approved: (user.Role.name === 'superuser')
         })
         result.msg = "Request Created"
     }

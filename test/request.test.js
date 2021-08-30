@@ -40,6 +40,7 @@ beforeAll(async () => {
     {name: 'admin'},
     {name: 'teamleader'},
     {name: 'user'},
+    {name: 'superuser'}
   ])
   await User.bulkCreate([{
     name: "karim",
@@ -51,6 +52,9 @@ beforeAll(async () => {
     name: "hazem",
     role_id: 3,
     user_leader_id: 1
+  },{
+    name: "osama",
+    role_id: 4,
   }
   ])
   return Request.bulkCreate([
@@ -179,14 +183,15 @@ describe('request I/O --> request test', () => {
 
 
   test.each([
-    [3,1,1],
-    [4,2,2],
-    [5,2,3],
-  ])('POST /requests --> create 3 requests', async (quantity_test, user_requesting_id_test, item_id_test) => {
+    ['karim',3,1,1],
+    ['nourhan',4,2,2],
+    ['hazem',5,3,3],
+    ['osama',5,4,3],
+  ])('POST /requests --> create 3 requests', async (username, quantity_test, user_requesting_id_test, item_id_test) => {
     const res_login = await request(app)
     .post('/auth/login')
     .send({
-      username: "karim"
+      username
     })
 
     const res = await request(app)
@@ -196,7 +201,7 @@ describe('request I/O --> request test', () => {
         item_id: item_id_test,
         user_requesting_id: user_requesting_id_test,
         token: res_login.body.token,
-        username: 'karim'
+        username
       })
 
     expect(res.statusCode).toEqual(200)
