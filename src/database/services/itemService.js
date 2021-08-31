@@ -1,5 +1,5 @@
 const { Item, User } = require('../models')
-const { Op } = require('sequelize')
+const { Op } = require("sequelize")
 
 const createItem = async (name, quantity, location, threshold, category_id, code, leader_approve) => {
     const result = {}
@@ -53,7 +53,7 @@ const getItemById = async (id) => {
 const getItemsByName = async (item_name) => {
     result = {}
     try {
-        result.items = Item.findAll({
+        result.items = await Item.findAll({
             where: {
                 name: {
                     [Op.substring]: item_name
