@@ -1,4 +1,4 @@
-const { Item, User } = require('../models')
+const { Item, User, sequelize } = require('../models')
 const { Op } = require("sequelize")
 
 const createItem = async (name, quantity, location, threshold, category_id, code, leader_approve) => {
@@ -27,7 +27,13 @@ const createItem = async (name, quantity, location, threshold, category_id, code
 const getItems = async () => {
     const result = {}
     try{
-        result.items = await Item.findAll()
+        result.items = await Item.findAll({
+            where: {
+                quantity: {
+                    [Op.gt]: sequelize.col('Item.threshold')
+                }
+            }
+        })
         result.msg = "Got all items"
     }
     catch(err){
