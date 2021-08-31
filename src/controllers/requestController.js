@@ -45,8 +45,17 @@ const createRequest = async (req, res) => {
         req.body.item_id,
         req.body.user,
     )
+    if(!result.err){
 
-    // if(!result.err) emailer.sendRequestingMail("email", "item", "username")
+    if(req.body.user.Role.name === "superuser" || req.body.user.Role.name === "teamleader"){
+
+        //emailer.sendRequestingMailToStore("email", result.request.item, req.body.user.name)
+    }
+    else if(req.body.user.Role.name ==="user"){
+
+        //emailer.sendRequestingMailToLeader("email",result.request.item, req.body.user.name)
+    } 
+}
 
     res.json({
         err: result.err,
@@ -58,7 +67,16 @@ const createRequest = async (req, res) => {
 const approveRequest = async (req, res) => {
     const result = await requestServices.approveRequest(req.params.id, req.body.user.Role.name)
 
-    // if(!result.err) emailer.sendApprovingMail("email", "item", "username")
+     if(!result.err){
+
+        if(result.request.leader_approved  === true && result.request.superuser_approved === true){
+            //emailer.sendApprovingMail("email", result.request.item, req.body.user.name )
+        }
+        else if(result.request.leader_approved  === true && result.request.superuser_approved === null){
+            //emailer.sendRequestingMailToStore("email", result.request.item, req.body.user.name )
+        }
+
+     } 
 
     res.json({
         err: result.err,
@@ -70,7 +88,13 @@ const approveRequest = async (req, res) => {
 const rejectRequest = async (req, res) => {
     const result = await requestServices.rejectRequest(req.params.id, req.body.user.Role.name)
 
-    // if(!result.err) emailer.sendRejectionMail("email", "item", "username")
+    if(!result.err){
+
+        if(result.request.leader_approved  === false || result.request.superuser_approved === false){
+            //emailer.sendRejectionMail("email", result.request.item, req.body.user.name )
+        }
+
+     } 
 
     res.json({
         err: result.err,
