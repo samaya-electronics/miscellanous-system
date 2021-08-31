@@ -65,6 +65,27 @@ const approveRequest = async (request_id, userRole) => {
     return result
 }
 
+const approveDelivery = async (request_id, approved) => {
+    result = {}
+    try{
+        result.request = await Request.findByPk(request_id)
+        result.request.delivered = approved
+        if(approved){
+            const item = result.request.getItem()
+            item.quantity = item.quantity - result.request.quantity
+            await item.save()
+            result.item = item
+        }
+        await result.request.save()
+        result.msg = "Request delivered"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Request not delivered"
+    }
+    return result
+}
+
 const rejectRequest = async (request_id, userRole) => {
     result = {}
     try{
@@ -179,6 +200,7 @@ module.exports = {
     getSuperUserRequests,
     getUserRequests,
     getRequestById,
+    approveDelivery,
     approveRequest,
     rejectRequest,
     deleteRequest

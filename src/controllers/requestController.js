@@ -103,6 +103,20 @@ const rejectRequest = async (req, res) => {
     })
 }
 
+const deliverRequest = async (req, res) => {
+    const result = await requestServices.approveDelivery(req.params.id, req.body.approved)
+
+    if(result.item.quantity <= result.item.threshold){
+        
+    }
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        request: result.request
+    })
+}
+
 const deleteRequest = async (req, res) => {
     const result = await requestServices.deleteRequest(req.params.id, req.body.user)
 
@@ -118,6 +132,7 @@ module.exports = {
     getRequestById,
     createRequest,
     approveRequest,
+    deliverRequest,
     rejectRequest,
     deleteRequest
 }
