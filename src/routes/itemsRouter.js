@@ -5,6 +5,7 @@ const { onlyPassRoles } = require('../middleware/authMiddleware')
 
 router.get('/', onlyPassRoles('admin', 'superuser', 'teamleader', 'user') ,itemsController.getItems)
 router.get('/:id', onlyPassRoles('admin', 'superuser', 'teamleader', 'user') , itemsController.getItemById)
+router.get('/search', onlyPassRoles('admin', 'superuser', 'teamleader', 'user') , itemsController.searchItems)
 router.post('/', onlyPassRoles('admin', 'superuser') , itemsController.postItem)
 router.delete('/:id', onlyPassRoles('admin', 'superuser') , itemsController.deleteItem)
 router.put('/:id', onlyPassRoles('admin', 'superuser') , itemsController.updateItem)

@@ -1,4 +1,5 @@
 const { Item, User } = require('../models')
+const { Op } = require('sequelize')
 
 const createItem = async (name, quantity, location, threshold, category_id, code, leader_approve) => {
     const result = {}
@@ -48,6 +49,25 @@ const getItemById = async (id) => {
      }
      return result
  }
+
+const getItemsByName = async (item_name) => {
+    result = {}
+    try {
+        result.items = Item.findAll({
+            where: {
+                name: {
+                    [Op.substring]: item_name
+                }
+            }
+        })
+        result.msg = "Here are your search results"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get your search results"
+    }
+    return result
+}
 
  const updateItem = async (name, quantity, location, threshold, category_id, code, leader_approve, id) => {
     const result = {}
@@ -128,5 +148,6 @@ module.exports = {
 	updateItem,
 	deleteItem,
 	createItemAuthenticators,
+    getItemsByName,
 	editItemAuthenticators
 }

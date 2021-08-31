@@ -1,7 +1,17 @@
 const itemServices = require('../database/services/itemService')
 
-const getItems = async(req, res)=>{
+const getItems = async (req, res)=>{
     const result = await itemServices.getItems()
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        items: result.items
+    })
+}
+
+const searchItems = async (req, res) => {
+    const result = await itemServices.getItemsByName(req.body.itemName)
 
     res.json({
         err: result.err,
@@ -80,5 +90,6 @@ module.exports = {
     postItem,
     updateItem,
     deleteItem,
+    searchItems,
     getItems
 }
