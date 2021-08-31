@@ -1,13 +1,14 @@
 const { User, Role } = require('../models')
 const jwt = require('jsonwebtoken');
 
-const createUser = async (name, role_id, user_manager_id) => {
+const createUser = async (name, role_id, user_manager_id,email) => {
     const result = {}
     try{
         result.user = await User.create({
             name,
             role_id,
-            user_manager_id
+            user_manager_id,
+            email
         })
         result.msg = "User Created"
     }
@@ -31,7 +32,7 @@ const getUserById = async (id) => {
      return result
  }
 
- const updateUser = async (id, name, role_id, user_manager_id) => {
+ const updateUser = async (id, name, role_id, user_manager_id, email) => {
     const result = {}
     try{
         const user = await User.findByPk(id)
@@ -39,6 +40,7 @@ const getUserById = async (id) => {
             name,
             role_id,
             user_manager_id,
+            email
         })
         result.msg = "Updated user"
     }
