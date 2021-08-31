@@ -43,7 +43,7 @@ const getAllRequests = async () => {
 }
 
 
-const getdeliveries = async () => {
+const getAllDeliveries = async () => {
     result = {}
     try{
         result.requests = await Request.findAll({
@@ -88,11 +88,10 @@ const approveDelivery = async (request_id, approved) => {
     try{
         result.request = await Request.findByPk(request_id)
         result.request.delivered = approved
+        result.item = await result.request.getItem()
         if(approved){
-            const item = result.request.getItem()
-            item.quantity = item.quantity - result.request.quantity
-            await item.save()
-            result.item = item
+            result.item.quantity = result.item.quantity - result.request.quantity
+            await result.item.save()
         }
         await result.request.save()
         result.msg = "Request delivered"
@@ -214,7 +213,7 @@ const deleteRequest = async (req_id, user) => {
 module.exports = {
     createRequest,
     getAllRequests,
-    getdeliveries,
+    getAllDeliveries,
     getLeaderRequests,
     getSuperUserRequests,
     getUserRequests,

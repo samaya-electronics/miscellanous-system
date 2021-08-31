@@ -30,12 +30,12 @@ const getRequests = async(req, res) => {
  }
 
 
- const getdeliveries = async(req, res) => {
+ const getDeliveries = async(req, res) => {
     const userRole = req.body.user.Role.name
     let result
     
     if(userRole === 'admin' || userRole === 'superuser'){
-        result = await requestServices.getdeliveries()
+        result = await requestServices.getAllDeliveries()
     }
     else{
         result.err = new Error("Could not get deliveries")
@@ -156,7 +156,7 @@ module.exports = {
     deliverRequest,
     rejectRequest,
     deleteRequest,
-    getdeliveries
+    getDeliveries
 }
 
 

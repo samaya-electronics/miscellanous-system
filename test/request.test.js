@@ -214,7 +214,7 @@ describe('request I/O --> request test', () => {
 
   test.each([
     ['nourhan', 3],
-    ['osama', 4]
+    ['osama', 3]
   ])('PUT /requests/:id/approve --> request approval by team leader and superuser', async (username, req_id) => {
     const res_login = await request(app)
     .post('/auth/login')
@@ -299,5 +299,48 @@ describe('request I/O --> request test', () => {
     expect(res.body.err).toEqual(expect.anything())
   })
 
+
+
+  test('GET /requests/deliveries --> get all deliveries for admin', async () => {
+    const res_login = await request(app)
+      .post('/auth/login')
+      .send({
+        username: "osama"
+      })
+
+    const res = await request(app)
+      .get('/requests/deliveries')
+      .send({
+        token: res_login.body.token,
+        username: 'osama'
+      })
+
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body.requests.length).toBeGreaterThanOrEqual(1)
+  })
+
+
+  
+
+  test('PUT /requests/:id/deliveries/approve --> request approval by team leader and superuser', async () => {
+    const res_login = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'osama'
+    })
+
+    const res = await request(app)
+      .put(`/requests/3/deliveries/approve`)
+      .send({
+        token: res_login.body.token,
+        username: 'osama',
+        approved: true
+      })
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.request).toEqual(expect.anything())
+    expect(res.body.err).not.toEqual(expect.anything())
+  })
 
 })
