@@ -42,6 +42,24 @@ const getAllRequests = async () => {
     return result
 }
 
+
+const getdeliveries = async () => {
+    result = {}
+    try{
+        result.requests = await Request.findAll({
+            where:{leader_approved : true, 
+                   superuser_approved : true,
+                   delivered: null}
+              })
+        result.msg = "Got all deliveries"
+    }
+    catch(err){
+        result.msg = "Could not Got all deliveries"
+        result.err = err
+    }
+    return result
+}
+
 const approveRequest = async (request_id, userRole) => {
     result = {}
     try{
@@ -196,6 +214,7 @@ const deleteRequest = async (req_id, user) => {
 module.exports = {
     createRequest,
     getAllRequests,
+    getdeliveries,
     getLeaderRequests,
     getSuperUserRequests,
     getUserRequests,

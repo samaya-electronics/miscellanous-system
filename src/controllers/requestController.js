@@ -29,6 +29,27 @@ const getRequests = async(req, res) => {
     })
  }
 
+
+ const getdeliveries = async(req, res) => {
+    const userRole = req.body.user.Role.name
+    let result
+    
+    if(userRole === 'admin' || userRole === 'superuser'){
+        result = await requestServices.getdeliveries()
+    }
+    else{
+        result.err = new Error("Could not get deliveries")
+        result.msg = "something want wrong"
+    }
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        requests: result.requests
+    })
+ }
+
+
  const getRequestById = async (req, res) => {
     const result = await requestServices.getRequestById(req.params.id)
 
@@ -134,7 +155,8 @@ module.exports = {
     approveRequest,
     deliverRequest,
     rejectRequest,
-    deleteRequest
+    deleteRequest,
+    getdeliveries
 }
 
 
