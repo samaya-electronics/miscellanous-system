@@ -132,9 +132,41 @@ const sendRequestingMailToStore = (email, item , username)=>{
 }
 
 
+
+const sendThreshholdCautionMailToStore = (email, item , username)=>{
+    const options = {
+        from: 'samayatest@outlook.com',
+        to: email,
+        subject: `Informing you about ${item.name} item has reached the threshold `,
+        html: `<!doctype html>
+        <html ⚡4email>
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head> 
+        <body>
+        <h1> miscellaneous store </h1>
+        <h4 style="color: black;"> We would like to inform you there is an item '${item.name}' 
+        has reached the threshold '${item.threshold}' Remembering you to contact the supplier </h4>
+        </body>
+        </html>`
+    }
+
+    transporter.sendMail(options, (err,info)=>{
+    if(err){
+        console.log(err)
+        return
+    }
+    console.log("sent" + info.response)
+})
+}
+
 module.exports = {
     sendApprovingMail,
     sendRejectionMail,
     sendRequestingMailToLeader,
-    sendRequestingMailToStore
+    sendRequestingMailToStore,
+    sendThreshholdCautionMailToStore
 }
