@@ -247,4 +247,30 @@ describe('Item I/O --> Category dependent', () => {
     expect(res.body.item.code).toEqual(expect.any(String))
   })
 
+  test.each([
+    "test-item",
+    "3"
+  ])('GET /items/search --> search for items in the database', async (test_name) => {
+    const resAuth = await request(app)
+      .post('/auth/login')
+      .send({
+        username: 'karim',
+        password:'password'
+      })
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
+    const res = await request(app)
+      .get('/items/search')
+      .send({
+        token:resAuth.body.token,
+        username:'karim',
+        itemName: test_name
+      })
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.items.length).toBeGreaterThanOrEqual(1)
+  })
+
 })
