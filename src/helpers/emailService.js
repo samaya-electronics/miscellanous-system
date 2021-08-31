@@ -133,7 +133,7 @@ const sendRequestingMailToStore = (email, item , username)=>{
 
 
 
-const sendThreshholdCautionMailToStore = (email, item , username)=>{
+const sendThresholdCautionMailToStore = (email, item , username)=>{
     const options = {
         from: 'samayatest@outlook.com',
         to: email,
@@ -168,5 +168,5 @@ module.exports = {
     sendRejectionMail,
     sendRequestingMailToLeader,
     sendRequestingMailToStore,
-    sendThreshholdCautionMailToStore
+    sendThresholdCautionMailToStore
 }

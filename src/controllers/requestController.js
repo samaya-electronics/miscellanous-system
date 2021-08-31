@@ -128,7 +128,7 @@ const deliverRequest = async (req, res) => {
     const result = await requestServices.approveDelivery(req.params.id, req.body.approved)
 
     if(result.item.quantity <= result.item.threshold){
-        
+        // emailer.sendThresholdCautionMailToStore("email", result.item.name, req.body.user.name)
     }
 
     res.json({
