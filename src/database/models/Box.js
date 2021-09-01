@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Box.belongsTo(models.Location, {
         foreignKey:{
-            name: "box_id",
+            name: "location_id",
             allowNull: false
         },
       })

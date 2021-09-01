@@ -14,7 +14,7 @@ class Location extends Model {
         })
         Location.hasMany(models.Box, {
         foreignKey: {
-            name: "box_id",
+            name: "location_id",
             allowNull: false
         },
         })
