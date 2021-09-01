@@ -17,7 +17,7 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
  - [X] remove unwanted info from user in token
  - [X] clean up middleware function
  - [X] request creation logic
- - [ ] request approval logic
+ - [X] request approval logic
  - [ ] formal email service
  - [ ] finish authentication with ldap
  - [ ] if security is tight, user UUIDs instead of IDs
