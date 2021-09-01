@@ -4,25 +4,25 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
 
-class Location extends Model {
+class Section extends Model {
     static associate(models) {
-        Location.belongsTo(models.Area, {
+        Section.belongsTo(models.Area, {
         foreignKey:{
             name: "area_id",
             allowNull: false
         },
         })
-        Location.hasMany(models.Box, {
+        Section.hasMany(models.Box, {
         foreignKey: {
-            name: "location_id",
+            name: "section_id",
             allowNull: false
         },
         })
     }
     };
 
-  Location.init({
-    Location_id: {
+  Section.init({
+    section_id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
@@ -40,9 +40,9 @@ class Location extends Model {
   ,{
     sequelize,
     underscored: true,
-    modelName: 'Location',
-    tableName: "locations"
+    modelName: 'Section',
+    tableName: "sections"
   });
 
-  return Location;
+  return Section;
 };
