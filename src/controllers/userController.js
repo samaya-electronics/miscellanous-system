@@ -4,7 +4,8 @@ const postUser = async (req, res)=>{
     const result = await userServices.createUser(
         req.body.username,
         req.body.role_id,
-        req.body.user_manager_id
+        req.body.user_manager_id,
+        req.body.email
     )
 
     res.json({
@@ -30,6 +31,7 @@ const updateUser = async (req, res)=>{
         req.body.username,
         req.body.role_id,
         req.body.user_manager_id,
+        req.body.email
     )
 
     res.json({
