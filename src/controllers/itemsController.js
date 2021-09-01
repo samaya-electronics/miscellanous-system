@@ -23,8 +23,6 @@ const searchItems = async (req, res) => {
 const postItem = async (req, res)=>{
     const result = await itemServices.createItem(
         req.body.item_name,
-        req.body.quantity,
-        req.body.location,
         req.body.threshold,
         req.body.category_id,
         req.body.code,
@@ -55,8 +53,6 @@ const getItemById = async (req, res)=>{
 const updateItem = async (req, res)=>{
     const result = await itemServices.updateItem(
         req.body.item_name,
-        req.body.quantity,
-        req.body.location,
         req.body.threshold,
         req.body.category_id,
         req.body.code,

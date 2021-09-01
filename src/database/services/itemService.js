@@ -1,13 +1,11 @@
 const { Item, User, sequelize } = require('../models')
 const { Op } = require("sequelize")
 
-const createItem = async (name, quantity, location, threshold, category_id, code, leader_approve) => {
+const createItem = async (name, threshold, category_id, code, leader_approve) => {
     const result = {}
     try{
         result.item = await Item.create({
             name,
-            quantity,
-            location,
             threshold,
             category_id,
             code,
@@ -76,14 +74,12 @@ const getItemsByName = async (item_name) => {
     return result
 }
 
- const updateItem = async (name, quantity, location, threshold, category_id, code, leader_approve, id) => {
+ const updateItem = async (name, threshold, category_id, code, leader_approve, id) => {
     const result = {}
     try{
         const item = await Item.findByPk(id)
         result.item = await item.update({
 					name,
-					quantity,
-					location,
 					threshold,
 					category_id,
 					code,
