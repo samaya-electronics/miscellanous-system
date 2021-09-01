@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       Area.hasMany(models.Location, {
         foreignKey: {
           allowNull: false,
-          name: "location_id"
+          name: "area_id"
         }
       })
     }
