@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     email:{
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.STRING(150),
       validate:{
         isEmail: true,

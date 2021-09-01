@@ -27,13 +27,14 @@ const createItem = async (name, quantity, location, threshold, category_id, code
 const getItems = async () => {
     const result = {}
     try{
-        result.items = await Item.findAll({
-            where: {
-                quantity: {
-                    [Op.gt]: sequelize.col('Item.threshold')
-                }
-            }
-        })
+        // result.items = await Item.findAll({
+        //     where: {
+        //         quantity: {
+        //             [Op.gt]: sequelize.col('Item.threshold')
+        //         }
+        //     }
+        // })
+        result.items = await Item.findAll()
         result.msg = "Got all items"
     }
     catch(err){
