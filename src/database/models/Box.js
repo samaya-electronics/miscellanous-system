@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
 
   class Box extends Model {
     static associate(models) {
-      Box.belongsTo(models.Location, {
+      Box.belongsTo(models.Section, {
         foreignKey:{
-            name: "location_id",
+            name: "section_id",
             allowNull: false
         },
       })

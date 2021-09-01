@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
   class Area extends Model {
     static associate(models) {
-      Area.hasMany(models.Location, {
+      Area.hasMany(models.Section, {
         foreignKey: {
           allowNull: false,
           name: "area_id"
