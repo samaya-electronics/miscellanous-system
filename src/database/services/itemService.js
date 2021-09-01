@@ -1,5 +1,5 @@
 const { Item, User, sequelize } = require('../models')
-const { Op } = require("sequelize")
+const { Op  } = require("sequelize")
 
 const createItem = async (name, threshold, category_id, code, leader_approve) => {
     const result = {}
