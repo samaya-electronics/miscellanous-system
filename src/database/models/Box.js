@@ -12,6 +12,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
       })
+      Box.hasOne(models.Stock, {
+        foreignKey: {
+          name: "box_id",
+          allowNull: false
+        },
+      })
     }
   };
 

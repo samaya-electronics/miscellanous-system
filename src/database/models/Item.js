@@ -21,7 +21,15 @@ module.exports = (sequelize, DataTypes) => {
       Item.belongsToMany(models.User, {
         through: models.ItemAuth
       })
+
+      Item.hasMany(models.Stock,{
+        foreignKey: {
+          name: "item_id",
+          allowNull: false
+        }
+      })
     }
+  
   };
 
   Item.init({
