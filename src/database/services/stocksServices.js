@@ -3,7 +3,7 @@ const { Stock } = require('../models')
 const createStock = async (item_id, box_id, quantity) => {
     const result = {}
     try{
-        result.categories = await Stock.create({
+        result.stock = await Stock.create({
             box_id,
             item_id,
             quantity
@@ -17,6 +17,68 @@ const createStock = async (item_id, box_id, quantity) => {
     return result
 }
 
+const getStocks = async () => {
+    const result = {}
+    try{
+        result.stocks = await Stock.findAll()
+        result.msg = "Got all stocks"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get all stocks"
+    }
+    return result
+}
+
+const getStockById = async (id) => {
+   const result = {}
+    try{
+        result.stock = await Stock.findByPk(parseInt(id))
+        result.msg = "Got Stock"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get Stock"
+    }
+    return result
+}
+
+const updateStock = async (id, item_id, box_id, quantity) => {
+    const result = {}
+    try{
+        const stock = await Stock.findByPk(id)
+        result.stock = await stock.update({
+            box_id,
+            item_id,
+            quantity
+        })
+        result.msg = "Updated stock"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not update stock"
+    }
+    return result
+}
+
+const deleteStock = async (id) => {
+   const result = {}
+    try{
+        result.stock = await Stock.findByPk(id)
+        result.stock.destroy()
+        result.msg = "Deleted stock"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not delete stock"
+    }
+    return result
+}
+
 module.exports = {
-    createStock
+    createStock,
+    deleteStock,
+    updateStock,
+    getStockById,
+    getStocks
 }
