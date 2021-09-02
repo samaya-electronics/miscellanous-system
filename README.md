@@ -18,6 +18,7 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
  - [X] clean up middleware function
  - [X] request creation logic
  - [X] request approval logic
+ - [ ] talk about how new stock arrives and work out how to insert new quantity instead of just editing the int
  - [ ] formal email service
  - [ ] finish authentication with ldap
  - [ ] if security is tight, user UUIDs instead of IDs
