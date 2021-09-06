@@ -16,37 +16,37 @@ const mockDB = async () => {
        ]) 
     await Item.bulkCreate([
         {
-        name: "item-1",
+        name: "copy book",
         threshold: 20,
         code: "klsjd4l5",
         category_id: 1
         },{
-        name: "item-2",
+        name: "red tape",
         threshold: 40,
         code: "klsajd45",
         category_id: 2
         },{
-        name: "item-3",
+        name: "blue tape",
         threshold: 23,
         code: "klsasjd45",
         category_id: 1
         },{
-        name: "item-4",
+        name: "blue marker",
         threshold: 30,
         code: "klsjads45",
         category_id: 2
         },{
-        name: "item-5",
+        name: "red marker",
         threshold: 120,
         code: "klsjads45",
         category_id: 3
         },{
-        name: "item-6",
+        name: "blue pen",
         threshold: 23,
         code: "klsasjd45",
         category_id: 3
         },{
-        name: "item-7",
+        name: "highliter",
         threshold: 30,
         code: "klsjads45",
         category_id: 3
