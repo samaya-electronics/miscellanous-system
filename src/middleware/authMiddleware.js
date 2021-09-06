@@ -17,17 +17,24 @@ const onlyPassRoles = (...roles) =>{
 
 const authenticateToken = async (req, res, next) => {
 	try{
-		let user = jwt.verify(req.body.token, process.env.SECRET_KEY)
+		const authorization = req.headers.authorization
+		const username = req.headers.username
+		if(!authorization) throw new TokenError("No Authorization Header")
+		if(!username) throw new Error("No username Header")
+
+		const token = authorization?.split("Bearer ")[1]
+		let user = jwt.verify(token, process.env.SECRET_KEY)
 		user = await User.findByPk(user.user_id, {include : Role})
-		if(user.token !== req.body.token) throw new Error("Invalid user token")
-		if(user.name !== req.body.username) throw new Error("Invalid username")
+
+		if(user.token !== token) throw new TokenError("Invalid user token")
+		if(user.name !== req.headers.username) throw new Error("Invalid username")
 		
 		req.body.user = user
 		next()
 	}
 	catch(err){
 		return res.json({
-			err
+			err: err.toString()
 		})
 	}
 }
