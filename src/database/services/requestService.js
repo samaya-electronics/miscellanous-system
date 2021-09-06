@@ -1,4 +1,6 @@
 const { Request, User } = require('../models')
+const stocksServices = require('../src/database/services/stocksServices')
+const emailer = require('../../helpers/emailService')
 
 const createRequest = async (quantity, item_id, user) => {
     const result = {}
@@ -89,7 +91,11 @@ const approveDelivery = async (request_id, approved) => {
         result.request = await Request.findByPk(request_id)
         result.request.delivered = approved
         result.item = await result.request.getItem()
+        const itemQuantity = stocksServices.getItemQuantity(result.request.item_id)
         if(approved){
+            if(result.item.threshold <= itemQuantity){
+                //emailer.sendThresholdCautionMailToStore()
+            }
             result.item.quantity = result.item.quantity - result.request.quantity
             await result.item.save()
         }
