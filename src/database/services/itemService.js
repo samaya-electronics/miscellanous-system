@@ -1,4 +1,5 @@
 const { Item, User, sequelize } = require('../models')
+const stocksServices = require('../services/stocksServices')
 const { Op  } = require("sequelize")
 
 const createItem = async (name, threshold, category_id, code, leader_approve) => {
@@ -143,7 +144,28 @@ const editItemAuthenticators = async (item, users_ids) => {
 		return err
 	}
 }
- 
+
+const getItemQuantity = async (item_id) => {
+    const item = await Item.findByPk(item_id)
+    const stocks = await item.getStocks()
+    let quantity = 0
+    stocks.forEach((stock, i) => {
+        quantity = quantity + stock.quantity
+    })
+    return quantity
+}
+
+// const getItemStocks = async (item_id) => {
+//     const result = {}
+//     try{
+//         const quantity = await getItemQuantity(item_id)
+
+//     }
+//     catch(err){
+//     }
+//     return result
+// }
+
 module.exports = {
 	createItem,
 	getItems,
@@ -152,5 +174,6 @@ module.exports = {
 	deleteItem,
 	createItemAuthenticators,
     getItemsByName,
+    getItemQuantity,
 	editItemAuthenticators
 }

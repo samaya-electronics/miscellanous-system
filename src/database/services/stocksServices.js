@@ -1,4 +1,4 @@
-const { Stock, Item } = require('../models')
+const { Stock } = require('../models')
 
 const createStock = async (item_id, box_id, quantity) => {
     const result = {}
