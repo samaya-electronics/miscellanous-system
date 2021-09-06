@@ -1,4 +1,4 @@
-const { Stock } = require('../models')
+const { Stock, Item } = require('../models')
 
 const createStock = async (item_id, box_id, quantity) => {
     const result = {}
@@ -75,10 +75,21 @@ const deleteStock = async (id) => {
     return result
 }
 
+const getItemQuantity = async (item_id) => {
+    const item = await Item.findByPk(item_id)
+    const stocks = await item.getStocks()
+    let quantity = 0
+    stocks.forEach((stock, i) => {
+        quantity = quantity + stock.quantity
+    })
+    return quantity
+}
+
 module.exports = {
     createStock,
     deleteStock,
     updateStock,
     getStockById,
+    getItemQuantity,
     getStocks
 }

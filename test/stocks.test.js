@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../src/app');
 const { sequelize, Item, Category, Area, Section, Box, Stock, Role, User } = require('../src/database/models')
+const stocksServices = require('../src/database/services/stocksServices')
 
 beforeAll(async () => {
   await sequelize.sync({
@@ -216,6 +217,12 @@ describe('Stocks I/O Testing', () => {
 		expect(res.statusCode).toEqual(200)
 		expect(res.body.err).not.toEqual(expect.anything())
 		expect(res.body.stock).toEqual(expect.anything())
+	})
+
+  test('GET Quantity by service', async () => {
+		const quantity = await stocksServices.getItemQuantity(1)
+    
+    expect(quantity).toBeGreaterThan(0)
 	})
 
 })
