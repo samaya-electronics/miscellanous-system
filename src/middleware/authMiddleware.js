@@ -19,14 +19,14 @@ const authenticateToken = async (req, res, next) => {
 	try{
 		const authorization = req.headers.authorization
 		const username = req.headers.username
-		if(!authorization) throw new TokenError("No Authorization Header")
+		if(!authorization) throw new Error("No Authorization Header")
 		if(!username) throw new Error("No username Header")
 
 		const token = authorization?.split("Bearer ")[1]
 		let user = jwt.verify(token, process.env.SECRET_KEY)
 		user = await User.findByPk(user.user_id, {include : Role})
 
-		if(user.token !== token) throw new TokenError("Invalid user token")
+		if(user.token !== token) throw new Error("Invalid user token")
 		if(user.name !== req.headers.username) throw new Error("Invalid username")
 		
 		req.body.user = user
