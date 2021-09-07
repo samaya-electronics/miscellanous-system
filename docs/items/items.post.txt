@@ -1,9 +1,7 @@
 URL POST /items
 Body Data: {
     item_name : {string},
-    quantity: {int},
     threshold: {int},
-    location: {string},
     category_id: {int},
     code:{string},
     leader_approve:{boolean},
@@ -19,9 +17,7 @@ A- success
     item:{
         item_id: {int}
         name : {string},
-        quantity: {int},
         threshold: {int},
-        location: {string},
         category_id: {int},
         code:{string},
         leader_approve:{boolean},

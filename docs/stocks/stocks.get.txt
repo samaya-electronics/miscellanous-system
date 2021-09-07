@@ -1,4 +1,4 @@
-URL GET /items
+URL GET /stocks
 Body Data: {
     token: {string},
     username: {string}
@@ -9,21 +9,21 @@ Returned Data:
 A- success
 {
     msg: {string}
-    items:[{
-        item_id: {int}
+    stocks:[{
         name : {string},
-        threshold: {int},
-        category_id: {int},
-        code:{string},
+        stock_id: {int},
+        quantity: {int},
+        box_id: {int},
+        item_id: {int},
         updated_at: {Date},
         created_at: {Date}
     },{
-        item_id: {int}
         name : {string},
-        threshold: {int},
-        category_id: {int},
-        code:{string},
+        stock_id: {int},
         updated_at: {Date},
+        quantity: {int},
+        box_id: {int},
+        item_id: {int},
         created_at: {Date}
     }]
 }
@@ -36,7 +36,7 @@ B- failed
 
 -----------------------------------------------------------------------------------------
 
-URL GET /items/:id
+URL GET /stocks/:id
 Body Data: {}
 
 Returned Data:
@@ -44,15 +44,12 @@ Returned Data:
 A- success
 {
     msg: {string}
-    item:{
-        item_id: {int}
+    stock:{
         name : {string},
+        role_id: {int},
         quantity: {int},
-        threshold: {int},
-        location: {string},
-        category_id: {int},
-        code:{string},
-        leader_approve:{boolean},
+        box_id: {int},
+        item_id: {int},
         updated_at: {Date},
         created_at: {Date}
     }
