@@ -50,8 +50,29 @@ const deleteSection = async (req, res)=>{
     })
 }
 
+const deleteSection = async (req, res)=>{
+    const result = await SectionServices.deleteSection(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        section: result.section
+    })
+}
+
+const getBoxesBySection = async (req, res)=>{
+    const result = await SectionServices.getBoxesBySection(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        boxes: result.boxes
+    })
+}
+
 module.exports = {
     getSectionById,
+    getBoxesBySection,
     postSection,
     updateSection,
     deleteSection,

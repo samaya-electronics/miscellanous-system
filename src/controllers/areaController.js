@@ -50,8 +50,19 @@ const deleteArea = async (req, res)=>{
     })
 }
 
+const getSectionsByArea = async (req, res)=>{
+    const result = await AreaServices.getSectionsByArea(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        sections: result.sections
+    })
+}
+
 module.exports = {
     getAreaById,
+    getSectionsByArea,
     postArea,
     updateArea,
     deleteArea,
