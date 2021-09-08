@@ -59,11 +59,22 @@ const deleteStock = async (req, res)=>{
     })
 }
 
+const getStockLocation = async (req, res)=>{
+    const result = await stocksServices.getStockLocation(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        location: result.location
+    })
+}
+
 
 module.exports = {
     getStocks,
     getStockById,
     updateStock,
     deleteStock,
+    getStockLocation,
     postStock
 }
