@@ -71,9 +71,25 @@ const deleteSection = async (id) => {
     return result
 }
 
+
+const getBoxesBySection = async (section_id) => {
+    const result = {}
+     try{
+         const section = await Section.findByPk(section_id)
+         result.boxes = await section.getBoxes()
+         result.msg = "got all boxes of the section"
+     }
+     catch(err){
+         result.err = err
+         result.msg = "Could not get boxes"
+     }
+     return result
+ }
+
 module.exports = {
     createSection,
     getSections,
+    getBoxesBySection,
     getSectionById,
     updateSection,
     deleteSection,

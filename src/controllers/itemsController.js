@@ -81,11 +81,23 @@ const deleteItem = async (req, res)=>{
     })
 }
 
+const getStocksByItem = async (req, res) =>{
+    const result = await itemServices.getItemStocks(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        stocks: result.stocks
+    })
+}
+
 module.exports = {
     getItemById,
+    getStocksByItem,
     postItem,
     updateItem,
     deleteItem,
     searchItems,
-    getItems
+    getItems,
+
 }
