@@ -70,9 +70,26 @@ const deleteArea = async (id) => {
     return result
 }
 
+const getSectionsByArea = async (area_id) => {
+    const result = {}
+     try{
+         const area = await Area.findByPk(area_id)
+         result.sections = await item.getSections()
+         result.msg = "got all sections of the area"
+     }
+     catch(err){
+         result.err = err
+         result.msg = "Could not get sections"
+     }
+     return result
+ }
+
+
+
 module.exports = {
     createArea,
     getAreas,
+    getSectionsByArea,
     getAreaById,
     updateArea,
     deleteArea,

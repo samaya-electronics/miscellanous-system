@@ -23,7 +23,8 @@ A- success
             created_at: {Date},
             item_id: {int},
             user_requesting_id: {int},
-            user_approving_id: {int},
+            leader_approved: {boolean},
+            superuser_approved: {boolean}
         }
 }
 

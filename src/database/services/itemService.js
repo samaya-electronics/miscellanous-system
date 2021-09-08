@@ -1,4 +1,4 @@
-const { Item, User, sequelize } = require('../models')
+const { Item, User, stock ,sequelize } = require('../models')
 const stocksServices = require('../services/stocksServices')
 const { Op  } = require("sequelize")
 
@@ -74,6 +74,7 @@ const getItemsByName = async (item_name) => {
     }
     return result
 }
+
 
  const updateItem = async (name, threshold, category_id, code, leader_approve, id) => {
     const result = {}
@@ -155,21 +156,26 @@ const getItemQuantity = async (item_id) => {
     return quantity
 }
 
-// const getItemStocks = async (item_id) => {
-//     const result = {}
-//     try{
-//         const quantity = await getItemQuantity(item_id)
-
-//     }
-//     catch(err){
-//     }
-//     return result
-// }
+const getItemStocks = async (item_id) => {
+    const result = {}
+    try{
+        const item = await Item.findByPk(item_id)
+        result.stocks = await item.getStocks()
+        result.quantity = await getItemQuantity(item_id)
+        result.msg = "got all stocks of the item"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get stocks"
+    }
+    return result
+}
 
 module.exports = {
 	createItem,
 	getItems,
 	getItemById,
+    getItemStocks,
 	updateItem,
 	deleteItem,
 	createItemAuthenticators,
