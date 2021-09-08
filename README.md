@@ -31,5 +31,6 @@ for development purposes the testing and dev domain is samaya-misc.herokuapp.com
 
 ## FUTURE WORK 2.0:
  - Make user approvals dynamic to any additional roles
- - make request GETing dynaming instead of hard coded functions
+ - make request GETing dynamic instead of hard coded functions
  - make roles and permissions dynamic instead of hard coded middleware
+ - user FIFO in choosing stock locations
