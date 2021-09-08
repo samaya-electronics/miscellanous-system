@@ -68,15 +68,15 @@ const createRequest = async (req, res) => {
     )
     if(!result.err){
 
-    if(req.body.user.Role.name === "superuser" || req.body.user.Role.name === "teamleader"){
+        if(req.body.user.Role.name === "superuser" || req.body.user.Role.name === "teamleader"){
 
-        //emailer.sendRequestingMailToStore("email", result.request.item, req.body.user.name)
+            //emailer.sendRequestingMailToStore("email", result.request.item, req.body.user.name)
+        }
+        else if(req.body.user.Role.name ==="user"){
+
+            //emailer.sendRequestingMailToLeader("email",result.request.item, req.body.user.name)
+        } 
     }
-    else if(req.body.user.Role.name ==="user"){
-
-        //emailer.sendRequestingMailToLeader("email",result.request.item, req.body.user.name)
-    } 
-}
 
     res.json({
         err: result.err,

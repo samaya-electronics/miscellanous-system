@@ -85,11 +85,30 @@ const getItemQuantity = async (item_id) => {
     return quantity
 }
 
+const getStockLocation = async (stock_id) => {
+    result = {}
+    try{
+        const stock = await Stock.findByPk(stock_id)
+        const box = await stock.getBox()
+        const section = await box.getSection()
+        const area = await section.getArea()
+        const locationCode = `${area.code}${section.code}${box.code}`
+        const locationName = `${area.name} ${section.name} ${box.name}`
+        result.location = `${locationCode} - ${locationName}`
+        result.msg = "Got location"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get location"
+    }
+}
+
 module.exports = {
     createStock,
     deleteStock,
     updateStock,
     getStockById,
     getItemQuantity,
+    getStockLocation,
     getStocks
 }
