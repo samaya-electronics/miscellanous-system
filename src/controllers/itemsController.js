@@ -91,6 +91,17 @@ const getStocksByItem = async (req, res) =>{
     })
 }
 
+const getStocksLocationsByItem = async (req, res) =>{
+    const result = await itemServices.getItemStocksLocations(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        stocks: result.stocks
+    })
+}
+
+
 module.exports = {
     getItemById,
     getStocksByItem,
@@ -98,6 +109,7 @@ module.exports = {
     updateItem,
     deleteItem,
     searchItems,
+    getStocksLocationsByItem,
     getItems,
 
 }

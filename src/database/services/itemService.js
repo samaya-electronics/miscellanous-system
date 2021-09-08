@@ -161,7 +161,6 @@ const getItemStocks = async (item_id) => {
     try{
         const item = await Item.findByPk(item_id)
         result.stocks = await item.getStocks()
-        result.quantity = await getItemQuantity(item_id)
         result.msg = "got all stocks of the item"
     }
     catch(err){
@@ -169,6 +168,28 @@ const getItemStocks = async (item_id) => {
         result.msg = "Could not get stocks"
     }
     return result
+}
+
+const getItemStocksLocations = async (item_id) => {
+    let result = {}
+    try{
+        const item = await Item.findByPk(item_id)
+        let locationResult
+        const stocks = await item.getStocks()
+        for (const stock of stocks) {
+            locationResult = await stocksServices.getStockLocation(stock_id)
+            if(locationResult.err) throw new Error(locationResult.msg)
+            result.stocks.push({
+                stock_id: stock.stock_id,
+                location: locationResult.location
+            })
+        }
+        result.msg = "Got location"
+    }
+    catch(err){
+        result.err = err
+        result.msg = "Could not get location"
+    }
 }
 
 module.exports = {
@@ -179,6 +200,7 @@ module.exports = {
 	updateItem,
 	deleteItem,
 	createItemAuthenticators,
+    getItemStocksLocations,
     getItemsByName,
     getItemQuantity,
 	editItemAuthenticators
