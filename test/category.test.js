@@ -131,7 +131,7 @@ describe('Category I/O ', () => {
 
     const res = await request(app)
     .delete(`/categories/${test_pk}`)
-    .set('authorization', `token=Bearer ${resAuth.body.token}`)
+    .set('authorization', `Bearer ${resAuth.body.token}`)
     .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)
@@ -156,7 +156,7 @@ describe('Category I/O ', () => {
 
     const res = await request(app)
       .post('/categories')
-      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
       .set('username', 'karim')
       .send({
         category_name: test_name,
@@ -179,7 +179,7 @@ describe('Category I/O ', () => {
 
     const res = await request(app)
       .post('/categories')
-      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
       .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)

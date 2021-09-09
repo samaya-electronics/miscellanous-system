@@ -78,7 +78,7 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .get('/items')
-      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
       .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)
@@ -97,7 +97,7 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
     .get('/items/1')
-    .set('authorization', `token=Bearer ${resAuth.body.token}`)
+    .set('authorization', `Bearer ${resAuth.body.token}`)
     .set('username', 'karim')
     
     expect(res.statusCode).toEqual(200)
@@ -124,7 +124,7 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .post('/items')
-      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
       .set('username', 'karim')
       .send({
         item_name: test_name,
@@ -156,7 +156,7 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .post('/items')
-      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
       .set('username', 'karim')
       .send({
         nme: "test-item-1", // wrong name tag
@@ -187,7 +187,7 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .put(`/items/${item_to_change_id}`)
-      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
       .set('username', 'karim')
       .send({
         item_name: test_name,
@@ -218,7 +218,7 @@ describe('Item I/O --> Category dependent', () => {
     
     const res = await request(app)
     .delete('/items/1')
-    .set('authorization', `token=Bearer ${resAuth.body.token}`)
+    .set('authorization', `Bearer ${resAuth.body.token}`)
     .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)
@@ -244,7 +244,7 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .get('/items/search')
-      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
       .set('username', 'karim')
       .send({
         itemName: test_name
