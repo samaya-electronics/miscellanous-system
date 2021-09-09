@@ -68,10 +68,8 @@ describe('Auth system testing', () => {
 
     const res2 = await request(app)
       .get('/items')
-      .send({
-        token: res.body.token,
-        username: username
-      })
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
     expect(res2.statusCode).toEqual(200)
     expect(res2.body.items).toEqual(expect.anything())

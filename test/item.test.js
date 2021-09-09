@@ -78,10 +78,8 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .get('/items')
-      .send({
-        token: resAuth.body.token,
-        username: 'karim'
-      })
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -99,10 +97,8 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
     .get('/items/1')
-    .send({
-      token: resAuth.body.token,
-      username: 'karim'
-    })
+    .set('authorization', `token=Bearer ${resAuth.body.token}`)
+    .set('username', 'karim')
     
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -128,26 +124,22 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .post('/items')
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
       .send({
         item_name: test_name,
-        // quantity: test_q,
         threshold: test_thresh,
-        // location: test_loc,
         category_id: test_cat_id,
         code: test_code,
         leader_approve: true,
         // users_ids: [4,2,3],
         // order: [1,2,3],
-        token: resAuth.body.token,
-        username: 'karim'
     })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.item).toEqual(expect.objectContaining({
       name: test_name,
-      // quantity: test_q,
       threshold: test_thresh,
-      // location: test_loc,
       category_id: test_cat_id,
       code: test_code,
     }))
@@ -164,18 +156,16 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .post('/items')
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
       .send({
         nme: "test-item-1", // wrong name tag
-        // quantity: 50,
         threshold: 30,
-        // location: "test-loc-1",
         category_id: 1,
         code: "125626werfs",
         users_ids: [4,2,3],
         order: [1,2,3],
         leader_approve: true,
-        token: resAuth.body.token,
-        username:'karim'
       })
 
     expect(res.body.err).toEqual(expect.anything())
@@ -197,26 +187,22 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .put(`/items/${item_to_change_id}`)
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
       .send({
         item_name: test_name,
-        // quantity: test_q,
         threshold: test_thresh,
-        // location: test_loc,
         category_id: test_cat_id,
         code: item_to_change_code,
         // users_ids: [4,2,3],
         // order: [1,2,3],
         leader_approve: false,
-        token: resAuth.body.token,
-        username: 'karim'
     })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.item).toEqual(expect.objectContaining({
       name: test_name,
-      // quantity: test_q,
       threshold: test_thresh,
-      // location: test_loc,
       category_id: test_cat_id
     }))
   })
@@ -232,16 +218,13 @@ describe('Item I/O --> Category dependent', () => {
     
     const res = await request(app)
     .delete('/items/1')
-    .send({
-      token:resAuth.body.token,
-      username:'karim'
-    })
+    .set('authorization', `token=Bearer ${resAuth.body.token}`)
+    .set('username', 'karim')
+
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.item.name).toEqual(expect.any(String))
-    // expect(res.body.item.location).toEqual(expect.any(String))
     expect(res.body.item.threshold).toEqual(expect.any(Number))
-    // expect(res.body.item.quantity).toEqual(expect.any(Number))
     expect(res.body.item.category_id).toEqual(expect.any(Number))
     expect(res.body.item.code).toEqual(expect.any(String))
   })
@@ -261,9 +244,9 @@ describe('Item I/O --> Category dependent', () => {
 
     const res = await request(app)
       .get('/items/search')
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
       .send({
-        token:resAuth.body.token,
-        username:'karim',
         itemName: test_name
       })
 
