@@ -45,17 +45,16 @@ describe('Category I/O ', () => {
     const resAuth = await request(app)
     .post('/auth/login')
     .send({
-      username: 'karim',
-      password:'password'})
+      username: 'karim'
+    })
+
     expect(resAuth.statusCode).toEqual(200)
     expect(resAuth.body.token).toEqual(expect.anything())
 
       const res = await request(app)
       .get('/categories')
-      .send({
-        token: resAuth.body.token,
-        username:'karim'
-      })
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
@@ -83,10 +82,8 @@ describe('Category I/O ', () => {
 
     const res = await request(app)
     .get(`/categories/${value}`)
-    .send({
-      token: resAuth.body.token,
-      username:'karim'
-    })
+    .set('authorization', `token=Bearer ${resAuth.body.token}`)
+    .set('username', 'karim')
 
 
     expect(res.statusCode).toEqual(200)
@@ -107,16 +104,16 @@ describe('Category I/O ', () => {
     expect(resAuth.statusCode).toEqual(200)
     expect(resAuth.body.token).toEqual(expect.anything())
 
-      const res = await request(app)
-      .put(`/categories/1`)
-      .send({
-        category_name: "test_name",
-          token: resAuth.body.token,
-          username: 'karim'
-      })
-      expect(res.statusCode).toEqual(200)
-      expect(res.body.err).not.toEqual(expect.anything())
-      expect(res.body.category).toEqual(expect.anything())
+    const res = await request(app)
+    .put(`/categories/1`)
+    .set('authorization', `token=Bearer ${resAuth.body.token}`)
+    .set('username', 'karim')
+    .send({
+      category_name: "test_name",
+    })
+    expect(res.statusCode).toEqual(200)
+    expect(res.body.err).not.toEqual(expect.anything())
+    expect(res.body.category).toEqual(expect.anything())
   })
 
   test.each([
@@ -134,11 +131,9 @@ describe('Category I/O ', () => {
 
     const res = await request(app)
     .delete(`/categories/${test_pk}`)
-    .send({
-      token: resAuth.body.token,
-      username: 'karim'
+    .set('authorization', `token=Bearer ${resAuth.body.token}`)
+    .set('username', 'karim')
 
-    })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
     expect(res.body.category).toEqual(expect.anything())
@@ -161,10 +156,10 @@ describe('Category I/O ', () => {
 
     const res = await request(app)
       .post('/categories')
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
       .send({
         category_name: test_name,
-          token: resAuth.body.token,
-          username: 'karim'
       })
 
     expect(res.statusCode).toEqual(200)
@@ -184,11 +179,8 @@ describe('Category I/O ', () => {
 
     const res = await request(app)
       .post('/categories')
-      .send({
-        nme: "test-error",
-        token: resAuth.body.token,
-        username: 'karim'
-      })
+      .set('authorization', `token=Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).toEqual(expect.anything())
