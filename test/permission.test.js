@@ -34,18 +34,16 @@ afterAll(() => {
 
 describe('Permission I/O', () => {
     test('GET /permissions --> get list of all Permissions', async () => {
-      const res_login = await request(app)
+      const resAuth = await request(app)
         .post('/auth/login')
         .send({
           username: "karim"
         })
       const res = await request(app)
         .get('/permissions')
-        .send({
-          username: "karim",
-          token: res_login.body.token
-        })
-
+        .set('authorization', `Bearer ${resAuth.body.token}`)
+        .set('username', 'karim')
+        
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
       expect(res.body.permissions).toEqual(expect.arrayContaining([{
@@ -64,7 +62,7 @@ describe('Permission I/O', () => {
       [4, 4],
       [5, 5],
     ])('GET /permissions/:pk --> get Permission by primary key', async (value, expected) => {
-      const res_login = await request(app)
+      const resAuth = await request(app)
         .post('/auth/login')
         .send({
           username: "karim"
@@ -72,10 +70,8 @@ describe('Permission I/O', () => {
         
       const res = await request(app)
       .get(`/permissions/${value}`)
-      .send({
-        username: "karim",
-        token: res_login.body.token
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
   
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
@@ -86,7 +82,7 @@ describe('Permission I/O', () => {
     })
   
     test('PUT /permissions --> updates 3 permission by primary key', async() => {
-      const res_login = await request(app)
+      const resAuth = await request(app)
         .post('/auth/login')
         .send({
           username: "karim"
@@ -94,10 +90,10 @@ describe('Permission I/O', () => {
 
       const res = await request(app)
         .put('/permissions/1')
+        .set('authorization', `Bearer ${resAuth.body.token}`)
+        .set('username', 'karim')
         .send({
           name: "test_name",
-          username: "karim",
-          token: res_login.body.token
         })
 
       expect(res.statusCode).toEqual(200)
@@ -110,7 +106,7 @@ describe('Permission I/O', () => {
       {test_pk: 2, remaining_objects_num: 3},
       {test_pk: 3, remaining_objects_num: 2},
     ])('DELETE /permissions/:pk --> delete 3 permissions', async ({test_pk, remaining_objects_num}) => {
-      const res_login = await request(app)
+      const resAuth = await request(app)
         .post('/auth/login')
         .send({
           username: "karim"
@@ -118,10 +114,8 @@ describe('Permission I/O', () => {
 
       const res = await request(app)
         .delete(`/permissions/${test_pk}`)
-        .send({
-          username: "karim",
-          token: res_login.body.token
-        })
+        .set('authorization', `Bearer ${resAuth.body.token}`)
+        .set('username', 'karim')
   
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
@@ -135,7 +129,7 @@ describe('Permission I/O', () => {
       ['test-permission-post-4','test-permission-post-4'],
       ['test-permission-post-5','test-permission-post-5'],
     ])('POST /permission --> Creates 5 permissions', async (test_name, expected_name) => {
-      const res_login = await request(app)
+      const resAuth = await request(app)
         .post('/auth/login')
         .send({
           username: "karim"
@@ -143,10 +137,10 @@ describe('Permission I/O', () => {
 
       const res = await request(app)
         .post('/permissions')
+        .set('authorization', `Bearer ${resAuth.body.token}`)
+        .set('username', 'karim')
         .send({
             name: test_name,
-            username: "karim",
-            token: res_login.body.token
         })
     
       expect(res.statusCode).toEqual(200)
