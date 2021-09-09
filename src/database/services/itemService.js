@@ -171,13 +171,14 @@ const getItemStocks = async (item_id) => {
 }
 
 const getItemStocksLocations = async (item_id) => {
-    let result = {}
+    const result = {}
     try{
         const item = await Item.findByPk(item_id)
         let locationResult
+        result.stocks = []
         const stocks = await item.getStocks()
         for (const stock of stocks) {
-            locationResult = await stocksServices.getStockLocation(stock_id)
+            locationResult = await stocksServices.getStockLocation(stock.stock_id)
             if(locationResult.err) throw new Error(locationResult.msg)
             result.stocks.push({
                 stock_id: stock.stock_id,
@@ -187,9 +188,10 @@ const getItemStocksLocations = async (item_id) => {
         result.msg = "Got location"
     }
     catch(err){
-        result.err = err
+        result.err = err.toString()
         result.msg = "Could not get location"
     }
+    return result
 }
 
 module.exports = {
