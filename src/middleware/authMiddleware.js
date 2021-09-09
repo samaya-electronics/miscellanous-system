@@ -9,7 +9,8 @@ const onlyPassRoles = (...roles) =>{
 		}
 		catch(err){
 			return res.json({
-				err
+				err: err.toString(),
+				msg: "Unauthorized user role"
 			})
 		}
 	}
@@ -21,8 +22,8 @@ const authenticateToken = async (req, res, next) => {
 		const username = req.headers.username
 		if(!authorization) throw new Error("No Authorization Header")
 		if(!username) throw new Error("No username Header")
-
-		const token = authorization?.split("Bearer ")[1]
+		
+		const token = authorization.split(" ")[1]
 		let user = jwt.verify(token, process.env.SECRET_KEY)
 		user = await User.findByPk(user.user_id, {include : Role})
 
@@ -34,7 +35,8 @@ const authenticateToken = async (req, res, next) => {
 	}
 	catch(err){
 		return res.json({
-			err: err.toString()
+			err: err.toString(),
+			msg: "Could not log in"
 		})
 	}
 }
