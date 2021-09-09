@@ -21,7 +21,7 @@ app.use(cors())
 app.use('/', homeRouter)
 app.use('/auth', authRouter)
 
-app.use(authMiddleware.authenticateToken)
+app.use(authMiddleware.authenticateToken) // auth middleware
 app.use('/categories', categoriesRouter)
 app.use('/stocks', stocksRouter)
 app.use('/items', itemsRouter)
