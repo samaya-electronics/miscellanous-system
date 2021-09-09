@@ -28,7 +28,7 @@ afterAll(async () => {
 describe('Role I/O', () => {
 
   test('GET /roles --> get list of all roles', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
       .post('/auth/login')
       .send({
         username: "karim"
@@ -36,10 +36,8 @@ describe('Role I/O', () => {
 
     const res = await request(app)
       .get('/roles')
-      .send({
-        username: "karim",
-        token: res_login.body.token
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -59,7 +57,7 @@ describe('Role I/O', () => {
     [4, 'test-role-4'],
     [5, 'test-role-5'],
   ])('GET /roles/:pk --> get role by primary key', async (value, expected) => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
       .post('/auth/login')
       .send({
         username: "karim"
@@ -67,10 +65,8 @@ describe('Role I/O', () => {
 
     const res = await request(app)
     .get(`/roles/${value}`)
-    .send({
-      username: "karim",
-      token: res_login.body.token
-    })
+    .set('authorization', `Bearer ${resAuth.body.token}`)
+    .set('username', 'karim')
 
 
     expect(res.statusCode).toEqual(200)
@@ -88,7 +84,7 @@ describe('Role I/O', () => {
     ['test-role-4'],
     ['test-role-5']
   ])('POST /roles --> create a role', async (test_name) => {
-      const res_login = await request(app)
+      const resAuth = await request(app)
         .post('/auth/login')
         .send({
           username: "karim"
@@ -96,10 +92,10 @@ describe('Role I/O', () => {
 
       const res = await request(app)
         .post('/roles')
+        .set('authorization', `Bearer ${resAuth.body.token}`)
+        .set('username', 'karim')
         .send({
           role_name: test_name,
-          username: "karim",
-          token: res_login.body.token
         })
   
       expect(res.statusCode).toEqual(200)
@@ -109,7 +105,7 @@ describe('Role I/O', () => {
   })
 
   test('PUT /roles --> updates roles by primary key', async() => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
       .post('/auth/login')
       .send({
         username: "karim"
@@ -117,10 +113,10 @@ describe('Role I/O', () => {
       
     const res = await request(app)
       .put(`/roles/3`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
       .send({
         role_name: "test_name",
-        username: "karim",
-        token: res_login.body.token
       })
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -132,7 +128,7 @@ describe('Role I/O', () => {
     [4],
     [5],
   ])('DELETE /catagories/:pk --> delete 3 roles', async (test_pk) => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
       .post('/auth/login')
       .send({
         username: "karim"
@@ -140,10 +136,8 @@ describe('Role I/O', () => {
 
     const res = await request(app)
       .delete(`/roles/${test_pk}`)
-      .send({
-        username: "karim",
-        token: res_login.body.token
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())

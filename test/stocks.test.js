@@ -108,10 +108,8 @@ describe('Stocks I/O Testing', () => {
 		
 		const res = await request(app)
 		.get('/stocks')
-		.send({
-			token: resAuth.body.token,
-			username: test_username
-		})
+		.set('authorization', `Bearer ${resAuth.body.token}`)
+    .set('username', test_username)
 		
 		expect(res.statusCode).toEqual(200)
 		expect(res.body.err).not.toEqual(expect.anything())
@@ -134,10 +132,8 @@ describe('Stocks I/O Testing', () => {
 		
 		const res = await request(app)
 		.get('/stocks/2')
-		.send({
-			token: resAuth.body.token,
-			username: test_username
-		})
+		.set('authorization', `Bearer ${resAuth.body.token}`)
+    .set('username', test_username)
 		
 		expect(res.statusCode).toEqual(200)
 		expect(res.body.err).not.toEqual(expect.anything())
@@ -156,9 +152,9 @@ describe('Stocks I/O Testing', () => {
 		
 		const res = await request(app)
 		.post('/stocks')
+    .set('authorization', `Bearer ${resAuth.body.token}`)
+    .set('username', 'sa3dawy')
 		.send({
-			token: resAuth.body.token,
-			username: 'sa3dawy',
 			item_id: 3,
 			box_id: 4,
 			quantity: 230
@@ -183,9 +179,9 @@ describe('Stocks I/O Testing', () => {
 		
 		const res = await request(app)
 		.put('/stocks/2')
+    .set('authorization', `Bearer ${resAuth.body.token}`)
+    .set('username', 'sa3dawy')
 		.send({
-			token: resAuth.body.token,
-			username: 'sa3dawy',
 			item_id: 3,
 			box_id: 4,
 			quantity: 300
@@ -209,10 +205,8 @@ describe('Stocks I/O Testing', () => {
 		
 		const res = await request(app)
 		.delete('/stocks/3')
-		.send({
-			token: resAuth.body.token,
-			username: 'sa3dawy'
-		})
+		.set('authorization', `Bearer ${resAuth.body.token}`)
+    .set('username', 'sa3dawy')
 		
 		expect(res.statusCode).toEqual(200)
 		expect(res.body.err).not.toEqual(expect.anything())
