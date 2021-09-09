@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Category, Item, User, Role, Request } = require('../src/database/models')
+const { sequelize, Category, Item, User, Role, Request, Stock, Area, Section, Box } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({
@@ -19,23 +19,42 @@ beforeAll(async () => {
     quantity: 50,
     threshold: 20,
     code: "klsjd45",
-    location: "wanta mal ahlk anta ana al sb3awy",
     category_id: 1
   },{
     name: "item-2",
     quantity: 90,
     threshold: 40,
     code: "klsjd45",
-    location: "wanta mal ahlk anta ana al sb3awy tany",
     category_id: 2
   },{
     name: "item-3",
     quantity: 102,
     threshold: 23,
     code: "klsjd45",
-    location: "wanta mal ahlk anta ana al sb3awy talt",
     category_id: 1
   }])
+
+
+  await Area.bulkCreate([
+    {name: 'area-1', code: 'A1'},
+    {name: 'area-2', code: 'A2'},
+    {name: 'area-3', code: 'A3'},
+  ])
+  await Section.bulkCreate([
+    {name: 'section-1', code: 'S1', area_id: 1},
+    {name: 'section-2', code: 'S2', area_id: 1},
+    {name: 'section-3', code: 'S3', area_id: 2},
+  ])
+  await Box.bulkCreate([
+    {name: 'Box-1', code: 'B1', section_id: 2},
+    {name: 'Box-2', code: 'B2', section_id: 2},
+    {name: 'Box-3', code: 'B3', section_id: 3},
+  ])
+  await Stock.bulkCreate([
+    {item_id: 1, box_id: 1, quantity: 30},
+    {item_id: 2, box_id: 2, quantity: 40},
+    {item_id: 3, box_id: 3, quantity: 50},
+  ])
   await Role.bulkCreate([
     {name: 'admin'},
     {name: 'teamleader'},
@@ -47,7 +66,8 @@ beforeAll(async () => {
     role_id: 1
   },{
     name: "nourhan",
-    role_id: 2
+    role_id: 2,
+    user_leader_id: 1
   },{
     name: "hazem",
     role_id: 3,
@@ -85,17 +105,10 @@ afterAll(async () => {
 })
 
 
-
-
-
-
-
-
-
 describe('request I/O --> request test', () => {
 
   test('GET /requests --> get all requests for admin', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
       .post('/auth/login')
       .send({
         username: "karim"
@@ -103,20 +116,16 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .get('/requests')
-      .send({
-        token: res_login.body.token,
-        username: 'karim'
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
       expect(res.body.requests.length).toEqual(4)
   })
-  
-
 
   test('GET /requests --> get specific user request depending on team member', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
     .send({
       username: "hazem"
@@ -124,10 +133,8 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .get('/requests')
-      .send({
-        token: res_login.body.token,
-        username: 'hazem'
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'hazem')
     
     expect(res.statusCode).toEqual(200)
     expect(res.body.requests).toEqual(expect.anything())
@@ -137,7 +144,7 @@ describe('request I/O --> request test', () => {
 
 
   test('GET /requests --> get specific user request depending on being leader', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
     .send({
       username: "nourhan"
@@ -145,10 +152,8 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .get('/requests')
-      .send({
-        token: res_login.body.token,
-        username: 'nourhan'
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'nourhan')
     
     expect(res.statusCode).toEqual(200)
     expect(res.body.requests).toEqual(expect.anything())
@@ -159,7 +164,7 @@ describe('request I/O --> request test', () => {
 
 
   test('GET /requests/:pk --> get request by pk', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
     .send({
       username: "karim"
@@ -167,10 +172,8 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .get('/requests/1')
-      .send({
-        token: res_login.body.token,
-        username: 'karim'
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.err).not.toEqual(expect.anything())
@@ -187,7 +190,7 @@ describe('request I/O --> request test', () => {
     ['hazem',5,3,3],
     ['osama',5,4,3],
   ])('POST /requests --> create 3 requests', async (username, quantity_test, user_requesting_id_test, item_id_test) => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
     .send({
       username
@@ -195,12 +198,12 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .post('/requests')
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', username)
       .send({
         quantity: quantity_test,
         item_id: item_id_test,
         user_requesting_id: user_requesting_id_test,
-        token: res_login.body.token,
-        username
       })
 
     expect(res.statusCode).toEqual(200)
@@ -216,7 +219,7 @@ describe('request I/O --> request test', () => {
     ['nourhan', 3],
     ['osama', 3]
   ])('PUT /requests/:id/approve --> request approval by team leader and superuser', async (username, req_id) => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
     .send({
       username
@@ -224,10 +227,8 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .put(`/requests/${req_id}/approve`)
-      .send({
-        token: res_login.body.token,
-        username
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', username)
 
     expect(res.statusCode).toEqual(200)
     expect(res.body.request).toEqual(expect.anything())
@@ -237,7 +238,7 @@ describe('request I/O --> request test', () => {
 
 
   test('DELETE /requests --> deleting request', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
     .send({
       username: "karim"
@@ -245,10 +246,8 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .delete('/requests/1')
-      .send({
-        token: res_login.body.token,
-        username: 'karim'
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
 
     expect(res.statusCode).toEqual(200)
@@ -260,7 +259,7 @@ describe('request I/O --> request test', () => {
 
 
   test('DELETE /requests --> deleting request that does not belong to user', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
     .send({
       username: "hazem"
@@ -268,10 +267,8 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .delete('/requests/2')
-      .send({
-        token: res_login.body.token,
-        username: 'hazem'
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'hazem')
 
 
     expect(res.statusCode).toEqual(200)
@@ -281,7 +278,7 @@ describe('request I/O --> request test', () => {
 
 
   test('DELETE /requests --> error deleting request', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
     .send({
       username: "karim"
@@ -289,10 +286,8 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .delete('/requests/30')
-      .send({
-        token: res_login.body.token,
-        username: 'karim'
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
 
 
     expect(res.statusCode).toEqual(200)
@@ -302,7 +297,7 @@ describe('request I/O --> request test', () => {
 
 
   test('GET /requests/deliveries --> get all deliveries for admin', async () => {
-    const res_login = await request(app)
+    const resAuth = await request(app)
       .post('/auth/login')
       .send({
         username: "osama"
@@ -310,10 +305,8 @@ describe('request I/O --> request test', () => {
 
     const res = await request(app)
       .get('/requests/deliveries')
-      .send({
-        token: res_login.body.token,
-        username: 'osama'
-      })
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'osama')
 
       expect(res.statusCode).toEqual(200)
       expect(res.body.err).not.toEqual(expect.anything())
@@ -323,24 +316,24 @@ describe('request I/O --> request test', () => {
 
   
 
-  test('PUT /requests/:id/deliveries/approve --> request approval by team leader and superuser', async () => {
-    const res_login = await request(app)
-    .post('/auth/login')
-    .send({
-      username: 'osama'
-    })
+  // test('PUT /requests/:id/deliveries/approve --> request approval by team leader and superuser', async () => {
+  //   const resAuth = await request(app)
+  //   .post('/auth/login')
+  //   .send({
+  //     username: 'osama'
+  //   })
 
-    const res = await request(app)
-      .put(`/requests/3/deliveries/approve`)
-      .send({
-        token: res_login.body.token,
-        username: 'osama',
-        approved: true
-      })
+  //   const res = await request(app)
+  //     .put(`/requests/3/deliveries/approve`)
+  //     .set('authorization', `Bearer ${resAuth.body.token}`)
+  //     .set('username', 'osama')
+  //     .send({
+  //       approved: true
+  //     })
 
-    expect(res.statusCode).toEqual(200)
-    expect(res.body.request).toEqual(expect.anything())
-    expect(res.body.err).not.toEqual(expect.anything())
-  })
+  //   expect(res.statusCode).toEqual(200)
+  //   expect(res.body.request).toEqual(expect.anything())
+  //   expect(res.body.err).not.toEqual(expect.anything())
+  // })
 
 })
