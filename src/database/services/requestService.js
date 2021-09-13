@@ -93,9 +93,7 @@ const approveDelivery = async (request_id, approved) => {
         result.item = await result.request.getItem()
         const itemQuantity = itemServices.getItemQuantity(result.request.item_id)
         if(approved){
-            if(result.item.threshold <= itemQuantity){
-                //emailer.sendThresholdCautionMailToStore()
-            }
+            
             result.item.quantity = result.item.quantity - result.request.quantity
             await result.item.save()
         }
