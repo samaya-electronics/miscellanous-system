@@ -56,18 +56,19 @@ describe('Auth system testing', () => {
     ['karim'],
     ['nourhan']
   ])('POST /login --> logging in to get token', async (username) => {
-    const res = await request(app)
+    const resAuth = await request(app)
     .post('/auth/login')
-    .set('authorization', `Bearer ${resAuth.body.token}`)
-    .set('username', 'karim')
+    .send({
+      username
+    })
 
-    expect(res.statusCode).toEqual(200)
-    expect(res.body.token).toEqual(expect.anything())
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
 
     const res2 = await request(app)
       .get('/items')
       .set('authorization', `Bearer ${resAuth.body.token}`)
-      .set('username', 'karim')
+      .set('username', username)
 
     expect(res2.statusCode).toEqual(200)
     expect(res2.body.items).toEqual(expect.anything())
@@ -75,7 +76,7 @@ describe('Auth system testing', () => {
     const res3 = await request(app)
 			.delete('/auth/logout')
 			.set('authorization', `Bearer ${resAuth.body.token}`)
-      .set('username', 'karim')
+      .set('username', username)
       
     expect(res3.statusCode).toEqual(200)
     expect(res3.body.msg).toEqual("User logged out successfully")
