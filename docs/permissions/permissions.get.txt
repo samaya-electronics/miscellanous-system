@@ -1,4 +1,8 @@
 URL GET /permissions
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
+}
 Body Data: {}
 
 Returned Data:
