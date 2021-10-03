@@ -1,4 +1,8 @@
 URL POST /items
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
+}
 Body Data: {
     item_name : {string},
     threshold: {int},

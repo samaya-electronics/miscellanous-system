@@ -1,4 +1,8 @@
 URL PUT /items
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
+}
 Body Data:{
         name : {string},
         threshold: {int},
