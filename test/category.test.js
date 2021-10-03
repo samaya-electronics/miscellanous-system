@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
-const { sequelize, Category, Role, User } = require('../src/database/models')
+const { sequelize, Category, Role, User, Item } = require('../src/database/models')
 
 beforeAll(async () => {
   await sequelize.sync({
@@ -10,6 +10,33 @@ beforeAll(async () => {
   await Role.bulkCreate([
     {name: 'admin'},
     {name: 'admin'},
+  ])
+
+  await Item.bulkCreate([
+    {
+      name: "test-item-1",
+      // quantity: 20,
+      threshold: 30,
+      // location: "test-loc-1",
+      category_id: 1,
+      code: "125626werfs"
+    },
+    {
+      name: "test-item-2",
+      // quantity: 50,
+      threshold: 30,
+      // location: "test-loc-2",
+      category_id: 1,
+      code :"12566werfs"
+    },
+    {
+      name: "test-item-3",
+      // quantity: 50,
+      threshold: 30,
+      // location: "test-loc-3",
+      category_id: 1,
+      code :"125686werfs"
+    },
   ])
 
   await User.bulkCreate([{
@@ -186,5 +213,7 @@ describe('Category I/O ', () => {
     expect(res.body.err).toEqual(expect.anything())
     expect(res.body.msg).toEqual(expect.any(String))
   })
+
+  
 
 })
