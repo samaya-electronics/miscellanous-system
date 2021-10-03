@@ -35,6 +35,10 @@ B- failed
 -----------------------------------------------------------------------------------------
 
 URL GET /categories/:id
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
+}
 Body Data: {}
 
 Returned Data:
@@ -48,6 +52,39 @@ A- success
         updated_at: {Date},
         created_at: {Date}
     }
+}
+
+B- failed 
+{
+    err: {Object}
+    msg: {string}
+}
+
+-----------------------------------------------------------------------------------------
+
+URL GET /categories/:id/items
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
+}
+Body Data: {}
+
+Returned Data:
+
+A- success
+{
+    msg: {string}
+    category:{
+        name : {string},
+        category_id: {int},
+        updated_at: {Date},
+        created_at: {Date}
+    }
+    items: [
+        {Item_object},
+        {Item_object},
+        {Item_object}
+    ]
 }
 
 B- failed 
