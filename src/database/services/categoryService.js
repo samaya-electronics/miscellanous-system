@@ -42,6 +42,20 @@ const getCategoryById = async (id) => {
     return result
 }
 
+const getCategoryItems = async (id) => {
+    const result = {}
+     try{
+         result.category = await Category.findByPk(parseInt(id))
+         result.items = await result.category.getItems()
+         result.msg = "Got category"
+     }
+     catch(err){
+         result.err = err
+         result.msg = "Could not get category"
+     }
+     return result
+ }
+
 const updateCategory = async (name, id) => {
     const result = {}
     try{
@@ -75,5 +89,6 @@ module.exports = {
     getCategories,
     getCategoryById,
     updateCategory,
+    getCategoryItems,
     deleteCategory,
 }
