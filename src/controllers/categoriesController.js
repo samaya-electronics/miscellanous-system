@@ -20,6 +20,19 @@ const postCategory = async (req, res)=>{
     })
 }
 
+const getCategoryItems = async (req, res)=>{
+    const result = await categoryServices.getCategoryItems(req.params.id)
+
+    res.json({
+        err: result.err,
+        msg: result.msg,
+        items: result.items,
+        category: result.category,
+        category: result.category
+    })
+}
+
+
 const getCategoryById = async (req, res)=>{
     const result = await categoryServices.getCategoryById(req.params.id)
 
@@ -55,5 +68,6 @@ module.exports = {
     postCategory,
     updateCategory,
     deleteCategory,
+    getCategoryItems,
     getCategories
 }
