@@ -1,3 +1,4 @@
+const { anything } = require('expect');
 const request = require('supertest');
 const app = require('../src/app');
 const { sequelize, Category, Role, User, Item } = require('../src/database/models')
@@ -12,7 +13,30 @@ beforeAll(async () => {
     {name: 'admin'},
   ])
 
-  await Item.bulkCreate([
+
+  await User.bulkCreate([{
+    name: "karim",
+    role_id: 1
+  },{
+    name: "nourhan",
+    role_id: 2
+  },{
+    name: "shafik",
+    role_id: 2
+  },{
+    name: "youssef",
+    role_id: 2
+  }])
+
+  await Category.bulkCreate([
+    {name: 'test-cat-1'},
+    {name: 'test-cat-2'},
+    {name: 'test-cat-3'},
+    {name: 'test-cat-4'},
+    {name: 'test-cat-5'},
+  ])
+
+  return Item.bulkCreate([
     {
       name: "test-item-1",
       // quantity: 20,
@@ -37,28 +61,6 @@ beforeAll(async () => {
       category_id: 1,
       code :"125686werfs"
     },
-  ])
-
-  await User.bulkCreate([{
-    name: "karim",
-    role_id: 1
-  },{
-    name: "nourhan",
-    role_id: 2
-  },{
-    name: "shafik",
-    role_id: 2
-  },{
-    name: "youssef",
-    role_id: 2
-  }])
-
-  return Category.bulkCreate([
-    {name: 'test-cat-1'},
-    {name: 'test-cat-2'},
-    {name: 'test-cat-3'},
-    {name: 'test-cat-4'},
-    {name: 'test-cat-5'},
   ])
 });
 
@@ -214,6 +216,29 @@ describe('Category I/O ', () => {
     expect(res.body.msg).toEqual(expect.any(String))
   })
 
-  
+  test('GET /categories/id/items --> get list of categories items', async () => {
+    const test_pk = 1 
+    const resAuth = await request(app)
+    .post('/auth/login')
+    .send({
+      username: 'karim'
+    })
+
+    expect(resAuth.statusCode).toEqual(200)
+    expect(resAuth.body.token).toEqual(expect.anything())
+
+      const res = await request(app)
+      .get(`/categories/${test_pk}/items`)
+      .set('authorization', `Bearer ${resAuth.body.token}`)
+      .set('username', 'karim')
+
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.err).not.toEqual(expect.anything())
+      expect(res.body).toEqual(expect.objectContaining({
+        msg: expect.any(String),
+        items: expect.arrayContaining(anything())
+      }))
+      expect(res.body.categories.length).toEqual(5)
+  })
 
 })
