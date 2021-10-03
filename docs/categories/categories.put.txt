@@ -1,4 +1,8 @@
 URL PUT /categories/:id
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
+}
 Body Data: {
     category_name : {string},
     username: {string},

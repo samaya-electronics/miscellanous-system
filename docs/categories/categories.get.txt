@@ -1,4 +1,8 @@
 URL GET /categories
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
+}
 Body Data: {
     token: {string},
     username: {string}
