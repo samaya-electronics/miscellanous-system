@@ -33,6 +33,11 @@ B- failed
 URL GET /roles/:id
 Body Data: {}
 
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
+}
+
 Returned Data:
 
 A- success

@@ -1,7 +1,7 @@
 URL GET /stocks
-Body Data: {
-    token: {string},
-    username: {string}
+Headers Data: {
+    authorization: 'Bearer ${token}',
+    username : {string}
 }
 
 Returned Data:
